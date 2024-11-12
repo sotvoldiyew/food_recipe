@@ -1,0 +1,58 @@
+name: food_recipe
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  cupertino_icons: ^1.0.8
+
+
+  # Localizations
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+
+  # Storage
+  shared_preferences: ^2.3.2
+
+  # Internet
+  dio: ^5.7.0
+  connectivity_plus: ^6.0.5
+
+  # Router
+  go_router: ^14.3.0
+
+  # Bloc
+  flutter_bloc: ^8.1.6
+  bloc: ^8.1.4
+  equatable: ^2.0.5
+  provider: ^6.1.2
+
+  flutter_native_splash: ^2.4.2
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^4.0.0
+
+flutter:
+  assets:
+    - assets/images/
+
+  uses-material-design: true
+
+flutter_intl:
+  enabled: true
+  main_locale: en
+  arb_dir: lib/src/common/l10n/
+  output_dir: lib/src/common/l10n/generated/
