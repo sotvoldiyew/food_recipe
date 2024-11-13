@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../feature/home_navigation.dart';
 import '../../feature/screens/welcome/screen/welcome_screen.dart';
 
 class AppRouter {
@@ -14,11 +15,14 @@ class AppRouter {
   static const String saved = "/saved";
 }
 
-GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+final GlobalKey<NavigatorState> _shellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'shell-key');
+final GlobalKey<NavigatorState> appNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'shell-key');
+late StatefulNavigationShell navigationShell2;
 
 GoRouter router = GoRouter(
-  navigatorKey: navigatorKey,
-  initialLocation: AppRouter.main,
+  navigatorKey: appNavigatorKey,
+  initialLocation: AppRouter.welcome,
   routes: [
     GoRoute(
       path: AppRouter.welcome,
@@ -34,99 +38,53 @@ GoRouter router = GoRouter(
         },
       ),
     ),
-    ShellRoute(
-      navigatorKey: GlobalKey<NavigatorState>(),
-      builder: (context, state, child) {
-        return Scaffold(
-          body: child,
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: _calculateIndex(state.uri.toString()),
-            onTap: (index) {
-              switch (index) {
-                case 0:
-                  context.go(AppRouter.home);
-                  break;
-                case 1:
-                  context.go(AppRouter.notification);
-                  break;
-                case 2:
-                  context.go(AppRouter.saved);
-                  break;
-                case 3:
-                  context.go(AppRouter.profile);
-                  break;
-              }
-            },
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.notifications),
-                label: 'Notifications',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.bookmark),
-                label: 'Saved',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'Profile',
-              ),
-            ],
-          ),
-        );
+
+    StatefulShellRoute.indexedStack(
+      parentNavigatorKey: appNavigatorKey,
+      builder: (context, state, navigationShell) {
+        navigationShell2 = navigationShell;
+        return HomeNavigation(navigationShell: navigationShell);
       },
-      routes: [
-        // GoRoute(
-        //   path: AppRouter.home,
-        //   name: AppRouter.home,
-        //   pageBuilder: (context, state) => NoTransitionPage(
-        //     key: state.pageKey,
-        //     child: const HomeScreen(),
-        //   ),
-        // ),
-        // GoRoute(
-        //   path: AppRouter.notification,
-        //   name: AppRouter.notification,
-        //   pageBuilder: (context, state) => NoTransitionPage(
-        //     key: state.pageKey,
-        //     child: const NotificationScreen(),
-        //   ),
-        // ),
-        // GoRoute(
-        //   path: AppRouter.saved,
-        //   name: AppRouter.saved,
-        //   pageBuilder: (context, state) => NoTransitionPage(
-        //     key: state.pageKey,
-        //     child: const SavedScreen(),
-        //   ),
-        // ),
-        // GoRoute(
-        //   path: AppRouter.profile,
-        //   name: AppRouter.profile,
-        //   pageBuilder: (context, state) => NoTransitionPage(
-        //     key: state.pageKey,
-        //     child: const ProfileScreen(),
-        //   ),
-        // ),
+      branches: [
+        StatefulShellBranch(
+          navigatorKey: _shellNavigatorKey,
+          routes: [
+            GoRoute(
+              path: AppRouter.home,
+              pageBuilder: (context, state) => const NoTransitionPage(child: Scaffold(body: Center(child: Text("Home")))),
+              routes: const [],
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRouter.notification,
+              pageBuilder: (context, state) => const NoTransitionPage(child: Scaffold(body: Center(child: Text("Notification"),),)),
+              routes: const [],
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRouter.saved,
+              pageBuilder: (context, state) => const NoTransitionPage(child: Scaffold(body: Center(child: Text("Saved"),),)),
+              routes: const [],
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: AppRouter.profile,
+              pageBuilder: (context, state) => const NoTransitionPage(child: Scaffold(body: Center(child: Text("Profile"),),)),
+              routes: const [],
+            ),
+          ],
+        ),
       ],
     ),
   ],
 );
 
-int _calculateIndex(String location) {
-  switch (location) {
-    case AppRouter.home:
-      return 0;
-    case AppRouter.notification:
-      return 1;
-    case AppRouter.saved:
-      return 2;
-    case AppRouter.profile:
-      return 3;
-    default:
-      return 0;
-  }
-}
