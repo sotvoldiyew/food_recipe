@@ -1,3 +1,21 @@
 {
+ "hello": "Hello",
+ "savedRecipes" : "Saved Recipes",
+ "min": "min",
+ "by": "By",
+ "foodReviews": "k Reviews",
+ "follow": "Follow",
+ "following": "Following",
+ "ingrident": "Ingrident",
+ "procedure": "Procedure",
+ "serve": "Serve",
+ "items": "Items",
+ "steps": "Steps",
+ "step": "Step",
+ "share": "Share",
+ "rateRecipe": "Rate Recipe",
+ "review": "Review",
+ "unsave": "Unsave",
+ "save": "Save"
 
 }

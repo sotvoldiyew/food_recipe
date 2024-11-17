@@ -23,6 +23,9 @@ dependencies:
   # Storage
   shared_preferences: ^2.3.2
 
+  # Flutter Svg
+  flutter_svg: ^2.0.14
+
 
   # Internet
   dio: ^5.7.0

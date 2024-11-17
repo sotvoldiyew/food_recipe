@@ -21,5 +21,24 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{};
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "by": MessageLookupByLibrary.simpleMessage("By"),
+        "follow": MessageLookupByLibrary.simpleMessage("Follow"),
+        "following": MessageLookupByLibrary.simpleMessage("Following"),
+        "foodReviews": MessageLookupByLibrary.simpleMessage("k Reviews"),
+        "hello": MessageLookupByLibrary.simpleMessage("Hello"),
+        "ingrident": MessageLookupByLibrary.simpleMessage("Ingrident"),
+        "items": MessageLookupByLibrary.simpleMessage("Items"),
+        "min": MessageLookupByLibrary.simpleMessage("min"),
+        "procedure": MessageLookupByLibrary.simpleMessage("Procedure"),
+        "rateRecipe": MessageLookupByLibrary.simpleMessage("Rate Recipe"),
+        "review": MessageLookupByLibrary.simpleMessage("Review"),
+        "save": MessageLookupByLibrary.simpleMessage("Save"),
+        "savedRecipes": MessageLookupByLibrary.simpleMessage("Saved Recipes"),
+        "serve": MessageLookupByLibrary.simpleMessage("Serve"),
+        "share": MessageLookupByLibrary.simpleMessage("Share"),
+        "step": MessageLookupByLibrary.simpleMessage("Step"),
+        "steps": MessageLookupByLibrary.simpleMessage("Steps"),
+        "unsave": MessageLookupByLibrary.simpleMessage("Unsave")
+      };
 }

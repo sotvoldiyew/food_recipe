@@ -49,6 +49,186 @@ class S {
   static S? maybeOf(BuildContext context) {
     return Localizations.of<S>(context, S);
   }
+
+  /// `Hello`
+  String get hello {
+    return Intl.message(
+      'Hello',
+      name: 'hello',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Saved Recipes`
+  String get savedRecipes {
+    return Intl.message(
+      'Saved Recipes',
+      name: 'savedRecipes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `min`
+  String get min {
+    return Intl.message(
+      'min',
+      name: 'min',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `By`
+  String get by {
+    return Intl.message(
+      'By',
+      name: 'by',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `k Reviews`
+  String get foodReviews {
+    return Intl.message(
+      'k Reviews',
+      name: 'foodReviews',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Follow`
+  String get follow {
+    return Intl.message(
+      'Follow',
+      name: 'follow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Following`
+  String get following {
+    return Intl.message(
+      'Following',
+      name: 'following',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ingrident`
+  String get ingrident {
+    return Intl.message(
+      'Ingrident',
+      name: 'ingrident',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Procedure`
+  String get procedure {
+    return Intl.message(
+      'Procedure',
+      name: 'procedure',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Serve`
+  String get serve {
+    return Intl.message(
+      'Serve',
+      name: 'serve',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Items`
+  String get items {
+    return Intl.message(
+      'Items',
+      name: 'items',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Steps`
+  String get steps {
+    return Intl.message(
+      'Steps',
+      name: 'steps',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Step`
+  String get step {
+    return Intl.message(
+      'Step',
+      name: 'step',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Share`
+  String get share {
+    return Intl.message(
+      'Share',
+      name: 'share',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rate Recipe`
+  String get rateRecipe {
+    return Intl.message(
+      'Rate Recipe',
+      name: 'rateRecipe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Review`
+  String get review {
+    return Intl.message(
+      'Review',
+      name: 'review',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unsave`
+  String get unsave {
+    return Intl.message(
+      'Unsave',
+      name: 'unsave',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save`
+  String get save {
+    return Intl.message(
+      'Save',
+      name: 'save',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

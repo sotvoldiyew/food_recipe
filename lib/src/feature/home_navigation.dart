@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:food_recipe/src/common/utils/context_extention.dart';
 import 'package:go_router/go_router.dart';
+
+import '../common/style/app_icons.dart';
 
 class HomeNavigation extends StatefulWidget {
   const HomeNavigation({super.key, required this.navigationShell});
+
   final StatefulNavigationShell navigationShell;
   static GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -15,39 +20,58 @@ class _HomeNavigationState extends State<HomeNavigation> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: widget.navigationShell,
-      bottomNavigationBar: BottomNavigationBar(
-        // selectedLabelStyle: context.appTextStyle.bodyMedium,
-        // unselectedLabelStyle: context.appTextStyle.bodyMedium,
-        type: BottomNavigationBarType.fixed,
-        showSelectedLabels: true,
-        unselectedFontSize: 8,  // Adjust sizes
-        selectedFontSize: 10,
-        unselectedItemColor: Colors.grey,
-        selectedItemColor: Colors.blue,
-        elevation: 0,
-        currentIndex: widget.navigationShell.currentIndex,
-        onTap: (index) => _onItemTapped(index),
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notifications',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark),
-            label: 'Saved',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
+      bottomNavigationBar: BottomAppBar(
+        color: context.colors.onPrimary,
+        elevation: 2,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              icon: SvgPicture.asset(
+                width: 27,
+                height: 27,
+                widget.navigationShell.currentIndex == 0
+                    ? AppIcons.pressedHome
+                    : AppIcons.homeIcon,
+              ),
+              onPressed: () => _onItemTapped(0),
+            ),
+            IconButton(
+              icon: SvgPicture.asset(
+                width: 27,
+                height: 27,
+                widget.navigationShell.currentIndex == 1
+                    ? AppIcons.pressedSave
+                    : AppIcons.saveIcon,
+              ),
+              onPressed: () => _onItemTapped(1),
+            ),
+            IconButton(
+              icon: SvgPicture.asset(
+                width: 27,
+                height: 27,
+                widget.navigationShell.currentIndex == 2
+                    ? AppIcons.pressedNotification
+                    : AppIcons.notificationIcon,
+              ),
+              onPressed: () => _onItemTapped(2),
+            ),
+            IconButton(
+              icon: SvgPicture.asset(
+                width: 27,
+                height: 27,
+                widget.navigationShell.currentIndex == 3
+                    ? AppIcons.pressedProfile
+                    : AppIcons.profileIcon,
+              ),
+              onPressed: () => _onItemTapped(3),
+            ),
+          ],
+        ),
       ),
     );
   }
+
   void _onItemTapped(int index) {
     widget.navigationShell.goBranch(
       index,

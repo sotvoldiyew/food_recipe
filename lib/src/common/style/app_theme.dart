@@ -17,7 +17,6 @@ class AppTheme {
 }
 
 /// Light [ColorScheme] made with FlexColorScheme v8.0.0.
-/// Requires Flutter 3.22.0 or later.
 const ColorScheme lightColorScheme = ColorScheme(
   brightness: Brightness.light,
   // Selected

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:food_recipe/src/feature/ingrident/screen/ingrident_screen.dart';
+import 'package:food_recipe/src/feature/notification/screen/notification_screen.dart';
+import 'package:food_recipe/src/feature/saved/screen/saved_screen.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../feature/home_navigation.dart';
-import '../../feature/screens/welcome/screen/welcome_screen.dart';
+import '../../feature/welcome/screen/welcome_screen.dart';
 
 class AppRouter {
   const AppRouter._();
@@ -13,6 +16,7 @@ class AppRouter {
   static const String notification = "/notification";
   static const String profile = "/profile";
   static const String saved = "/saved";
+  static const String ingrident = "/ingrident";
 }
 
 
@@ -22,9 +26,23 @@ late StatefulNavigationShell navigationShell2;
 
 GoRouter router = GoRouter(
   navigatorKey: appNavigatorKey,
-  initialLocation: AppRouter.welcome,
+  initialLocation: AppRouter.home,
   routes: [
     GoRoute(
+      path: AppRouter.ingrident,
+      name: AppRouter.ingrident,
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const IngridentScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      ),
+    ),
+GoRoute(
       path: AppRouter.welcome,
       name: AppRouter.welcome,
       pageBuilder: (context, state) => CustomTransitionPage(
@@ -59,8 +77,8 @@ GoRouter router = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: AppRouter.notification,
-              pageBuilder: (context, state) => const NoTransitionPage(child: Scaffold(body: Center(child: Text("Notification"),),)),
+              path: AppRouter.saved,
+              pageBuilder: (context, state) => const NoTransitionPage(child: SavedScreen()),
               routes: const [],
             ),
           ],
@@ -68,8 +86,8 @@ GoRouter router = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: AppRouter.saved,
-              pageBuilder: (context, state) => const NoTransitionPage(child: Scaffold(body: Center(child: Text("Saved"),),)),
+              path: AppRouter.notification,
+              pageBuilder: (context, state) => const NoTransitionPage(child: NotificationScreen()),
               routes: const [],
             ),
           ],
