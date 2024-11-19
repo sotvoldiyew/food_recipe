@@ -15,6 +15,17 @@ class _ForgotpasswordScreenState extends State<ForgotpasswordScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back_ios_sharp,
+              color: Colors.black, size: 25,),
+        ),
+      ),
+
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 35.0),
         child: Column(
