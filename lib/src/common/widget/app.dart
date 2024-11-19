@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:food_recipe/src/common/utils/context_extention.dart';
-
 import '../l10n/generated/l10n.dart';
 import '../router/app_router.dart';
 import '../style/app_theme.dart';

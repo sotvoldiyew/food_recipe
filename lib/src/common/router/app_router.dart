@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../feature/home_navigation.dart';
-import '../../feature/screens/welcome/screen/welcome_screen.dart';
+import '../../feature/splash/screen/login_screen.dart';
+import '../../feature/splash/screen/signup_screen.dart';
+import '../../feature/splash/screen/splash_screen.dart';
 
 class AppRouter {
   const AppRouter._();
 
   static const String welcome = "/welcome";
+  static const String signin = "/signin";
+  static const String signup = "/signup";
+
   static const String main = "/main";
   static const String home = "/home";
   static const String notification = "/notification";
@@ -38,6 +42,35 @@ GoRouter router = GoRouter(
         },
       ),
     ),
+    GoRoute(
+      path: AppRouter.signin,
+      name: AppRouter.signin,
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child:  const SignInScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      ),
+    ),
+    GoRoute(
+      path: AppRouter.signup,
+      name: AppRouter.signup,
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child:  const SignUpScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      ),
+    ),
+
 
     StatefulShellRoute.indexedStack(
       parentNavigatorKey: appNavigatorKey,
