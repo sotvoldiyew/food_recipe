@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_recipe/src/feature/splash/screen/forgot_screen.dart';
 import 'package:food_recipe/src/feature/splash/screen/signup_screen.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -113,12 +114,23 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
             const SizedBox(height: 10),
             Row(
+
               children: [
-                TextButton(
-                  onPressed: () {},
+
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>  const ForgotScreen()),
+                    );
+                  },
                   child: const Text(
                     'Forgot Password?',
-                    style: TextStyle(color: Colors.orange),
+                    style: TextStyle(
+                        color: Color(0xffFF9C00),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 13),
                   ),
                 ),
               ],
