@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_recipe/src/feature/splash/screen/forgotPassword_screen.dart';
+import 'package:go_router/go_router.dart';
 
 class ForgotScreen extends StatefulWidget {
   const ForgotScreen({super.key});
@@ -16,6 +17,16 @@ class _ForgotScreenState extends State<ForgotScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          onPressed: () {
+            context.pop();
+          },
+          icon: const Icon(Icons.arrow_back_ios_sharp,
+            color: Colors.black,),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 35.0),
         child: Column(
@@ -83,10 +94,10 @@ class _ForgotScreenState extends State<ForgotScreen> {
             const SizedBox(height: 60),
             ElevatedButton(
               onPressed: () {
-                 Navigator.push(
-                   context,
-                  MaterialPageRoute(builder: (context) => ForgotpasswordScreen()),
-                 );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => VerificationCodeScreen(email: "email")),
+                );
               },
               style: ElevatedButton.styleFrom(
                 fixedSize: const Size(355, 60),
@@ -95,7 +106,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 120, vertical: 15),
+                const EdgeInsets.symmetric(horizontal: 120, vertical: 15),
               ),
               child: const Row(
                 children: [

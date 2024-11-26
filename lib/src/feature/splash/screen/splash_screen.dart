@@ -44,7 +44,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 260),
+                  const SizedBox(height: 200),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 80.0),
                     child: Text(
@@ -53,12 +53,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
-                        fontSize: 50,
+                        fontSize: 40,
                       ),
                     ),
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 20,
                   ),
                   const Text(
                     'Simple way to find Tasty Recipe',
@@ -70,7 +70,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ),
                   ),
                   const SizedBox(
-                    height: 80,
+                    height: 60,
                   ),
                   ElevatedButton(
                     onPressed: () {

@@ -24,7 +24,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Column(
           children: [
             const SizedBox(
-              height: 70,
+              height: 50,
             ),
             const Row(
               children: [
@@ -250,7 +250,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 120, vertical: 15),
+                    const EdgeInsets.symmetric(horizontal: 110),
               ),
               child: const Row(
                 children: [
@@ -261,7 +261,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         fontSize: 17,
                         fontWeight: FontWeight.w700),
                   ),
-                  SizedBox(width: 30),
+                  SizedBox(width: 15),
                   Icon(
                     Icons.arrow_forward,
                     color: Colors.white,
@@ -270,7 +270,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 60.0),
               child: Row(
@@ -298,7 +298,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -331,7 +331,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),*/
               ],
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

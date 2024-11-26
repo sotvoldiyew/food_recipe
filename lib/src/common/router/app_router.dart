@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_recipe/src/feature/splash/screen/notifications_screen.dart';
 import 'package:go_router/go_router.dart';
 import '../../feature/home_navigation.dart';
 import '../../feature/splash/screen/login_screen.dart';
@@ -9,9 +10,8 @@ class AppRouter {
   const AppRouter._();
 
   static const String welcome = "/welcome";
-  static const String signin = "/signin";
+  static const String signIn = "/signIn";
   static const String signup = "/signup";
-
   static const String main = "/main";
   static const String home = "/home";
   static const String notification = "/notification";
@@ -26,7 +26,7 @@ late StatefulNavigationShell navigationShell2;
 
 GoRouter router = GoRouter(
   navigatorKey: appNavigatorKey,
-  initialLocation: AppRouter.welcome,
+  initialLocation: AppRouter.notification,
   routes: [
     GoRoute(
       path: AppRouter.welcome,
@@ -43,8 +43,8 @@ GoRouter router = GoRouter(
       ),
     ),
     GoRoute(
-      path: AppRouter.signin,
-      name: AppRouter.signin,
+      path: AppRouter.signIn,
+      name: AppRouter.signIn,
       pageBuilder: (context, state) => CustomTransitionPage(
         key: state.pageKey,
         child:  const SignInScreen(),
@@ -62,6 +62,20 @@ GoRouter router = GoRouter(
       pageBuilder: (context, state) => CustomTransitionPage(
         key: state.pageKey,
         child:  const SignUpScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      ),
+    ),
+    GoRoute(
+      path: AppRouter.notification,
+      name: AppRouter.notification,
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child:   NotificationsScreen(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
             opacity: animation,

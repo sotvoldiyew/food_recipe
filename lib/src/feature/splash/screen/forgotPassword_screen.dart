@@ -1,17 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:food_recipe/src/common/utils/context_extention.dart';
+import 'package:food_recipe/src/feature/splash/screen/new_password.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pinput/pinput.dart';
+import '../../../common/style/app_icons.dart';
 
-class ForgotpasswordScreen extends StatefulWidget {
-  const ForgotpasswordScreen({super.key});
+class VerificationCodeScreen extends StatefulWidget {
+  final String email;
+
+  const VerificationCodeScreen({super.key, required this.email});
 
   @override
-  State<ForgotpasswordScreen> createState() => _ForgotpasswordScreenState();
+  State<VerificationCodeScreen> createState() => _VerificationCodeScreenState();
 }
 
-class _ForgotpasswordScreenState extends State<ForgotpasswordScreen> {
-  TextEditingController passwordController = TextEditingController();
+class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
+  get focusedPinTheme => null;
 
   @override
   Widget build(BuildContext context) {
+    final defaultPinTheme = PinTheme(
+      width: 70,
+      height: 70,
+      margin: const EdgeInsets.all(7),
+      padding: const EdgeInsets.all(10),
+      textStyle: context.textTheme.bodyLarge?.copyWith(
+        fontSize: 20,
+        fontWeight: FontWeight.w600,
+        color: Colors.black
+      ),
+      decoration: BoxDecoration(
+        color: Colors.grey[300],
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(
+          color: const Color(0xFFE8ECF4)
+        ),
+      ),
+    );
+    final focusedPinTheme = defaultPinTheme.copyWith(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: Color(0xFF129575)),
+      ),
+    );
+
+    final submittedPinTheme = defaultPinTheme.copyWith(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: Color(0xFF129575),),
+      ),
+    );
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -19,111 +59,106 @@ class _ForgotpasswordScreenState extends State<ForgotpasswordScreen> {
         backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            context.pop();
           },
           icon: const Icon(Icons.arrow_back_ios_sharp,
-              color: Colors.black, size: 25,),
+          color: Colors.black,),
         ),
       ),
-
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 35.0),
+        padding: const EdgeInsets.symmetric(horizontal: 30.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 140,
-            ),
-            const Row(
-              children: [
-                SizedBox(
-                  width: 12,
-                ),
-                Text(
-                  textAlign: TextAlign.start,
-                  'Check your email for a ',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-            const Row(
-              children: [
-                SizedBox(
-                  width: 50,
-                ),
-                Text(
-                  textAlign: TextAlign.start,
-                  ' verification code.',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 60),
-            const Row(
+            const SizedBox(height: 30),
+            Row(
               children: [
                 Text(
-                  textAlign: TextAlign.start,
-                  'Enter Password',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xff121212),
+                  "OTP Verification",
+                  style: context.textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 10),
-            TextField(
-              controller: passwordController,
-              decoration: InputDecoration(
-                labelText: 'Enter Password',
-                labelStyle: const TextStyle(color: Color(0xffD9D9D9)),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.black38),
-                  borderRadius: BorderRadius.circular(12),
-                ),
+            Text(
+              "Enter the verification code we just sent on your email address",
+              style: context.textTheme.bodyLarge?.copyWith(
+                fontSize: 17,
+                fontWeight: FontWeight.w500,
+                color: Colors.grey
               ),
-              obscureText: true,
-              style: const TextStyle(color: Colors.black),
             ),
-            const SizedBox(height: 60),
-            ElevatedButton(
-              onPressed: () {
-                //Navigator.push(
-                //context,
-                // MaterialPageRoute(builder: (context) => ForgotpasswordScreen()),
-                // );
+
+            const SizedBox(height: 40),
+            Pinput(
+              length: 4,
+              defaultPinTheme: defaultPinTheme,
+              focusedPinTheme: focusedPinTheme,
+              submittedPinTheme: submittedPinTheme,
+              keyboardType: TextInputType.number,
+              onCompleted: (pin) {
+                print("Verification Code Entered: $pin");
               },
-              style: ElevatedButton.styleFrom(
-                fixedSize: const Size(355, 60),
-                backgroundColor: const Color(0xFF129575),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 120, vertical: 15),
-              ),
-              child: const Row(
-                children: [
-                  Text(
-                    'Continue',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w700),
+            ),
+            const SizedBox(height: 50),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  //Navigator.push(
+                  //  context,
+                   // MaterialPageRoute(builder: (context) => NewPassword()),
+                 // );
+                },
+                style: ElevatedButton.styleFrom(
+                  fixedSize: const Size(355, 60),
+                  backgroundColor: const Color(0xFF129575),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                ],
+                  padding:
+                  const EdgeInsets.symmetric(horizontal: 100,),
+                ),
+
+                child: Text(
+                  "Continue",
+                  style: context.textTheme.bodyLarge?.copyWith(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white
+                  ),
+                ),
               ),
+            ),
+            const SizedBox(height: 350),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "Didn't received code? ",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 13),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const NewPassword()),
+                    );
+                  },
+                  child: const Text(
+                    'Resend',
+                    style: TextStyle(
+                        color: Color(0xffFF9C00),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 13),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

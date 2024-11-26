@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_recipe/src/feature/splash/screen/forgot_screen.dart';
 import 'package:food_recipe/src/feature/splash/screen/signup_screen.dart';
 
+
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
@@ -114,15 +115,13 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
             const SizedBox(height: 10),
             Row(
-
               children: [
-
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>  const ForgotScreen()),
+                          builder: (context) => const ForgotScreen()),
                     );
                   },
                   child: const Text(
@@ -135,7 +134,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 15),
             ElevatedButton(
               onPressed: () {
                 // Navigator.push(
@@ -150,7 +149,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 120, vertical: 15),
+                    const EdgeInsets.symmetric(horizontal: 110),
               ),
               child: const Row(
                 children: [
@@ -161,7 +160,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         fontSize: 17,
                         fontWeight: FontWeight.w700),
                   ),
-                  SizedBox(width: 37),
+                  SizedBox(width: 15),
                   Icon(
                     Icons.arrow_forward,
                     color: Colors.white,
@@ -170,7 +169,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 15),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 60.0),
               child: Row(
@@ -214,7 +213,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     height: 25,
                   ),
                 ),
-               /* const SizedBox(
+                /* const SizedBox(
                   width: 30,
                 ),
                 MaterialButton(
@@ -247,15 +246,15 @@ class _SignInScreenState extends State<SignInScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>  const SignUpScreen()),
+                          builder: (context) => const SignUpScreen()),
                     );
                   },
                   child: const Text(
                     'Sign Up',
-                      style: TextStyle(
-                      color: Color(0xffFF9C00),
-                      fontWeight: FontWeight.w500,
-                      fontSize: 13),
+                    style: TextStyle(
+                        color: Color(0xffFF9C00),
+                        fontWeight: FontWeight.w500,
+                        fontSize: 13),
                   ),
                 ),
               ],
