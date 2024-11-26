@@ -48,6 +48,7 @@ class _HomeNavigationState extends State<HomeNavigation> {
       ),
     );
   }
+
   void _onItemTapped(int index) {
     widget.navigationShell.goBranch(
       index,
