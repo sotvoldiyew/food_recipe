@@ -229,6 +229,206 @@ class S {
       args: [],
     );
   }
+
+  /// `Send`
+  String get send {
+    return Intl.message(
+      'Send',
+      name: 'send',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profile`
+  String get profile {
+    return Intl.message(
+      'Profile',
+      name: 'profile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recipe`
+  String get recipe {
+    return Intl.message(
+      'Recipe',
+      name: 'recipe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Followers`
+  String get followers {
+    return Intl.message(
+      'Followers',
+      name: 'followers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` More...`
+  String get viewMore {
+    return Intl.message(
+      ' More...',
+      name: 'viewMore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` View Less`
+  String get viewLess {
+    return Intl.message(
+      ' View Less',
+      name: 'viewLess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Profile`
+  String get editProfile {
+    return Intl.message(
+      'Edit Profile',
+      name: 'editProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name`
+  String get name {
+    return Intl.message(
+      'Name',
+      name: 'name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get email {
+    return Intl.message(
+      'Email',
+      name: 'email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Country`
+  String get country {
+    return Intl.message(
+      'Country',
+      name: 'country',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `City`
+  String get city {
+    return Intl.message(
+      'City',
+      name: 'city',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Role`
+  String get role {
+    return Intl.message(
+      'Role',
+      name: 'role',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Description`
+  String get description {
+    return Intl.message(
+      'Description',
+      name: 'description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recipe Link`
+  String get recipeLink {
+    return Intl.message(
+      'Recipe Link',
+      name: 'recipeLink',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copy recipe link and share your recipe link with  friends and family.`
+  String get copyRecipe {
+    return Intl.message(
+      'Copy recipe link and share your recipe link with  friends and family.',
+      name: 'copyRecipe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copy Link`
+  String get copyLink {
+    return Intl.message(
+      'Copy Link',
+      name: 'copyLink',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Text saved to clipboard!`
+  String get textSaved {
+    return Intl.message(
+      'Text saved to clipboard!',
+      name: 'textSaved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upload Image`
+  String get uploadImage {
+    return Intl.message(
+      'Upload Image',
+      name: 'uploadImage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Video Minute`
+  String get videoMin {
+    return Intl.message(
+      'Video Minute',
+      name: 'videoMin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Video Link`
+  String get videoLink {
+    return Intl.message(
+      'Video Link',
+      name: 'videoLink',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

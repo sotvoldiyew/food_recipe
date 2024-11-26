@@ -1,13 +1,12 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:food_recipe/src/common/router/app_router.dart';
 import 'package:food_recipe/src/common/style/app_icons.dart';
 import 'package:food_recipe/src/common/style/app_images.dart';
 import 'package:food_recipe/src/common/utils/context_extention.dart';
-import 'package:go_router/go_router.dart';
-
+import 'package:food_recipe/src/feature/ingrident/bloc/ingrident_bloc.dart';
 class FoodIngrident extends StatefulWidget {
   const FoodIngrident({super.key});
 
@@ -16,7 +15,6 @@ class FoodIngrident extends StatefulWidget {
 }
 
 class _FoodIngridentState extends State<FoodIngrident> {
-  bool isSaved = false;
 
   @override
   Widget build(BuildContext context) {
@@ -71,23 +69,23 @@ class _FoodIngridentState extends State<FoodIngrident> {
                   const SizedBox(
                     width: 10,
                   ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        isSaved = !isSaved;
-                      });
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(6),
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: context.colors.onPrimary,
+                  BlocBuilder<IngridentBloc, IngridentState>(
+                    builder: (BuildContext context, IngridentState state) => InkWell(
+                      onTap: () {
+                        context.read<IngridentBloc>().add(SaveButton$IngridentEvent());
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(6),
+                        height: 30,
+                        width: 30,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: context.colors.onPrimary,
+                        ),
+                        child: state.isSaved
+                            ? SvgPicture.asset(AppIcons.pressedSave)
+                            : SvgPicture.asset(AppIcons.saveIcon),
                       ),
-                      child: isSaved
-                          ? SvgPicture.asset(AppIcons.pressedSave)
-                          : SvgPicture.asset(AppIcons.saveIcon),
                     ),
                   ),
                 ],

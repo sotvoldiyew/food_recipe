@@ -27,6 +27,12 @@ dependencies:
   flutter_svg: ^2.0.14
 
 
+  image_picker: ^1.1.2
+
+  # Rating
+  flutter_rating_bar: ^4.0.0
+
+
   # Internet
   dio: ^5.7.0
   connectivity_plus: ^6.0.5
@@ -39,8 +45,6 @@ dependencies:
   bloc: ^8.1.4
   equatable: ^2.0.5
   provider: ^6.1.2
-
-  flutter_native_splash: ^2.4.2
 
 
 dev_dependencies:

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:food_recipe/src/common/style/app_icons.dart';
 import 'package:food_recipe/src/common/utils/context_extention.dart';
 
 import '../../../common/style/app_images.dart';
@@ -12,7 +10,6 @@ class IngridentItems extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true,
-      // physics: const NeverScrollableScrollPhysics(),
       itemCount: 15,
       itemBuilder: (context, index) => Card(
         elevation: 0,

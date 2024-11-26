@@ -2,14 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:food_recipe/src/common/utils/context_extention.dart';
 import 'package:food_recipe/src/feature/saved/widget/saved_recipe.dart';
 
-class SavedScreen extends StatefulWidget {
+class SavedScreen extends StatelessWidget {
   const SavedScreen({super.key});
 
-  @override
-  State<SavedScreen> createState() => _SavedScreenState();
-}
-
-class _SavedScreenState extends State<SavedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

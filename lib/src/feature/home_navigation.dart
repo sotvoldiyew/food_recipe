@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:food_recipe/src/common/router/app_router.dart';
 import 'package:food_recipe/src/common/utils/context_extention.dart';
 import 'package:go_router/go_router.dart';
 
@@ -20,13 +21,41 @@ class _HomeNavigationState extends State<HomeNavigation> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: widget.navigationShell,
+      floatingActionButton: widget.navigationShell.currentIndex == 3
+          ? Material(
+              elevation: 0,
+              borderRadius: BorderRadius.circular(25),
+              type: MaterialType.transparency,
+              child: InkWell(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () {
+                  context.push(AppRouter.createScreen);
+                },
+                child: ClipOval(
+                  child: SvgPicture.asset(
+                    AppIcons.navCreate,
+                    fit: BoxFit.contain,
+                    width: 44,
+                    height: 44,
+                  ),
+                ),
+              ),
+            )
+          : null,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 10,
         color: context.colors.onPrimary,
-        elevation: 2,
+        elevation: 5,
+        shadowColor: context.colors.primaryContainer,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
+              hoverColor: Colors.transparent,
+              highlightColor: Colors.transparent,
               icon: SvgPicture.asset(
                 width: 27,
                 height: 27,
@@ -37,6 +66,8 @@ class _HomeNavigationState extends State<HomeNavigation> {
               onPressed: () => _onItemTapped(0),
             ),
             IconButton(
+              hoverColor: Colors.transparent,
+              highlightColor: Colors.transparent,
               icon: SvgPicture.asset(
                 width: 27,
                 height: 27,
@@ -47,6 +78,8 @@ class _HomeNavigationState extends State<HomeNavigation> {
               onPressed: () => _onItemTapped(1),
             ),
             IconButton(
+              hoverColor: Colors.transparent,
+              highlightColor: Colors.transparent,
               icon: SvgPicture.asset(
                 width: 27,
                 height: 27,
@@ -57,6 +90,8 @@ class _HomeNavigationState extends State<HomeNavigation> {
               onPressed: () => _onItemTapped(2),
             ),
             IconButton(
+              hoverColor: Colors.transparent,
+              highlightColor: Colors.transparent,
               icon: SvgPicture.asset(
                 width: 27,
                 height: 27,

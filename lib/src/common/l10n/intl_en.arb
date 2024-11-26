@@ -16,6 +16,26 @@
  "rateRecipe": "Rate Recipe",
  "review": "Review",
  "unsave": "Unsave",
- "save": "Save"
+ "save": "Save",
+ "send": "Send",
+ "profile": "Profile",
+ "recipe": "Recipe",
+ "followers": "Followers",
+ "viewMore": " More...",
+ "viewLess": " View Less",
+ "editProfile": "Edit Profile",
+ "name": "Name",
+ "email": "Email",
+ "country": "Country",
+ "city": "City",
+ "role": "Role",
+ "description": "Description",
+ "recipeLink": "Recipe Link",
+ "copyRecipe": "Copy recipe link and share your recipe link with  friends and family.",
+ "copyLink": "Copy Link",
+ "textSaved": "Text saved to clipboard!",
+ "uploadImage": "Upload Image",
+ "videoMin": "Video Minute",
+ "videoLink": "Video Link"
 
 }

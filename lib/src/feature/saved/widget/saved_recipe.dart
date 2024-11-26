@@ -1,12 +1,13 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_recipe/src/common/router/app_router.dart';
 import 'package:food_recipe/src/common/style/app_icons.dart';
 import 'package:food_recipe/src/common/style/app_images.dart';
 import 'package:food_recipe/src/common/utils/context_extention.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../common/bloc/recipe_bloc.dart';
 
 class SavedRecipe extends StatefulWidget {
   const SavedRecipe({super.key});
@@ -16,12 +17,10 @@ class SavedRecipe extends StatefulWidget {
 }
 
 class _SavedRecipeState extends State<SavedRecipe> {
-  bool isSaved = false;
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         context.push(AppRouter.ingrident);
       },
       child: SizedBox(
@@ -86,23 +85,25 @@ class _SavedRecipeState extends State<SavedRecipe> {
                     const SizedBox(
                       width: 10,
                     ),
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          isSaved = !isSaved;
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(6),
-                        height: 30,
-                        width: 30,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: context.colors.onPrimary,
+                    BlocBuilder<RecipeBloc, RecipeState>(
+                      builder: (context, state) => InkWell(
+                        onTap: () {
+                          context
+                              .read<RecipeBloc>()
+                              .add(const SaveButton$RecipeEvent());
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(6),
+                          height: 30,
+                          width: 30,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: context.colors.onPrimary,
+                          ),
+                          child: state.isSaved
+                              ? SvgPicture.asset(AppIcons.pressedSave)
+                              : SvgPicture.asset(AppIcons.saveIcon),
                         ),
-                        child: isSaved
-                            ? SvgPicture.asset(AppIcons.pressedSave)
-                            : SvgPicture.asset(AppIcons.saveIcon),
                       ),
                     ),
                   ],
@@ -113,7 +114,7 @@ class _SavedRecipeState extends State<SavedRecipe> {
                 right: 10,
                 child: SizedBox(
                   height: 15,
-                  width:33,
+                  width: 33,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
                       color: context.colors.onSecondary,
@@ -139,7 +140,7 @@ class _SavedRecipeState extends State<SavedRecipe> {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
