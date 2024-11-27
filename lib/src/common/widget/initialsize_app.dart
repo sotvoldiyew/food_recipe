@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,7 +15,7 @@ class InitializeApp {
 
     final shp = await SharedPreferences.getInstance();
 
-    bool theme = shp.getBool(Constants.theme) ?? false;
+    bool theme = shp.getBool(Constants.theme) ?? true;
     String locale = shp.getString(Constants.locale) ?? "en";
 
 

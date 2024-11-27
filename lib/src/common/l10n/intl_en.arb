@@ -36,6 +36,8 @@
  "textSaved": "Text saved to clipboard!",
  "uploadImage": "Upload Image",
  "videoMin": "Video Minute",
- "videoLink": "Video Link"
+ "videoLink": "Video Link",
 
+  "@@locale": "en",
+  "all": "All"
 }

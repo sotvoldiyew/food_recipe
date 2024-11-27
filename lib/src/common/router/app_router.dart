@@ -10,11 +10,17 @@ import 'package:food_recipe/src/feature/profile/screen/profile_screen.dart';
 import 'package:food_recipe/src/feature/profile/widget/see_followers.dart';
 import 'package:food_recipe/src/feature/saved/bloc/saved_bloc.dart';
 import 'package:food_recipe/src/feature/saved/screen/saved_screen.dart';
+import 'package:food_recipe/src/feature/reviews/screen/review.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../feature/create/screen/create_screen.dart';
 import '../../feature/home_navigation.dart';
 import '../../feature/profile/bloc/profile_bloc.dart';
+import '../../feature/home/screen/home_navigation.dart';
+import '../../feature/main/screen/main_screen.dart';
+import '../../feature/search/screen/search_screen.dart';
+
+// import '../../feature/screens/welcome/screen/welcome_screen.dart';
 
 class AppRouter {
   const AppRouter._();
@@ -25,6 +31,7 @@ class AppRouter {
   static const String notification = "/notification";
   static const String profile = "/profile";
   static const String saved = "/saved";
+  static const String search = "/search";
   static const String ingrident = "/ingrident";
   static const String profileTapBar = "/profileTapBar";
   static const String editProfile = "/editProfile";
@@ -42,6 +49,8 @@ GoRouter router = GoRouter(
   initialLocation: AppRouter.home,
   routes: [
     GoRoute(
+      path: AppRouter.search,
+      name: AppRouter.search,
       path: AppRouter.ingrident,
       name: AppRouter.ingrident,
       pageBuilder: (context, state) => CustomTransitionPage(
@@ -63,6 +72,9 @@ GoRouter router = GoRouter(
       name: AppRouter.editProfile,
       pageBuilder: (context, state) => CustomTransitionPage(
         key: state.pageKey,
+        child: SearchScreen(
+          allRecipes: state.extra as List<Map<String, Object?>>,
+        ),
         child: BlocProvider(create: (BuildContext context) => EditProfileBloc(),
         child: const EditProfile()),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -120,7 +132,8 @@ GoRouter router = GoRouter(
             GoRoute(
               path: AppRouter.home,
               pageBuilder: (context, state) => const NoTransitionPage(
-                  child: Scaffold(body: Center(child: Text("Home")))),
+                child: MainScreen(),
+              ),
               routes: const [],
             ),
           ],
@@ -128,6 +141,13 @@ GoRouter router = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
+              path: AppRouter.notification,
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: ReviewsPage(),
+                // Scaffold(body: Center(child: Text(""))),
+              ),
+              routes: const [],
+            ),
               path: AppRouter.saved,
               pageBuilder: (context, state) => NoTransitionPage(
                 child: MultiBlocProvider(
@@ -148,6 +168,13 @@ GoRouter router = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
+              path: AppRouter.saved,
+              pageBuilder: (context, state) => const NoTransitionPage(
+                  child: Scaffold(
+                body: Center(
+                  child: Text("Saved"),
+                ),
+              )),
               path: AppRouter.notification,
               pageBuilder: (context, state) => const NoTransitionPage(
                   child: Scaffold(

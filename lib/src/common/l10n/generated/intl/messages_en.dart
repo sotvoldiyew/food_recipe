@@ -63,4 +63,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewLess": MessageLookupByLibrary.simpleMessage(" View Less"),
         "viewMore": MessageLookupByLibrary.simpleMessage(" More...")
       };
+  static Map<String, Function> _notInlinedMessages(_) =>
+      <String, Function>{"all": MessageLookupByLibrary.simpleMessage("All")};
 }

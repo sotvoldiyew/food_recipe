@@ -27,8 +27,6 @@ const ColorScheme lightColorScheme = ColorScheme(
   primaryContainer: Color(0xffebebeb),
   secondary:Color(0xffffad30),
   onSecondary: Color(0xffffe1b3),
-
-
   primaryFixedDim: Color(0xff8cd39d),
   onPrimaryFixed: Color(0xff000902),
   onPrimaryFixedVariant: Color(0xff001b07),
