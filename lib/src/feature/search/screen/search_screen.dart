@@ -28,7 +28,9 @@ class _SearchScreenState extends State<SearchScreen> {
         filteredResults = widget.allRecipes;
       } else {
         filteredResults = widget.allRecipes.where((recipe) {
-          return (recipe["title"] as String).toLowerCase().contains(query.toLowerCase());
+          return (recipe["title"] as String)
+              .toLowerCase()
+              .contains(query.toLowerCase());
         }).toList();
       }
     });
@@ -38,6 +40,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
         elevation: 0,
@@ -45,9 +48,10 @@ class _SearchScreenState extends State<SearchScreen> {
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
+        title: Text(
           "Search recipes",
-          style: TextStyle(color: Colors.black),
+          style: context.textTheme.titleMedium
+              ?.copyWith(fontSize: 18, fontWeight: FontWeight.w600),
         ),
       ),
       backgroundColor: Colors.white,
@@ -59,21 +63,25 @@ class _SearchScreenState extends State<SearchScreen> {
             Row(
               children: [
                 Expanded(
-                  child: TextField(
+                  child: TextFormField(
                     controller: searchController,
                     decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.search, color: context.colors.outlineVariant,),
-                      hintText: "Search recipe",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
-                      ),
-                      fillColor: context.colors.surfaceContainer,
-                      filled: true,
-                      hintStyle: TextStyle(
-                        color: context.colors.outlineVariant,
-                      )
-                    ),
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: context.colors.outlineVariant,
+                        ),
+                        hintText: "Search recipe",
+                        labelStyle: context.textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.w600),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide.none,
+                        ),
+                        fillColor: context.colors.surfaceContainer,
+                        filled: true,
+                        hintStyle: TextStyle(
+                          color: context.colors.outlineVariant,
+                        )),
                     onChanged: (query) {
                       _searchRecipes(query);
                     },
@@ -83,7 +91,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.green,
+                    color: context.colors.primary,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(Icons.filter_list, color: Colors.white),
@@ -91,17 +99,20 @@ class _SearchScreenState extends State<SearchScreen> {
               ],
             ),
             const SizedBox(height: 24),
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "Search Result",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: context.textTheme.titleMedium
+                      ?.copyWith(fontWeight: FontWeight.w600),
                 ),
-               Text(
-                  "Search Result",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
+                searchController.text == ""
+                    ? const Text("")
+                    : Text(
+                        "255 saved",
+                        style: context.textTheme.labelSmall,
+                      ),
               ],
             ),
             const SizedBox(height: 8),
@@ -122,7 +133,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
-                  childAspectRatio: .9, // balandlikni katta yoki kichiklashtirish
+                  childAspectRatio:
+                      .9, // balandlikni katta yoki kichiklashtirish
                 ),
               ),
             ),

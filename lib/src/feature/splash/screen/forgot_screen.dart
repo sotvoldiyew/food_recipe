@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_recipe/src/common/utils/context_extention.dart';
 import 'package:food_recipe/src/feature/splash/screen/forgotPassword_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -28,37 +29,25 @@ class _ForgotScreenState extends State<ForgotScreen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 35.0),
-        child: Column(
+        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
               height: 140,
             ),
-            const Row(
-              children: [
-                Text(
-                  textAlign: TextAlign.start,
-                  'Find your account',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
+            Text(
+              textAlign: TextAlign.start,
+              'Find your account',
+              style: context.textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
             ),
-            const Row(
-              children: [
-                Text(
-                  textAlign: TextAlign.start,
-                  'Enter your email address.',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xff121212),
-                  ),
-                ),
-              ],
+            Text(
+              textAlign: TextAlign.start,
+              'Enter your email address',
+              style: context.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
             ),
             const SizedBox(height: 60),
             const Row(
@@ -91,33 +80,29 @@ class _ForgotScreenState extends State<ForgotScreen> {
               obscureText: false,
               style: const TextStyle(color: Colors.black),
             ),
-            const SizedBox(height: 60),
+            const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => VerificationCodeScreen(email: "email")),
+                  MaterialPageRoute(builder: (context) => const VerificationCodeScreen(email: "email")),
                 );
               },
               style: ElevatedButton.styleFrom(
-                fixedSize: const Size(355, 60),
+                fixedSize: const Size(double.infinity, 50),
                 backgroundColor: const Color(0xFF129575),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                padding:
-                const EdgeInsets.symmetric(horizontal: 120, vertical: 15),
               ),
-              child: const Row(
-                children: [
-                  Text(
-                    'Continue',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ],
+              child: const Center(
+                child: Text(
+                  'Continue',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w700),
+                ),
               ),
             ),
           ],

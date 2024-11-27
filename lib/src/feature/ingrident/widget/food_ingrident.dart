@@ -43,7 +43,7 @@ class _FoodIngridentState extends State<FoodIngrident> {
                 ),
               ),
             ),
-            Positioned(
+            const Positioned(
               bottom: 10,
               left: 10,
               right: 10,
@@ -72,7 +72,7 @@ class _FoodIngridentState extends State<FoodIngrident> {
                   BlocBuilder<IngridentBloc, IngridentState>(
                     builder: (BuildContext context, IngridentState state) => InkWell(
                       onTap: () {
-                        context.read<IngridentBloc>().add(SaveButton$IngridentEvent());
+                        context.read<IngridentBloc>().add(const SaveButton$IngridentEvent());
                       },
                       child: Container(
                         padding: const EdgeInsets.all(6),

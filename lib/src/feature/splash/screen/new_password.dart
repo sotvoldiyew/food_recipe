@@ -33,19 +33,15 @@ class _NewPasswordState extends State<NewPassword> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        padding: const EdgeInsets.symmetric(horizontal: 25.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 30),
-            Row(
-              children: [
-                Text(
-                  "Create new password",
-                  style: context.textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.w700, color: Colors.black),
-                ),
-              ],
+            Text(
+              "Create new password",
+              style: context.textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w700,),
             ),
             const SizedBox(height: 10),
             Text(
@@ -127,13 +123,11 @@ class _NewPasswordState extends State<NewPassword> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  fixedSize: const Size(355, 60),
+                  fixedSize: const Size(double.infinity, 50),
                   backgroundColor: const Color(0xFF129575),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 100,),
                 ),
                 child: Text(
                   "Reset Password",

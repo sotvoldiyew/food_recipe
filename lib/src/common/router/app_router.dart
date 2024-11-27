@@ -15,9 +15,8 @@ import 'package:food_recipe/src/feature/splash/screen/notifications_screen.dart'
 import 'package:go_router/go_router.dart';
 
 import '../../feature/create/screen/create_screen.dart';
-import '../../feature/home_navigation.dart';
 import '../../feature/profile/bloc/profile_bloc.dart';
-import '../../feature/home/screen/home_navigation.dart';
+import '../../../home_navigation.dart';
 import '../../feature/main/screen/main_screen.dart';
 import '../../feature/search/screen/search_screen.dart';
 
@@ -42,6 +41,7 @@ class AppRouter {
   static const String profileTapBar = "/profileTapBar";
   static const String editProfile = "/editProfile";
   static const String createScreen = "/createScreen";
+  static const String review = "/review";
 }
 
 final GlobalKey<NavigatorState> _shellNavigatorKey =
@@ -52,11 +52,23 @@ late StatefulNavigationShell navigationShell2;
 
 GoRouter router = GoRouter(
   navigatorKey: appNavigatorKey,
-  initialLocation: AppRouter.home,
+  initialLocation: AppRouter.signIn,
   routes: [
     GoRoute(
-      path: AppRouter.search,
-      name: AppRouter.search,
+      path: AppRouter.welcome,
+      name: AppRouter.welcome,
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const WelcomeScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      ),
+    ),
+    GoRoute(
       path: AppRouter.ingrident,
       name: AppRouter.ingrident,
       pageBuilder: (context, state) => CustomTransitionPage(
@@ -74,15 +86,11 @@ GoRouter router = GoRouter(
       ),
     ),
     GoRoute(
-      path: AppRouter.editProfile,
-      name: AppRouter.editProfile,
+      path: AppRouter.search,
       pageBuilder: (context, state) => CustomTransitionPage(
-        key: state.pageKey,
         child: SearchScreen(
           allRecipes: state.extra as List<Map<String, Object?>>,
         ),
-        child: BlocProvider(create: (BuildContext context) => EditProfileBloc(),
-        child: const EditProfile()),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
             opacity: animation,
@@ -91,14 +99,30 @@ GoRouter router = GoRouter(
         },
       ),
     ),
-
+    GoRoute(
+      path: AppRouter.editProfile,
+      name: AppRouter.editProfile,
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: BlocProvider(
+            create: (BuildContext context) => EditProfileBloc(),
+            child: const EditProfile()),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      ),
+    ),
     GoRoute(
       path: AppRouter.createScreen,
       name: AppRouter.createScreen,
       pageBuilder: (context, state) => CustomTransitionPage(
         key: state.pageKey,
-        child:  BlocProvider(create: (BuildContext context) => CreateBloc(),
-        child: const CreateScreen()),
+        child: BlocProvider(
+            create: (BuildContext context) => CreateBloc(),
+            child: const CreateScreen()),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
             opacity: animation,
@@ -107,7 +131,6 @@ GoRouter router = GoRouter(
         },
       ),
     ),
-
     GoRoute(
       path: AppRouter.profileTapBar,
       name: AppRouter.profileTapBar,
@@ -130,7 +153,7 @@ GoRouter router = GoRouter(
       name: AppRouter.signIn,
       pageBuilder: (context, state) => CustomTransitionPage(
         key: state.pageKey,
-        child:  const SignInScreen(),
+        child: const SignInScreen(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
             opacity: animation,
@@ -144,7 +167,7 @@ GoRouter router = GoRouter(
       name: AppRouter.signup,
       pageBuilder: (context, state) => CustomTransitionPage(
         key: state.pageKey,
-        child:  const SignUpScreen(),
+        child: const SignUpScreen(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
             opacity: animation,
@@ -154,11 +177,11 @@ GoRouter router = GoRouter(
       ),
     ),
     GoRoute(
-      path: AppRouter.notification,
-      name: AppRouter.notification,
+      path: AppRouter.review,
+      name: AppRouter.review,
       pageBuilder: (context, state) => CustomTransitionPage(
         key: state.pageKey,
-        child:   NotificationsScreen(),
+        child: const ReviewsPage(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
             opacity: animation,
@@ -167,8 +190,6 @@ GoRouter router = GoRouter(
         },
       ),
     ),
-
-
     StatefulShellRoute.indexedStack(
       parentNavigatorKey: appNavigatorKey,
       builder: (context, state, navigationShell) {
@@ -191,14 +212,8 @@ GoRouter router = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: AppRouter.notification,
-              pageBuilder: (context, state) => const NoTransitionPage(
-                child: ReviewsPage(),
-                // Scaffold(body: Center(child: Text(""))),
-              ),
-              routes: const [],
-            ),
               path: AppRouter.saved,
+              name: AppRouter.saved,
               pageBuilder: (context, state) => NoTransitionPage(
                 child: MultiBlocProvider(
                   providers: [
@@ -212,26 +227,18 @@ GoRouter router = GoRouter(
                   child: const SavedScreen(),
                 ),
               ),
-            )
+              routes: const [],
+            ),
           ],
         ),
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: AppRouter.saved,
-              pageBuilder: (context, state) => const NoTransitionPage(
-                  child: Scaffold(
-                body: Center(
-                  child: Text("Saved"),
-                ),
-              )),
               path: AppRouter.notification,
+              name: AppRouter.notification,
               pageBuilder: (context, state) => const NoTransitionPage(
-                  child: Scaffold(
-                body: Center(
-                  child: Text("Natficasion"),
-                ),
-              )),
+                child: NotificationsScreen(),
+              ),
               routes: const [],
             ),
           ],

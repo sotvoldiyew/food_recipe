@@ -4,7 +4,8 @@ import 'package:food_recipe/src/common/router/app_router.dart';
 import 'package:food_recipe/src/common/utils/context_extention.dart';
 import 'package:go_router/go_router.dart';
 
-import '../common/style/app_icons.dart';
+import 'src/common/style/app_icons.dart';
+
 
 class HomeNavigation extends StatefulWidget {
   const HomeNavigation({super.key, required this.navigationShell});

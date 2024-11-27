@@ -3,7 +3,6 @@ import 'package:food_recipe/src/common/utils/context_extention.dart';
 import 'package:food_recipe/src/feature/splash/screen/new_password.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pinput/pinput.dart';
-import '../../../common/style/app_icons.dart';
 
 class VerificationCodeScreen extends StatefulWidget {
   final String email;
@@ -41,7 +40,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: Color(0xFF129575)),
+        border: Border.all(color: const Color(0xFF129575)),
       ),
     );
 
@@ -49,7 +48,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: Color(0xFF129575),),
+        border: Border.all(color: const Color(0xFF129575),),
       ),
     );
     return Scaffold(
@@ -71,16 +70,11 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 30),
-            Row(
-              children: [
-                Text(
-                  "OTP Verification",
-                  style: context.textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black
-                  ),
-                ),
-              ],
+            Text(
+              "OTP Verification",
+              style: context.textTheme.headlineMedium?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
             ),
             const SizedBox(height: 10),
             Text(
@@ -113,26 +107,25 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                  // );
                 },
                 style: ElevatedButton.styleFrom(
-                  fixedSize: const Size(355, 60),
+                  fixedSize: const Size(double.infinity, 50),
                   backgroundColor: const Color(0xFF129575),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 100,),
                 ),
 
-                child: Text(
-                  "Continue",
-                  style: context.textTheme.bodyLarge?.copyWith(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white
+                child: Center(
+                  child: Text(
+                    "Continue",
+                    style: context.textTheme.bodyLarge?.copyWith(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 350),
+            ),const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -160,6 +153,7 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                 ),
               ],
             ),
+            const SizedBox(height: 15),
           ],
         ),
       ),

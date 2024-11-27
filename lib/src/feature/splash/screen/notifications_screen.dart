@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:food_recipe/home_navigation.dart';
+import 'package:food_recipe/src/common/utils/context_extention.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
@@ -70,15 +72,15 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.add_circle, size: 40), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
-        ],
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: const [
+      //     BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
+      //     BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: ''),
+      //     BottomNavigationBarItem(icon: Icon(Icons.add_circle, size: 40), label: ''),
+      //     BottomNavigationBarItem(icon: Icon(Icons.notifications), label: ''),
+      //     BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
+      //   ],
+      // ),
     );
   }
 }
@@ -95,16 +97,16 @@ class FilterButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.green : Colors.transparent,
-          borderRadius: BorderRadius.circular(20.0),
+          color: isSelected ? context.colors.primary : Colors.transparent,
+          borderRadius: BorderRadius.circular(12.0),
         ),
         child: Text(
           text,
           style: TextStyle(
-            color: isSelected ? Colors.white : Colors.black,
-            fontWeight: FontWeight.bold,
+            color: isSelected ? context.colors.onPrimary : context.colors.primary,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
@@ -125,11 +127,11 @@ class NotificationTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(notification['description'] ?? ''),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           Text(notification['time'] ?? ''),
         ],
       ),
-      trailing: Icon(Icons.notifications),
+      trailing: const Icon(Icons.notifications),
       isThreeLine: true,
     );
   }

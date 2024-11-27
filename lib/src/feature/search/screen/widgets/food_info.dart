@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:food_recipe/src/common/style/app_icons.dart';
 import 'package:food_recipe/src/common/utils/context_extention.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../../common/router/app_router.dart';
 
 class SavedRecipe extends StatelessWidget {
   const SavedRecipe({
@@ -19,7 +24,7 @@ class SavedRecipe extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // context.push(AppRouter.ingrident);
+        context.push(AppRouter.ingrident);
       },
       child: SizedBox(
         child: ClipRRect(
@@ -61,10 +66,10 @@ class SavedRecipe extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    // const SizedBox(height: 4),
                     Text(
                       byName,
-                      style: context.textTheme.bodySmall?.copyWith(
+                      style: context.textTheme.labelSmall?.copyWith(
                         color: context.colors.outline,
                         fontWeight: FontWeight.w300,
                       ),
@@ -89,7 +94,10 @@ class SavedRecipe extends StatelessWidget {
                         ),
                         child: Row(
                           children: [
-                            const Icon(Icons.star, size: 12),
+                            SvgPicture.asset(
+                              AppIcons.star,
+                              width: 10,
+                            ),
                             const SizedBox(width: 4),
                             Text(
                               reputation.toString(),

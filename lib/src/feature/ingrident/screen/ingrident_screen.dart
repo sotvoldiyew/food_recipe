@@ -255,6 +255,9 @@ class _IngridentScreenState extends State<IngridentScreen> {
                             ),
                           ),
                           PopupMenuItem<SampleItem>(
+                            onTap: () {
+                              context.push(AppRouter.review);
+                            },
                             value: SampleItem.itemThree,
                             child: Row(
                               children: [
@@ -295,13 +298,14 @@ class _IngridentScreenState extends State<IngridentScreen> {
                         maxLines: 2,
                         overflow: TextOverflow.clip,
                       ),
-                    ),Text(
-                        "(13${context.lang.foodReviews})",
-                        style: context.textTheme.titleSmall?.copyWith(
-                          color: Colors.black45,
-                        ),
+                    ),
+                    Text(
+                      "(13${context.lang.foodReviews})",
+                      style: context.textTheme.titleSmall?.copyWith(
+                        color: Colors.black45,
                       ),
-                   ],
+                    ),
+                  ],
                 ),
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 15)),

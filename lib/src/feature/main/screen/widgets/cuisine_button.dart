@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_recipe/src/common/utils/context_extention.dart';
 
 class CuisineButton extends StatelessWidget {
   final String label;
@@ -20,14 +21,14 @@ class CuisineButton extends StatelessWidget {
         margin: const EdgeInsets.only(right: 12),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.green : Colors.grey[200],
+          color: isSelected ? context.colors.primary : context.colors.onPrimary,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Text(
           label,
           style: TextStyle(
-            color: isSelected ? Colors.white : Colors.black,
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            color: isSelected ? Colors.white : context.colors.primary,
+            fontWeight:  FontWeight.w600,
           ),
         ),
       ),
