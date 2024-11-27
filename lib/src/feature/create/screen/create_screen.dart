@@ -13,17 +13,11 @@ class CreateScreen extends StatefulWidget {
 }
 
 class _CreateScreenState extends State<CreateScreen> {
-
   late TextEditingController _videoLinkController;
   late TextEditingController _nameController;
   late TextEditingController _videoMinController;
   final List<TextEditingController> _ingredientControllers = [];
   final List<TextEditingController> _stepControllers = [];
-
-
-
-
-
 
   @override
   void initState() {
@@ -47,7 +41,6 @@ class _CreateScreenState extends State<CreateScreen> {
     super.dispose();
   }
 
-
   void _addIngredient() {
     setState(() {
       _ingredientControllers.add(TextEditingController());
@@ -60,17 +53,15 @@ class _CreateScreenState extends State<CreateScreen> {
     });
   }
 
-
-
   void _submitRecipe() {
-    final List<String> ingredients =
-    _ingredientControllers.map((controller) => controller.text.trim()).toList();
+    final List<String> ingredients = _ingredientControllers
+        .map((controller) => controller.text.trim())
+        .toList();
     final List<String> steps =
-    _stepControllers.map((controller) => controller.text.trim()).toList();
+        _stepControllers.map((controller) => controller.text.trim()).toList();
 
     ingredients.removeWhere((ingredient) => ingredient.isEmpty);
     steps.removeWhere((step) => step.isEmpty);
-
   }
 
   @override
@@ -90,8 +81,10 @@ class _CreateScreenState extends State<CreateScreen> {
             children: [
               BlocBuilder<CreateBloc, CreateState>(
                 builder: (context, state) => GestureDetector(
-                  onTap: (){
-                    context.read<CreateBloc>().add(const ImagePicker$CreateEvent());
+                  onTap: () {
+                    context
+                        .read<CreateBloc>()
+                        .add(const ImagePicker$CreateEvent());
                   },
                   child: Container(
                     height: 170,
@@ -102,27 +95,32 @@ class _CreateScreenState extends State<CreateScreen> {
                     ),
                     child: state.selectedImage != null
                         ? ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.file(
-                        File(state.selectedImage!.path),
-                        fit: BoxFit.cover,
-                      ),
-                    )
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.file(
+                              File(state.selectedImage!.path),
+                              fit: BoxFit.cover,
+                            ),
+                          )
                         : Center(
-                      child: Text(
-                        "Upload Image",
-                        style: TextStyle(color: Colors.grey[600]),
-                      ),
-                    ),
+                            child: Text(
+                              "Upload Image",
+                              style: TextStyle(color: Colors.grey[600]),
+                            ),
+                          ),
                   ),
                 ),
               ),
               const SizedBox(height: 16),
-              MyTextFild(controller: _nameController, labelName: context.lang.name),
+              MyTextFild(
+                  controller: _nameController, labelName: context.lang.name),
               const SizedBox(height: 16),
-              MyTextFild(controller: _videoLinkController, labelName: context.lang.videoLink),
+              MyTextFild(
+                  controller: _videoLinkController,
+                  labelName: context.lang.videoLink),
               const SizedBox(height: 16),
-              MyTextFild(controller: _videoMinController, labelName: context.lang.videoMin),
+              MyTextFild(
+                  controller: _videoMinController,
+                  labelName: context.lang.videoMin),
               const SizedBox(height: 16),
               BlocBuilder<CreateBloc, CreateState>(
                 builder: (context, state) => GestureDetector(
@@ -136,7 +134,8 @@ class _CreateScreenState extends State<CreateScreen> {
                             return ListTile(
                               title: Text(category),
                               trailing: state.selectedCategory == category
-                                  ? Icon(Icons.check, color: Theme.of(context).primaryColor)
+                                  ? Icon(Icons.check,
+                                      color: Theme.of(context).primaryColor)
                                   : null,
                               onTap: () => Navigator.pop(context, category),
                             );
@@ -148,12 +147,14 @@ class _CreateScreenState extends State<CreateScreen> {
                     // Agar kategoriya tanlangan bo‘lsa, BLoC ga yuboriladi
                     if (selected != null) {
                       context.read<CreateBloc>().add(
-                        CategorySelecter$CreateEvent(selectedCategory: selected),
-                      );
+                            CategorySelecter$CreateEvent(
+                                selectedCategory: selected),
+                          );
                     }
                   },
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 12),
                     decoration: BoxDecoration(
                       color: Colors.grey[200],
                       borderRadius: BorderRadius.circular(8),
@@ -164,7 +165,9 @@ class _CreateScreenState extends State<CreateScreen> {
                         Text(
                           state.selectedCategory ?? "Select Category",
                           style: TextStyle(
-                            color: state.selectedCategory == null ? Colors.grey : Colors.black,
+                            color: state.selectedCategory == null
+                                ? Colors.grey
+                                : Colors.black,
                           ),
                         ),
                         const Icon(Icons.arrow_drop_down),
@@ -173,9 +176,9 @@ class _CreateScreenState extends State<CreateScreen> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 16),
-              _buildDynamicList("Ingredients", _ingredientControllers, _addIngredient),
+              _buildDynamicList(
+                  "Ingredients", _ingredientControllers, _addIngredient),
               const SizedBox(height: 16),
               _buildDynamicList("Steps", _stepControllers, _addStep),
               const SizedBox(height: 24),
@@ -193,14 +196,15 @@ class _CreateScreenState extends State<CreateScreen> {
   }
 
   Widget _buildDynamicList(
-      String title,
-      List<TextEditingController> controllers,
-      VoidCallback onAdd,
-      ) {
+    String title,
+    List<TextEditingController> controllers,
+    VoidCallback onAdd,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        Text(title,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         const SizedBox(height: 8),
         ListView.builder(
           shrinkWrap: true,
@@ -208,17 +212,40 @@ class _CreateScreenState extends State<CreateScreen> {
           itemCount: controllers.length + 1,
           itemBuilder: (context, index) {
             if (index == controllers.length) {
-              return ElevatedButton(
+              return MaterialButton(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                height: 50,
+                minWidth: 10,
+                color: context.colors.primary,
                 onPressed: onAdd,
-                child: Text("Add $title"),
+                child: Text("Add $title", style: context.textTheme.labelMedium?.copyWith(color: context.colors.onPrimary),),
               );
             }
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: TextFormField(
+
                 controller: controllers[index],
                 decoration: InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: context.colors.primary,
+                      width: 2,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: Colors.grey.shade300,
+                      width: 1.5,
+                    ),
+                  ),
+                  filled: true,
+                  fillColor: context.colors.primaryContainer,
                   labelText: "$title ${index + 1}",
+                  labelStyle: context.textTheme.titleMedium
+                      ?.copyWith(color: Colors.grey.shade400),
                   border: const OutlineInputBorder(),
                 ),
               ),
