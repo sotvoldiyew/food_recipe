@@ -14,7 +14,8 @@ dependencies:
 
 
   cupertino_icons: ^1.0.8
-  flutter_svg: ^2.0.15
+  pinput: ^2.2.31
+
 
   # Localizations
   flutter_localizations:
@@ -55,10 +56,11 @@ dev_dependencies:
   flutter_lints: ^4.0.0
 
 flutter:
-  uses-material-design: true
-
   assets:
     - assets/images/
+    - assets/icons/
+
+  uses-material-design: true
 
   fonts:
       - family: Poppins

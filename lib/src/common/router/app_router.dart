@@ -11,6 +11,7 @@ import 'package:food_recipe/src/feature/profile/widget/see_followers.dart';
 import 'package:food_recipe/src/feature/saved/bloc/saved_bloc.dart';
 import 'package:food_recipe/src/feature/saved/screen/saved_screen.dart';
 import 'package:food_recipe/src/feature/reviews/screen/review.dart';
+import 'package:food_recipe/src/feature/splash/screen/notifications_screen.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../feature/create/screen/create_screen.dart';
@@ -21,11 +22,16 @@ import '../../feature/main/screen/main_screen.dart';
 import '../../feature/search/screen/search_screen.dart';
 
 // import '../../feature/screens/welcome/screen/welcome_screen.dart';
+import '../../feature/splash/screen/login_screen.dart';
+import '../../feature/splash/screen/signup_screen.dart';
+import '../../feature/splash/screen/splash_screen.dart';
 
 class AppRouter {
   const AppRouter._();
 
   static const String welcome = "/welcome";
+  static const String signIn = "/signIn";
+  static const String signup = "/signup";
   static const String main = "/main";
   static const String home = "/home";
   static const String notification = "/notification";
@@ -119,6 +125,50 @@ GoRouter router = GoRouter(
         },
       ),
     ),
+    GoRoute(
+      path: AppRouter.signIn,
+      name: AppRouter.signIn,
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child:  const SignInScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      ),
+    ),
+    GoRoute(
+      path: AppRouter.signup,
+      name: AppRouter.signup,
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child:  const SignUpScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      ),
+    ),
+    GoRoute(
+      path: AppRouter.notification,
+      name: AppRouter.notification,
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child:   NotificationsScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+      ),
+    ),
+
+
     StatefulShellRoute.indexedStack(
       parentNavigatorKey: appNavigatorKey,
       builder: (context, state, navigationShell) {
