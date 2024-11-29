@@ -11,7 +11,7 @@ class AppTheme {
 
   static ThemeData dark = ThemeData(
     useMaterial3: true,
-    colorScheme: darkColorScheme,
+    colorScheme: lightColorScheme,
     fontFamily: "Poppins",
   );
 }
