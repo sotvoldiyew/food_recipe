@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_recipe/src/feature/splash/screen/notifications_screen.dart';
+import 'package:food_recipe/src/feature/notification/screen/notifications_screen.dart';
 import 'package:go_router/go_router.dart';
 import '../../feature/home_navigation.dart';
 import '../../feature/splash/screen/login_screen.dart';
@@ -75,7 +75,7 @@ GoRouter router = GoRouter(
       name: AppRouter.notification,
       pageBuilder: (context, state) => CustomTransitionPage(
         key: state.pageKey,
-        child:   NotificationsScreen(),
+        child:   const NotificationsScreen(),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
             opacity: animation,
