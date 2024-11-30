@@ -14,7 +14,8 @@ dependencies:
 
 
   cupertino_icons: ^1.0.8
-  flutter_svg: ^2.0.15
+  pinput: ^2.2.31
+
 
   # Localizations
   flutter_localizations:
@@ -23,6 +24,15 @@ dependencies:
 
   # Storage
   shared_preferences: ^2.3.2
+
+  # Flutter Svg
+  flutter_svg: ^2.0.14
+
+
+  image_picker: ^1.1.2
+
+  # Rating
+  flutter_rating_bar: ^4.0.0
 
 
   # Internet
@@ -38,8 +48,6 @@ dependencies:
   equatable: ^2.0.5
   provider: ^6.1.2
 
-  flutter_native_splash: ^2.4.2
-
 
 dev_dependencies:
   flutter_test:
@@ -52,6 +60,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/icons/
 
   fonts:
       - family: Poppins

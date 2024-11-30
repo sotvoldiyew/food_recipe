@@ -106,7 +106,8 @@ class _ReviewsPageState extends State<ReviewsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Reviews'),
+        scrolledUnderElevation: 0,
+        title:  Text('Reviews', style: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),),
         centerTitle: true,
       ),
       body: Column(
@@ -258,30 +259,17 @@ class _ReviewsPageState extends State<ReviewsPage> {
               GestureDetector(
                 onTap: () {
                   Navigator.pop(context); // Закрыть меню
-                  print('😃');
-                },
-                child: Icon(Icons.star_rounded),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                  print('❤️');
-                },
-                child: Text('❤️', style: TextStyle(fontSize: 24)),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                  print('😂');
-                },
-                child: Text('😂', style: TextStyle(fontSize: 24)),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
                   print('👍');
                 },
-                child: const Text('👍', style: TextStyle(fontSize: 24)),
+                child: Text('👍', style: TextStyle(fontSize: 24)),
+
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                  print('👎');
+                },
+                child: Text('👎', style: TextStyle(fontSize: 24)),
               ),
             ],
           ),

@@ -21,14 +21,14 @@ class CuisineButton extends StatelessWidget {
         margin: const EdgeInsets.only(right: 12),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? context.colors.primary : context.colors.primaryContainer,
+          color: isSelected ? context.colors.primary : context.colors.onPrimary,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Text(
           label,
           style: TextStyle(
-            color: isSelected ? context.colors.onPrimary : context.colors.onPrimaryFixed,
-            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            color: isSelected ? Colors.white : context.colors.primary,
+            fontWeight:  FontWeight.w600,
           ),
         ),
       ),

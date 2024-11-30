@@ -113,6 +113,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         forceMaterialTransparency: true,
         backgroundColor: context.colors.onPrimary,
         elevation: 0,
@@ -239,7 +240,7 @@ class _MainScreenState extends State<MainScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Text(
               "New Recipes",
-              style: context.textTheme.titleLarge?.copyWith(
+              style: context.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
             ),
