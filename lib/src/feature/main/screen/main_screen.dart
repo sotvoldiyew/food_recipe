@@ -114,7 +114,7 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       appBar: AppBar(
         forceMaterialTransparency: true,
-        backgroundColor: Colors.white,
+        backgroundColor: context.colors.onPrimary,
         elevation: 0,
         toolbarHeight: 80,
         title: Column(
@@ -145,7 +145,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: context.colors.onPrimary,
       body: ListView(
         children: [
           const SizedBox(height: 10),
@@ -170,13 +170,13 @@ class _MainScreenState extends State<MainScreen> {
                         color: context.colors.surfaceContainer,
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: const Row(
+                      child:  Row(
                         children: [
-                          Icon(Icons.search, color: Colors.grey),
-                          SizedBox(width: 8),
+                          Icon(Icons.search, color: context.colors.outline),
+                          const SizedBox(width: 8),
                           Text(
                             "Search recipe",
-                            style: TextStyle(color: Colors.grey),
+                            style: TextStyle(color: context.colors.outline),
                           ),
                         ],
                       ),
@@ -187,10 +187,10 @@ class _MainScreenState extends State<MainScreen> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.green,
+                    color: context.colors.primary,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Icon(Icons.filter_list, color: Colors.white),
+                  child: Icon(Icons.filter_list, color: context.colors.onPrimary),
                 ),
               ],
             ),

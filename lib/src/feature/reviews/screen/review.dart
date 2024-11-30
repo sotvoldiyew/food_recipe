@@ -21,27 +21,27 @@ class _ReviewsPageState extends State<ReviewsPage> {
     {
       'name': 'Bella Throne',
       'text': 'Lorem Ipsum dolor sit amet.',
-      'time': '12:30 PM'
+      'time': 'June 12, 2020 - 19:35'
     },
     {
       'name': 'Christopher Oshana',
       'text': 'Consectetur adipiscing elit.',
-      'time': '1:00 PM'
+      'time': 'June 12, 2020 - 19:35'
     },
     {
       'name': 'Kyle Austin',
       'text': 'Sed do eiusmod tempor incididunt.',
-      'time': '2:15 PM'
+      'time': 'June 12, 2020 - 19:35'
     },
     {
       'name': 'Jeniffer Wilson',
       'text': 'Ut labore et dolore magna aliqua.',
-      'time': '3:00 PM'
+      'time': 'June 12, 2020 - 19:35'
     },
     {
       'name': 'Kate Johnson',
       'text': 'Excepteur sint occaecat cupidatat.',
-      'time': '4:30 PM'
+      'time': 'June 12, 2020 - 19:35'
     },
   ];
 
@@ -165,8 +165,8 @@ class _ReviewsPageState extends State<ReviewsPage> {
                               const SizedBox(width: 10),
                               Text(
                                 comment['time']!, // Добавляем время
-                                style: const TextStyle(
-                                    color: Colors.grey, fontSize: 12),
+                                style: TextStyle(
+                                    color: context.colors.outline, fontSize: 12),
                               ),
                             ],
                           ),
@@ -281,7 +281,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
                   Navigator.pop(context);
                   print('👍');
                 },
-                child: Text('👍', style: TextStyle(fontSize: 24)),
+                child: const Text('👍', style: TextStyle(fontSize: 24)),
               ),
             ],
           ),

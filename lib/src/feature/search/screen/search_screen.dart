@@ -39,7 +39,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: context.colors.onPrimary,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),

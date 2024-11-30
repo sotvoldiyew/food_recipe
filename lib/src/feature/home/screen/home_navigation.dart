@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_recipe/src/common/utils/context_extention.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeNavigation extends StatefulWidget {
@@ -22,8 +23,8 @@ class _HomeNavigationState extends State<HomeNavigation> {
         showSelectedLabels: true,
         unselectedFontSize: 8,  // Adjust sizes
         selectedFontSize: 10,
-        unselectedItemColor: Colors.grey,
-        selectedItemColor: Colors.blue,
+        unselectedItemColor: context.colors.outline,
+        selectedItemColor: context.colors.tertiary,
         elevation: 0,
         currentIndex: widget.navigationShell.currentIndex,
         onTap: (index) => _onItemTapped(index),
