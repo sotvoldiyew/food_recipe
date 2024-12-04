@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_recipe/src/common/utils/context_extention.dart';
+import 'package:food_recipe/src/feature/reviews/bloc/review_bloc.dart';
+import 'package:food_recipe/src/feature/reviews/controller/review_controller.dart';
 
 import "package:intl/intl.dart";
 
@@ -10,10 +13,7 @@ class ReviewsPage extends StatefulWidget {
   State<ReviewsPage> createState() => _ReviewsPageState();
 }
 
-class _ReviewsPageState extends State<ReviewsPage> {
-  final TextEditingController _commentController = TextEditingController();
-  bool _hasCommented = false;
-
+class _ReviewsPageState extends State<ReviewsPage> with ReviewController {
   final Map<int, int> likesCount = {}; // Количество лайков
   final Map<int, int> dislikesCount = {}; // Количество дизлайков
   final Map<int, String> userReactions = {}; // Реакция пользователя
@@ -46,7 +46,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
   ];
 
   // Форматируем текущее время
-  String _getCurrentTime() {
+  String _getCurrentTime({String? time}) {
     final now = DateTime.now();
     final formatter =
         DateFormat('MMM d, y - H:mm'); // Формат времени (12:30 PM)
@@ -54,15 +54,14 @@ class _ReviewsPageState extends State<ReviewsPage> {
   }
 
   void _addComment() {
-    if (_commentController.text.isNotEmpty) {
+    if (commentController.text.isNotEmpty) {
       setState(() {
-        _hasCommented = true;
         comments.add({
           'name': 'You', // Ваше имя или идентификатор
-          'text': _commentController.text,
+          'text': commentController.text,
           'time': _getCurrentTime(), // Добавляем текущее время
         });
-        _commentController.clear();
+        commentController.clear();
       });
     }
   }
@@ -107,136 +106,153 @@ class _ReviewsPageState extends State<ReviewsPage> {
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0,
-        title:  Text('Reviews', style: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),),
+        title: Text(
+          'Reviews',
+          style: context.textTheme.titleLarge
+              ?.copyWith(fontWeight: FontWeight.w600),
+        ),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          if (!_hasCommented) // Поле для комментариев доступно только один раз
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _commentController,
-                      decoration: const InputDecoration(
-                        hintText: 'Say something...',
-                        border: OutlineInputBorder(),
+      body: BlocBuilder<ReviewBloc, ReviewState>(
+        builder: (context, state) => Column(
+          children: [
+            if (!state
+                .isCommented) // Поле для комментариев доступно только один раз
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: commentController,
+                        decoration: InputDecoration(
+                          hintText: context.lang.say_something,
+                          border: const OutlineInputBorder(),
+                        ),
                       ),
                     ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.send),
-                    onPressed: _addComment,
-                  ),
-                ],
-              ),
-            ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: comments.length,
-              itemBuilder: (context, index) {
-                final comment = comments[index];
-                return InkWell(
-                  onTapDown: (details) {
-                    _showReactionMenu(context, details.globalPosition);
-                  },
-                  child: ListTile(
-                    title: InkWell(
-                      onTap: () {
-                        print("Nozima");
+                    IconButton(
+                      icon: const Icon(Icons.send),
+                      onPressed: () {
+                        context.read<ReviewBloc>().add(
+                              SendMessage$ReviewEvent(
+                                text: commentController.text,
+                                context: context,
+                              ),
+                            );
                       },
-                      overlayColor: const WidgetStatePropertyAll(Colors.transparent),
-                      child: Row(
+                    ),
+                  ],
+                ),
+              ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: comments.length,
+                itemBuilder: (context, index) {
+                  final comment = comments[index];
+                  return InkWell(
+                    onTapDown: (details) {
+                      _showReactionMenu(context, details.globalPosition);
+                    },
+                    child: ListTile(
+                      title: InkWell(
+                        onTap: () {
+                          print("Nozima");
+                        },
+                        overlayColor:
+                            const WidgetStatePropertyAll(Colors.transparent),
+                        child: Row(
+                          children: [
+                            const CircleAvatar(
+                              radius: 20,
+                            ),
+                            const SizedBox(width: 10),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  comment['name']!,
+                                  style:
+                                      context.textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  comment['time']!, // Добавляем время
+                                  style: TextStyle(
+                                      color: context.colors.outline,
+                                      fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const CircleAvatar(
-                            radius: 20,
-                          ),
-                          const SizedBox(width: 10),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          const SizedBox(height: 10),
+                          Text(comment['text']!),
+                          const SizedBox(height: 10),
+                          Row(
                             children: [
-                              Text(
-                                comment['name']!,
-                                style: context.textTheme.titleMedium?.copyWith(
-                                  fontWeight: FontWeight.w600,
+                              GestureDetector(
+                                onTap: () => _react(index, 'Like'),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.thumb_up,
+                                      color: userReactions[index] == 'Like'
+                                          ? Colors.yellow
+                                          : Colors.grey,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      '${likesCount[index] ?? 0}',
+                                      style: TextStyle(
+                                        color: userReactions[index] == 'Like'
+                                            ? Colors.yellow
+                                            : Colors.grey,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              const SizedBox(width: 10),
-                              Text(
-                                comment['time']!, // Добавляем время
-                                style: TextStyle(
-                                    color: context.colors.outline, fontSize: 12),
+                              const SizedBox(width: 20),
+                              GestureDetector(
+                                onTap: () => _react(index, 'Dislike'),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.thumb_down,
+                                      color: userReactions[index] == 'Dislike'
+                                          ? Colors.yellow
+                                          : Colors.grey,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      '${dislikesCount[index] ?? 0}',
+                                      style: TextStyle(
+                                        color: userReactions[index] == 'Dislike'
+                                            ? Colors.yellow
+                                            : Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
                         ],
                       ),
                     ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 10),
-                        Text(comment['text']!),
-                        const SizedBox(height: 10),
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () => _react(index, 'Like'),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.thumb_up,
-                                    color: userReactions[index] == 'Like'
-                                        ? Colors.yellow
-                                        : Colors.grey,
-                                  ),
-                                  const SizedBox(width: 5),
-                                  Text(
-                                    '${likesCount[index] ?? 0}',
-                                    style: TextStyle(
-                                      color: userReactions[index] == 'Like'
-                                          ? Colors.yellow
-                                          : Colors.grey,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(width: 20),
-                            GestureDetector(
-                              onTap: () => _react(index, 'Dislike'),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.thumb_down,
-                                    color: userReactions[index] == 'Dislike'
-                                        ? Colors.yellow
-                                        : Colors.grey,
-                                  ),
-                                  const SizedBox(width: 5),
-                                  Text(
-                                    '${dislikesCount[index] ?? 0}',
-                                    style: TextStyle(
-                                      color: userReactions[index] == 'Dislike'
-                                          ? Colors.yellow
-                                          : Colors.grey,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -262,7 +278,6 @@ class _ReviewsPageState extends State<ReviewsPage> {
                   print('👍');
                 },
                 child: Text('👍', style: TextStyle(fontSize: 24)),
-
               ),
               GestureDetector(
                 onTap: () {

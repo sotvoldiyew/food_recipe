@@ -430,6 +430,16 @@ class S {
     );
   }
 
+  /// `Say something...`
+  String get say_something {
+    return Intl.message(
+      'Say something...',
+      name: 'say_something',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `All`
   String get all {
     return Intl.message(

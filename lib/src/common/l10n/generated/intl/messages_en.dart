@@ -50,6 +50,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "role": MessageLookupByLibrary.simpleMessage("Role"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "savedRecipes": MessageLookupByLibrary.simpleMessage("Saved Recipes"),
+        "say_something":
+            MessageLookupByLibrary.simpleMessage("Say something..."),
         "send": MessageLookupByLibrary.simpleMessage("Send"),
         "serve": MessageLookupByLibrary.simpleMessage("Serve"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),

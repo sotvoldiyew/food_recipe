@@ -8,6 +8,7 @@ import 'package:food_recipe/src/feature/ingrident/bloc/ingrident_bloc.dart';
 import 'package:food_recipe/src/feature/ingrident/screen/ingrident_screen.dart';
 import 'package:food_recipe/src/feature/profile/screen/profile_screen.dart';
 import 'package:food_recipe/src/feature/profile/widget/see_followers.dart';
+import 'package:food_recipe/src/feature/reviews/bloc/review_bloc.dart';
 import 'package:food_recipe/src/feature/saved/bloc/saved_bloc.dart';
 import 'package:food_recipe/src/feature/saved/screen/saved_screen.dart';
 import 'package:food_recipe/src/feature/reviews/screen/review.dart';
@@ -181,7 +182,10 @@ GoRouter router = GoRouter(
       name: AppRouter.review,
       pageBuilder: (context, state) => CustomTransitionPage(
         key: state.pageKey,
-        child: const ReviewsPage(),
+        child: BlocProvider(
+          create: (BuildContext context) => ReviewBloc(),
+          child: const ReviewsPage(),
+        ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
             opacity: animation,
