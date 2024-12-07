@@ -6,10 +6,10 @@ import 'package:food_recipe/src/common/widget/my_text_fild.dart';
 import 'package:food_recipe/src/feature/create/bloc/create_bloc.dart';
 
 class CreateScreen extends StatefulWidget {
-  const CreateScreen({Key? key}) : super(key: key);
+  const CreateScreen({super.key});
 
   @override
-  _CreateScreenState createState() => _CreateScreenState();
+  State<CreateScreen> createState() => _CreateScreenState();
 }
 
 class _CreateScreenState extends State<CreateScreen> {

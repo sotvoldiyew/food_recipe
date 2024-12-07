@@ -273,7 +273,7 @@ class _IngridentScreenState extends State<IngridentScreen> {
                               children: [
                                 SvgPicture.asset(AppIcons.saveBlack),
                                 const SizedBox(width: 8),
-                                Text(context.lang.unsave),
+                                Text(context.lang.unsaved),
                               ],
                             ),
                           )

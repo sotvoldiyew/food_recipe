@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
@@ -36,10 +37,12 @@ class ApiService {
     if (!await checkConnection()) throw Exception("No Connection");
 
     try {
+      const token = 'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzM1ODMzNzAsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImV4cCI6MTczNjE3NTM3MH0.1ULIaNA3nPeDkmr3ORxo9VBGcJG3af1Bm1v3YgJwOX4';
+
       final requestHeaders = {
         ...?headers,
-        'content-Type':
-        formData != null ? 'multipart/form-data' : 'application/json',
+        'Authorization': 'Bearer $token',
+        'content-Type': formData != null ? 'multipart/form-data' : 'application/json',
       };
 
       final response = await dio.request<Map<String, Object?>?>(path,
@@ -49,6 +52,8 @@ class ApiService {
             method: method.name,
             headers: requestHeaders,
           ));
+
+      log("Response Data: $response");
 
       if (response.statusCode == null ||
           response.statusCode! > 204 ||

@@ -7,7 +7,7 @@
   "foodReviews": "k Reviews",
   "follow": "Follow",
   "following": "Following",
-  "ingrident": "Ingrident",
+  "ingredient": "Ingredient",
   "procedure": "Procedure",
   "serve": "Serve",
   "items": "Items",
@@ -16,7 +16,7 @@
   "share": "Share",
   "rateRecipe": "Rate Recipe",
   "review": "Review",
-  "unsave": "Unsave",
+  "unsaved": "Unsaved",
   "save": "Save",
   "send": "Send",
   "profile": "Profile",
@@ -39,5 +39,10 @@
   "videoMin": "Video Minute",
   "videoLink": "Video Link",
   "say_something": "Say something...",
-  "all": "All"
+  "all": "All",
+  "search_recipe": "Search recipe",
+  "search_result": "Search result",
+  "new_recipes": "New Recipes",
+  "what_cooking": "What are you cooking today?",
+  "no_recipes": "No recipes found"
 }

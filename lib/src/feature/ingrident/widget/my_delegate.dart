@@ -34,7 +34,7 @@ class MyHeaderDelegate extends SliverPersistentHeaderDelegate {
                   : context.colors.onPrimary,
               onPressed: () => onToggle(0),
               child: Text(
-                context.lang.ingrident,
+                context.lang.ingredient,
                 style: context.textTheme.labelLarge?.copyWith(
                   color: isIngrident
                       ? context.colors.onPrimary

@@ -1,7 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:food_recipe/home_navigation.dart';
 import 'package:food_recipe/src/common/router/app_router.dart';
+import 'package:food_recipe/src/common/style/app_images.dart';
 import 'package:food_recipe/src/common/utils/context_extention.dart';
 import 'package:go_router/go_router.dart';
 
@@ -45,15 +46,23 @@ class RecipeCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image.asset(
-                    image,
-                    width: double.infinity,
+                  child: CachedNetworkImage(
+                    imageUrl: image,
+                    errorWidget: (context, url, error) {
+                      return const Center(
+                        child: Image(
+                          image: AssetImage(AppImages.chef),
+                        ),
+                      );
+                    },
+                    placeholder: (context, url) => CircularProgressIndicator(
+                      color: context.colors.onPrimary,
+                    ),
                     fit: BoxFit.cover,
                   ),
                 ),
-                Positioned(
-                  top: 8,
-                  right: 8,
+                Align(
+                  alignment: Alignment.topRight,
                   child: SizedBox(
                     height: 22,
                     width: 40,
@@ -64,15 +73,16 @@ class RecipeCard extends StatelessWidget {
                       ),
                       child: Center(
                         child: Padding(
-                          padding: const EdgeInsets.all(2.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
                           child: Row(
                             children: [
                               SvgPicture.asset(
                                 width: 13,
                                 AppIcons.star,
                               ),
+                              const Expanded(child: SizedBox()),
                               Text(
-                                rating.toString(),
+                                rating.toStringAsFixed(1),
                                 style: context.textTheme.bodySmall
                                     ?.copyWith(fontSize: 10),
                               ),
@@ -92,7 +102,7 @@ class RecipeCard extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
-            const SizedBox(height: 4),
+            const Expanded(child: SizedBox()),
             Row(
               children: [
                 const Icon(Icons.timer, size: 14, color: Colors.grey),

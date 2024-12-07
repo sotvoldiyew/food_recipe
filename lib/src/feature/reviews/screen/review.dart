@@ -277,14 +277,14 @@ class _ReviewsPageState extends State<ReviewsPage> with ReviewController {
                   Navigator.pop(context); // Закрыть меню
                   print('👍');
                 },
-                child: Text('👍', style: TextStyle(fontSize: 24)),
+                child: const Text('👍', style: TextStyle(fontSize: 24)),
               ),
               GestureDetector(
                 onTap: () {
                   Navigator.pop(context);
                   print('👎');
                 },
-                child: Text('👎', style: TextStyle(fontSize: 24)),
+                child: const Text('👎', style: TextStyle(fontSize: 24)),
               ),
             ],
           ),

@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:food_recipe/src/common/utils/context_extention.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../common/router/app_router.dart';
+import '../../../../common/style/app_images.dart';
 
 class RecipeCardInfo extends StatelessWidget {
   final String title;
@@ -25,14 +27,13 @@ class RecipeCardInfo extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
-
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent,
         hoverColor: Colors.transparent,
         onTap: () {
           context.push(AppRouter.ingrident);
         },
-        child: Container(
+        child: DecoratedBox(
           decoration: BoxDecoration(
             color: context.colors.onPrimary,
             borderRadius: BorderRadius.circular(12.0),
@@ -52,13 +53,20 @@ class RecipeCardInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 5),
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      overflow: TextOverflow.ellipsis,
+                    Wrap(
+                      children: [
+                        SizedBox(
+                          width: 150,
+                          child: Text(
+                            title,
+                            style: context.textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
+                        )
+                      ],
                     ),
                     const SizedBox(height: 5),
                     const CircleAvatar(
@@ -81,7 +89,6 @@ class RecipeCardInfo extends StatelessWidget {
                       ),
                     ),
                     const Expanded(child: SizedBox()),
-                    const SizedBox(height: 8),
                     Row(
                       children: [
                         Icon(
@@ -108,11 +115,20 @@ class RecipeCardInfo extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                  child: Image.asset(
-                    image,
+                  borderRadius: BorderRadius.circular(12),
+                  child: CachedNetworkImage(
+                    imageUrl: image,
+                    errorWidget: (context, url, error) {
+                      return const Center(
+                        child: Image(
+                          image: AssetImage(AppImages.chef),
+                        ),
+                      );
+                    },
+                    placeholder: (context, url) => CircularProgressIndicator(
+                      color: context.colors.onPrimary,
+                    ),
                     fit: BoxFit.cover,
-                    height: double.infinity,
                   ),
                 ),
               ),

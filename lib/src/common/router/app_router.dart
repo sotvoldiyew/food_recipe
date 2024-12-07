@@ -6,12 +6,14 @@ import 'package:food_recipe/src/feature/edit_profile/bloc/edit_profile_bloc.dart
 import 'package:food_recipe/src/feature/edit_profile/screen/edit_profile.dart';
 import 'package:food_recipe/src/feature/ingrident/bloc/ingrident_bloc.dart';
 import 'package:food_recipe/src/feature/ingrident/screen/ingrident_screen.dart';
+import 'package:food_recipe/src/feature/main/bloc/main_bloc.dart';
 import 'package:food_recipe/src/feature/profile/screen/profile_screen.dart';
 import 'package:food_recipe/src/feature/profile/widget/see_followers.dart';
 import 'package:food_recipe/src/feature/reviews/bloc/review_bloc.dart';
 import 'package:food_recipe/src/feature/saved/bloc/saved_bloc.dart';
 import 'package:food_recipe/src/feature/saved/screen/saved_screen.dart';
 import 'package:food_recipe/src/feature/reviews/screen/review.dart';
+import 'package:food_recipe/src/feature/search/bloc/search_bloc.dart';
 import 'package:food_recipe/src/feature/splash/screen/notifications_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -89,8 +91,11 @@ GoRouter router = GoRouter(
     GoRoute(
       path: AppRouter.search,
       pageBuilder: (context, state) => CustomTransitionPage(
-        child: SearchScreen(
-          allRecipes: state.extra as List<Map<String, Object?>>,
+        child: BlocProvider<SearchBloc>(
+          create: (BuildContext context) => SearchBloc(),
+          child: SearchScreen(
+            allRecipes: state.extra as List<Map<String, Object?>>,
+          ),
         ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
@@ -206,8 +211,15 @@ GoRouter router = GoRouter(
           routes: [
             GoRoute(
               path: AppRouter.home,
-              pageBuilder: (context, state) => const NoTransitionPage(
-                child: MainScreen(),
+              name: AppRouter.home,
+              pageBuilder: (context, state) => NoTransitionPage(
+                child: BlocProvider(
+                  create: (context) => MainBloc()
+                    ..add(
+                      GetAllData$MainEvent(context: context),
+                    ),
+                  child: const MainScreen(),
+                ),
               ),
               routes: const [],
             ),

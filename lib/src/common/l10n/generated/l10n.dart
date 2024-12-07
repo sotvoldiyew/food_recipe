@@ -120,11 +120,11 @@ class S {
     );
   }
 
-  /// `Ingrident`
-  String get ingrident {
+  /// `Ingredient`
+  String get ingredient {
     return Intl.message(
-      'Ingrident',
-      name: 'ingrident',
+      'Ingredient',
+      name: 'ingredient',
       desc: '',
       args: [],
     );
@@ -210,11 +210,11 @@ class S {
     );
   }
 
-  /// `Unsave`
-  String get unsave {
+  /// `Unsaved`
+  String get unsaved {
     return Intl.message(
-      'Unsave',
-      name: 'unsave',
+      'Unsaved',
+      name: 'unsaved',
       desc: '',
       args: [],
     );
@@ -445,6 +445,56 @@ class S {
     return Intl.message(
       'All',
       name: 'all',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search recipe`
+  String get search_recipe {
+    return Intl.message(
+      'Search recipe',
+      name: 'search_recipe',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search result`
+  String get search_result {
+    return Intl.message(
+      'Search result',
+      name: 'search_result',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Recipes`
+  String get new_recipes {
+    return Intl.message(
+      'New Recipes',
+      name: 'new_recipes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `What are you cooking today?`
+  String get what_cooking {
+    return Intl.message(
+      'What are you cooking today?',
+      name: 'what_cooking',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No recipes found`
+  String get no_recipes {
+    return Intl.message(
+      'No recipes found',
+      name: 'no_recipes',
       desc: '',
       args: [],
     );

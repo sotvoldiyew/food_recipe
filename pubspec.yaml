@@ -12,10 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   cupertino_icons: ^1.0.8
   pinput: ^2.2.31
-
 
   # Localizations
   flutter_localizations:
@@ -28,12 +26,12 @@ dependencies:
   # Flutter Svg
   flutter_svg: ^2.0.14
 
-
+  # Image
+  cached_network_image: ^3.4.1
   image_picker: ^1.1.2
 
   # Rating
   flutter_rating_bar: ^4.0.0
-
 
   # Internet
   dio: ^5.7.0

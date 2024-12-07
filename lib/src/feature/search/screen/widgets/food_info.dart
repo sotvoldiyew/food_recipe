@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_recipe/src/common/style/app_icons.dart';
@@ -5,6 +6,7 @@ import 'package:food_recipe/src/common/utils/context_extention.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../common/router/app_router.dart';
+import '../../../../common/style/app_images.dart';
 
 class SavedRecipe extends StatelessWidget {
   const SavedRecipe({
@@ -32,8 +34,22 @@ class SavedRecipe extends StatelessWidget {
           child: Stack(
             children: [
               // Image layer
-              Positioned.fill(
-                child: Image.asset(image, fit: BoxFit.cover),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: CachedNetworkImage(
+                  imageUrl: image,
+                  errorWidget: (context, url, error) {
+                    return const Center(
+                      child: Image(
+                        image: AssetImage(AppImages.chef),
+                      ),
+                    );
+                  },
+                  placeholder: (context, url) => CircularProgressIndicator(
+                    color: context.colors.onPrimary,
+                  ),
+                  fit: BoxFit.cover,
+                ),
               ),
 
               // Gradiant

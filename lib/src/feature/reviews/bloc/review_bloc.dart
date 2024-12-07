@@ -6,7 +6,6 @@ import 'package:food_recipe/src/common/model/comment_model.dart';
 import '../../../common/utils/status_enum.dart';
 
 part 'review_state.dart';
-
 part 'review_event.dart';
 
 class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
@@ -24,7 +23,6 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
     Emitter<ReviewState> emit,
   ) async {
     emit(state.copyWith(status: Status.loading));
-
 
 
     emit(state.copyWith(

@@ -37,10 +37,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "following": MessageLookupByLibrary.simpleMessage("Following"),
         "foodReviews": MessageLookupByLibrary.simpleMessage("k Reviews"),
         "hello": MessageLookupByLibrary.simpleMessage("Hello"),
-        "ingrident": MessageLookupByLibrary.simpleMessage("Ingrident"),
+        "ingredient": MessageLookupByLibrary.simpleMessage("Ingredient"),
         "items": MessageLookupByLibrary.simpleMessage("Items"),
         "min": MessageLookupByLibrary.simpleMessage("min"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
+        "new_recipes": MessageLookupByLibrary.simpleMessage("New Recipes"),
+        "no_recipes": MessageLookupByLibrary.simpleMessage("No recipes found"),
         "procedure": MessageLookupByLibrary.simpleMessage("Procedure"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "rateRecipe": MessageLookupByLibrary.simpleMessage("Rate Recipe"),
@@ -52,6 +54,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "savedRecipes": MessageLookupByLibrary.simpleMessage("Saved Recipes"),
         "say_something":
             MessageLookupByLibrary.simpleMessage("Say something..."),
+        "search_recipe": MessageLookupByLibrary.simpleMessage("Search recipe"),
+        "search_result": MessageLookupByLibrary.simpleMessage("Search result"),
         "send": MessageLookupByLibrary.simpleMessage("Send"),
         "serve": MessageLookupByLibrary.simpleMessage("Serve"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
@@ -59,11 +63,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "steps": MessageLookupByLibrary.simpleMessage("Steps"),
         "textSaved":
             MessageLookupByLibrary.simpleMessage("Text saved to clipboard!"),
-        "unsave": MessageLookupByLibrary.simpleMessage("Unsave"),
+        "unsaved": MessageLookupByLibrary.simpleMessage("Unsaved"),
         "uploadImage": MessageLookupByLibrary.simpleMessage("Upload Image"),
         "videoLink": MessageLookupByLibrary.simpleMessage("Video Link"),
         "videoMin": MessageLookupByLibrary.simpleMessage("Video Minute"),
         "viewLess": MessageLookupByLibrary.simpleMessage(" View Less"),
-        "viewMore": MessageLookupByLibrary.simpleMessage(" More...")
+        "viewMore": MessageLookupByLibrary.simpleMessage(" More..."),
+        "what_cooking":
+            MessageLookupByLibrary.simpleMessage("What are you cooking today?")
       };
 }
