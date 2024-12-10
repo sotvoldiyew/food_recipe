@@ -5,6 +5,7 @@ import 'package:food_recipe/src/feature/reviews/data/review_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../feature/main/data/main_repository.dart';
+import '../../feature/search/data/search_repository.dart';
 import '../constants/constants.dart';
 import '../dependency/dependency.dart';
 import '../service/api_service.dart';
@@ -35,6 +36,7 @@ class InitializeApp {
     /// Repositories
     final reviewRepository = ReviewRepositoryImpl(apiService: apiService);
     final mainRepository = MainRepositoryImpl(apiService: apiService);
+    final searchRepository = SearchRepositoryImpl(apiService: apiService);
 
     return AppDependency(
       locale: locale,
@@ -43,6 +45,7 @@ class InitializeApp {
       dio: dio,
       reviewRepository: reviewRepository,
       mainRepository: mainRepository,
+      searchRepository: searchRepository,
     );
   }
 }

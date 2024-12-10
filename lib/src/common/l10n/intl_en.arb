@@ -44,5 +44,7 @@
   "search_result": "Search result",
   "new_recipes": "New Recipes",
   "what_cooking": "What are you cooking today?",
-  "no_recipes": "No recipes found"
+  "no_recipes": "No recipes found",
+  "recent_search": "Recent Search",
+  "reviews": "Reviews"
 }

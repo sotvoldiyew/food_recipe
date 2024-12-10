@@ -90,12 +90,13 @@ GoRouter router = GoRouter(
     ),
     GoRoute(
       path: AppRouter.search,
+      name: AppRouter.search,
       pageBuilder: (context, state) => CustomTransitionPage(
         child: BlocProvider<SearchBloc>(
-          create: (BuildContext context) => SearchBloc(),
-          child: SearchScreen(
-            allRecipes: state.extra as List<Map<String, Object?>>,
+          create: (BuildContext context) => SearchBloc()..add(
+            GetRecipes$SearchEvent(context: context),
           ),
+          child: const SearchScreen(),
         ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(

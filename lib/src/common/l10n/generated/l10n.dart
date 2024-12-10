@@ -499,6 +499,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Recent Search`
+  String get recent_search {
+    return Intl.message(
+      'Recent Search',
+      name: 'recent_search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reviews`
+  String get reviews {
+    return Intl.message(
+      'Reviews',
+      name: 'reviews',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

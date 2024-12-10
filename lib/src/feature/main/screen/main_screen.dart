@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_recipe/src/common/router/app_router.dart';
-import 'package:food_recipe/src/common/utils/context_extention.dart';
+import 'package:food_recipe/src/common/utils/context_extension.dart';
 import 'package:food_recipe/src/feature/main/screen/widgets/cuisine_button.dart';
 import 'package:food_recipe/src/feature/main/screen/widgets/recipe_card.dart';
 import 'package:food_recipe/src/feature/main/screen/widgets/recipe_card_info.dart';
@@ -9,59 +9,8 @@ import 'package:go_router/go_router.dart';
 
 import '../bloc/main_bloc.dart';
 
-class MainScreen extends StatefulWidget {
+class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
-
-  @override
-  State<MainScreen> createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
-
-  List<Map<String, Object?>> allRecipes = [
-    {
-      "image": "assets/images/recipe1.png",
-      "title": "Classic Greek Salad",
-      "time": "15 Mins",
-      "rating": 4.5,
-      "cuisine": "Greek"
-    },
-    {
-      "image": "assets/images/recipe2.png",
-      "title": "Crunchy Nut Coleslaw",
-      "time": "10 Mins",
-      "rating": 3.5,
-      "cuisine": "American"
-    },
-    {
-      "image": "assets/images/recipe1.png",
-      "title": "Tandoori Chicken",
-      "time": "30 Mins",
-      "rating": 4.7,
-      "cuisine": "Indian"
-    },
-    {
-      "image": "assets/images/recipe2.png",
-      "title": "Spaghetti Carbonara",
-      "time": "20 Mins",
-      "rating": 4.2,
-      "cuisine": "Italian"
-    },
-    {
-      "image": "assets/images/recipe2.png",
-      "title": "Egg Fried Rice",
-      "time": "20 Mins",
-      "rating": 4.1,
-      "cuisine": "Chinese"
-    },
-    {
-      "image": "assets/images/recipe2.png",
-      "title": "Sushi Rolls",
-      "time": "25 Mins",
-      "rating": 4.8,
-      "cuisine": "Japanese"
-    },
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -116,10 +65,7 @@ class _MainScreenState extends State<MainScreen> {
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
-                              context.push(
-                                AppRouter.search,
-                                extra: allRecipes,
-                              );
+                              context.push(AppRouter.search);
                             },
                             child: Container(
                               padding: const EdgeInsets.symmetric(
@@ -176,8 +122,7 @@ class _MainScreenState extends State<MainScreen> {
                         for (int i = 0; i < state.categories.length; i++)
                           CuisineButton(
                             label: state.categories[i].name,
-                            isSelected: state.categories[i].id ==
-                                state.selectedCategoryId,
+                            isSelected: state.categories[i].id == state.selectedCategoryId,
                             onTap: () {
                               context.read<MainBloc>().add(
                                     GetRecipesByCategory$MainEvent(
@@ -240,10 +185,11 @@ class _MainScreenState extends State<MainScreen> {
                         for (int i = 0; i < state.newRecipes.length; i++)
                           RecipeCardInfo(
                             title: state.newRecipes[i].title,
-                            author: "James Milner",
+                            author: state.newRecipes[i].ownerName ?? "Chef",
                             time: state.newRecipes[i].cookingTime,
                             rating: state.newRecipes[i].averageRating,
                             image: state.newRecipes[i].imgUrl ?? "",
+                            ownerImage: state.newRecipes[i].ownerImage ?? "",
                           )
                       ],
                     ),

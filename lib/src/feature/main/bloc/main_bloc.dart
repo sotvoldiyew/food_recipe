@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:food_recipe/src/common/model/category_model.dart';
 import 'package:food_recipe/src/common/model/recipe_model.dart';
-import 'package:food_recipe/src/common/utils/context_extention.dart';
+import 'package:food_recipe/src/common/utils/context_extension.dart';
 
 import '../../../common/utils/status_enum.dart';
 

@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:food_recipe/src/common/utils/context_extention.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:food_recipe/src/common/style/app_icons.dart';
+import 'package:food_recipe/src/common/utils/context_extension.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../common/router/app_router.dart';
@@ -12,6 +14,7 @@ class RecipeCardInfo extends StatelessWidget {
   final String time;
   final double rating;
   final String image;
+  final String ownerImage;
 
   const RecipeCardInfo({
     super.key,
@@ -20,6 +23,7 @@ class RecipeCardInfo extends StatelessWidget {
     required this.time,
     required this.rating,
     required this.image,
+    required this.ownerImage,
   });
 
   @override
@@ -69,14 +73,26 @@ class RecipeCardInfo extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 5),
-                    const CircleAvatar(
+                    CircleAvatar(
                       radius: 18,
                       child: ClipRRect(
-                        borderRadius: BorderRadius.all(
+                        borderRadius: const BorderRadius.all(
                           Radius.circular(18),
                         ),
-                        child: Image(
-                          image: AssetImage('assets/images/steak.png'),
+                        child: CachedNetworkImage(
+                          imageUrl: ownerImage,
+                          errorWidget: (context, url, error) {
+                            return const Center(
+                              child: Image(
+                                image: AssetImage(AppImages.chef),
+                              ),
+                            );
+                          },
+                          placeholder: (context, url) =>
+                              CircularProgressIndicator(
+                            color: context.colors.onPrimary,
+                          ),
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
@@ -106,7 +122,11 @@ class RecipeCardInfo extends StatelessWidget {
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        for (int i = 0; i < 5; i++) const Icon(Icons.star),
+                        for (int i = 0; i < 5; i++)
+                          SvgPicture.asset(
+                            AppIcons.star,
+                            height: 23,
+                          ),
                       ],
                     ),
                   ],
@@ -117,6 +137,8 @@ class RecipeCardInfo extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: CachedNetworkImage(
+                    width: 200,
+                    height: double.infinity,
                     imageUrl: image,
                     errorWidget: (context, url, error) {
                       return const Center(

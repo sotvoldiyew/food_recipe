@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_recipe/src/common/utils/context_extention.dart';
+import 'package:food_recipe/src/common/utils/context_extension.dart';
 import 'package:food_recipe/src/feature/reviews/bloc/review_bloc.dart';
 import 'package:food_recipe/src/feature/reviews/controller/review_controller.dart';
 
@@ -107,7 +107,7 @@ class _ReviewsPageState extends State<ReviewsPage> with ReviewController {
       appBar: AppBar(
         scrolledUnderElevation: 0,
         title: Text(
-          'Reviews',
+          context.lang.reviews,
           style: context.textTheme.titleLarge
               ?.copyWith(fontWeight: FontWeight.w600),
         ),
@@ -116,33 +116,60 @@ class _ReviewsPageState extends State<ReviewsPage> with ReviewController {
       body: BlocBuilder<ReviewBloc, ReviewState>(
         builder: (context, state) => Column(
           children: [
-            if (!state
-                .isCommented) // Поле для комментариев доступно только один раз
+            if (!state.isCommented) // Поле для комментариев доступно только один раз
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: commentController,
-                        decoration: InputDecoration(
-                          hintText: context.lang.say_something,
-                          border: const OutlineInputBorder(),
+                child: Expanded(
+                  child: TextFormField(
+                    controller: commentController,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                          width: 1.5,
+                          color: context.colors.outlineVariant,
+                        ),
+                      ),
+                      hintText: context.lang.say_something,
+                      hintStyle: context.textTheme.titleMedium?.copyWith(
+                        color: context.colors.outlineVariant,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                        borderSide: BorderSide(
+                          width: 1.5,
+                          color: context.colors.outlineVariant,
+                        ),
+                      ),
+                      suffixIcon: Padding(// Кнопка отправить комментарии
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 5,
+                        ),
+                        child: FilledButton(
+                          onPressed: () {
+                            context.read<ReviewBloc>().add(
+                                  SendMessage$ReviewEvent(
+                                    text: commentController.text,
+                                    context: context,
+                                  ),
+                                );
+                          },
+                          style: const ButtonStyle(
+                            shape: WidgetStatePropertyAll(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
+                              ),
+                            ),
+                          ),
+                          child: Text(context.lang.send),
                         ),
                       ),
                     ),
-                    IconButton(
-                      icon: const Icon(Icons.send),
-                      onPressed: () {
-                        context.read<ReviewBloc>().add(
-                              SendMessage$ReviewEvent(
-                                text: commentController.text,
-                                context: context,
-                              ),
-                            );
-                      },
-                    ),
-                  ],
+                  ),
                 ),
               ),
             Expanded(
@@ -156,11 +183,8 @@ class _ReviewsPageState extends State<ReviewsPage> with ReviewController {
                     },
                     child: ListTile(
                       title: InkWell(
-                        onTap: () {
-                          print("Nozima");
-                        },
-                        overlayColor:
-                            const WidgetStatePropertyAll(Colors.transparent),
+                        onTap: () {},
+                        overlayColor: const WidgetStatePropertyAll(Colors.transparent),
                         child: Row(
                           children: [
                             const CircleAvatar(

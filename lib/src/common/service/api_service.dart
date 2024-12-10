@@ -25,19 +25,19 @@ class ApiService {
   }
 
   Future<Map<String, Object?>> request(
-      String path, {
-        Method method = Method.get,
-        bool setToken = true,
-        Object? data,
-        Map<String, Object?>? headers,
-        Map<String, Object?>? queryParams,
-        FormData? formData,
-      }) async {
+    String path, {
+    Method method = Method.get,
+    bool setToken = true,
+    Object? data,
+    Map<String, Object?>? headers,
+    Map<String, Object?>? queryParams,
+    FormData? formData,
+  }) async {
     final sw = Stopwatch()..start();
     if (!await checkConnection()) throw Exception("No Connection");
 
     try {
-      const token = 'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzM1ODMzNzAsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImV4cCI6MTczNjE3NTM3MH0.1ULIaNA3nPeDkmr3ORxo9VBGcJG3af1Bm1v3YgJwOX4';
+      const token = 'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzM4MDQ3OTcsInN1YiI6InNheWR1bGxhMjQxMEBnbWFpbC5jb20iLCJleHAiOjE3MzYzOTY3OTd9.eUU0FhR8M5vZoPdT3zOttr7t5SfR9lFNryws6-UD35Y';
 
       final requestHeaders = {
         ...?headers,
