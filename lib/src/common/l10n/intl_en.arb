@@ -37,7 +37,8 @@
  "uploadImage": "Upload Image",
  "videoMin": "Video Minute",
  "videoLink": "Video Link",
-
+ "errorLoadingProfile": "Error Loading Profile",
+ "noProfileData": "No Profile Data",
   "@@locale": "en",
   "all": "All"
 }

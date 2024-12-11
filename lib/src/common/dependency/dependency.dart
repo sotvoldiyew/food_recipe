@@ -1,3 +1,4 @@
+import 'package:food_recipe/src/feature/edit_profile/data/edit_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppDependency {
@@ -5,6 +6,7 @@ class AppDependency {
     required this.locale,
     required this.shp,
     required this.theme,
+    required this.editRepository,
   });
 
   String locale;
@@ -12,4 +14,5 @@ class AppDependency {
 
   final SharedPreferences shp;
 
+  IEditRepository editRepository;
 }

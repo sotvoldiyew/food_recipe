@@ -1,7 +1,12 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:food_recipe/src/common/utils/context_extention.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../common/router/app_router.dart';
 import 'login_screen.dart';
-
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -11,6 +16,37 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+
+  void checkUser(){
+    log("chec user func");
+    String? token = context.dependencies.shp.getString("token");
+
+    log("token $token");
+    if(token != null){
+      log("token != null");
+      context.go(AppRouter.home);
+    }else{
+      log("token = null");
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => const SignInScreen()),
+      );
+    }
+  }
+
+
+
+  @override
+  void initState() {
+    Timer(const Duration(seconds: 2), (){
+      log("init");
+      checkUser();
+    });
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,31 +68,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               child: Column(
                 children: [
                   const SizedBox(height: 120),
-                  Image.asset('assets/images/white_hat.png',
-                  height: 100,
+                  Image.asset(
+                    'assets/images/white_hat.png',
+                    height: 100,
                   ),
                   const SizedBox(height: 20),
-                  const Text(
-                    '100K+ Premium Recipe',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 200),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 80.0),
-                    child: Text(
-                      'Get Cooking',
+                  Text('100K+ Premium Recipe',
+                      style: context.textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: context.colors.onPrimary,
+                          fontSize: 20)),
+                  const Expanded(child: SizedBox()),
+                  Text('Get\n Cooking',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 40,
-                      ),
-                    ),
-                  ),
+                      style: context.textTheme.displayMedium?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: context.colors.onPrimary)),
                   const SizedBox(
                     height: 20,
                   ),
@@ -72,33 +99,37 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   const SizedBox(
                     height: 60,
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const SignInScreen()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF129575),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 50, vertical: 15),
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'Start Cooking',
-                          style: TextStyle(color: Colors.white, fontSize: 16),
-                        ),
-                        SizedBox(width: 12),
-                        Icon(Icons.arrow_forward, color: Colors.white,size: 20,),
-                      ],
-                    ),
-                  ),
+                  // MaterialButton(
+                  //   height: 50,
+                  //   color: context.colors.primary,
+                  //   shape: RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.circular(10)),
+                  //   onPressed: () {
+                  //
+                  //     Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //           builder: (context) => const SignInScreen()),
+                  //     );
+                  //   },
+                  //   child: const Center(
+                  //     child: Row(
+                  //       mainAxisSize: MainAxisSize.min,
+                  //       children: [
+                  //         Text(
+                  //           'Start Cooking',
+                  //           style: TextStyle(color: Colors.white, fontSize: 16),
+                  //         ),
+                  //         SizedBox(width: 12),
+                  //         Icon(
+                  //           Icons.arrow_forward,
+                  //           color: Colors.white,
+                  //           size: 20,
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   const SizedBox(height: 30),
                 ],
               ),
@@ -109,4 +140,3 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     );
   }
 }
-

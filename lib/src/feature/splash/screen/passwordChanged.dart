@@ -66,7 +66,7 @@ class _PasswordChangedState extends State<PasswordChanged> {
               //   ],
               // ),
               const SizedBox(
-                height: 20,
+                height: 20
               ),
 
               ElevatedButton(

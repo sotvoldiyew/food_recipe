@@ -125,7 +125,6 @@ class _CreateScreenState extends State<CreateScreen> {
               BlocBuilder<CreateBloc, CreateState>(
                 builder: (context, state) => GestureDetector(
                   onTap: () async {
-                    // ModalBottomSheet ochiladi va tanlangan kategoriya qaytariladi
                     final String? selected = await showModalBottomSheet<String>(
                       context: context,
                       builder: (context) {
@@ -144,7 +143,6 @@ class _CreateScreenState extends State<CreateScreen> {
                       },
                     );
 
-                    // Agar kategoriya tanlangan bo‘lsa, BLoC ga yuboriladi
                     if (selected != null) {
                       context.read<CreateBloc>().add(
                             CategorySelecter$CreateEvent(

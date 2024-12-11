@@ -47,7 +47,7 @@ class CreateBloc extends Bloc<CreateEvent, CreateState> {
       Emitter<CreateState> emit,
       ) async {
     try {
-      if (event.selectedCategory!.isNotEmpty &&
+      if (event.selectedCategory.isNotEmpty &&
           state.categories.contains(event.selectedCategory)) {
         emit(state.copyWith(
           status: Status.success,

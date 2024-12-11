@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_recipe/src/common/router/app_router.dart';
@@ -9,19 +10,60 @@ import 'package:food_recipe/src/feature/profile/widget/view_more.dart';
 import 'package:food_recipe/src/feature/saved/widget/saved_recipe.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../common/constants/constants.dart';
+import '../data/profile_model.dart';
+import '../data/profile_repository.dart';
+
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  const ProfileScreen({super.key,});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
+
 class _ProfileScreenState extends State<ProfileScreen> {
+  late final ProfileRepository profileRepository;
+
+  final dio = Dio(
+    BaseOptions(
+      baseUrl: Constants.baseUrl,
+    ),
+  );
+
+
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    profileRepository = ProfileRepository(dio: dio,
+      getHeaders: () async {
+        return {'Authorization': 'Bearer ${context.dependencies.shp.getString("token") ?? ""}'};
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.colors.onPrimary,
-      body: Padding(
+      body:FutureBuilder<UserProfile?>(
+        future: profileRepository.fetchUserProfile(),
+    builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+    return const Center(child: CircularProgressIndicator());
+    } else if (snapshot.hasError) {
+    return Center(child: Text('Error: ${snapshot.error}'));
+    } else if (!snapshot.hasData || snapshot.data == null) {
+    return const Center(child: Text('No user profile found.'));
+    }
+
+    final userProfile = snapshot.data!;
+    context.dependencies.shp.setString("role", userProfile.data!.userRole);
+    context.dependencies.shp.setInt("user_id", userProfile.data!.userId);
+    return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25.0),
         child: NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) => [
@@ -72,14 +114,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       // crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const CircleAvatar(
-                          radius: 40,
-                          child: Image(
-                            image: AssetImage(
-                              AppImages.profileImage,
+                         ClipOval(
+                           child: CircleAvatar(
+                            radius: 40,
+                            child: Image(
+                              image: AssetImage(
+                                userProfile.data?.authorImg ?? AppImages.userImage ,
+                              ),
                             ),
-                          ),
-                        ),
+                                                   ),
+                         ),
                         Column(
                           children: [
                             Text(
@@ -98,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                               onPressed: () {},
                               child: Text(
-                                "4",
+                                "${userProfile.data?.recipeNumber ?? 0}",
                                 style: context.textTheme.titleLarge
                                     ?.copyWith(fontWeight: FontWeight.w600),
                               ),
@@ -123,7 +167,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 context.push(AppRouter.profileTapBar);
                               },
                               child: Text(
-                                "2.5M",
+                                "${userProfile.data?.followersCount ?? 0}",
                                 style: context.textTheme.titleLarge
                                     ?.copyWith(fontWeight: FontWeight.w600),
                               ),
@@ -146,7 +190,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 context.push(AppRouter.profileTapBar);
                               },
                               child: Text(
-                                "4",
+                                "${userProfile.data?.followingCount ?? 0}",
                                 style: context.textTheme.titleLarge
                                     ?.copyWith(fontWeight: FontWeight.w600),
                               ),
@@ -159,7 +203,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SliverToBoxAdapter(child: SizedBox(height: 15)),
                   SliverToBoxAdapter(
                     child: Text(
-                      "Afuwape Abiodun",
+                      "${userProfile.data?.userName }",
                       style: context.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
@@ -167,7 +211,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   SliverToBoxAdapter(
                     child: Text(
-                      "Chef",
+                      "${userProfile.data?.userRole }",
                       style: context.textTheme.labelSmall?.copyWith(
                         fontWeight: FontWeight.w400,
                       ),
@@ -177,19 +221,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   SliverToBoxAdapter(
                     child: BlocProvider(
                       create: (context) => ProfileBloc(),
-                      child: const MyViewMore(
+                      child: userProfile.data?.description?.length != null &&
+                          userProfile.data!.description!.length <= 100 ?  MyViewMore(
                         text:
-                            "eifhbehvb rthbrh tbhbehbfeh h hvbrhfbrh hrhjrdbjefnv ejvejv rvj ervjkr ervjevjnvjnervjrvvjrejvrenv",
-                      ),
+                        userProfile.data?.description ?? "",
+                      ) : const SizedBox.shrink()
                     ),
                   ),
                   const SliverToBoxAdapter(
                     child: SizedBox(height: 15),
                   ),
-                  SliverPersistentHeader(
-                    pinned: true,
-                    delegate: MySliverDelegete(),
-                  ),
+      if (userProfile.data?.userRole == "CHEF")
+      SliverPersistentHeader(
+      pinned: true,
+      delegate: MySliverDelegete(),
+      )
+      else
+      const SliverToBoxAdapter(),
                 ],
             body: ListView.builder(
               itemCount: 10,
@@ -201,7 +249,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             )),
-      ),
+      );}),
     );
   }
 }

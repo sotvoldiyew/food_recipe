@@ -18,11 +18,12 @@ import '../../feature/create/screen/create_screen.dart';
 import '../../feature/profile/bloc/profile_bloc.dart';
 import '../../../home_navigation.dart';
 import '../../feature/main/screen/main_screen.dart';
+import '../../feature/profile/data/profile_repository.dart';
 import '../../feature/search/screen/search_screen.dart';
 
 // import '../../feature/screens/welcome/screen/welcome_screen.dart';
 import '../../feature/splash/screen/login_screen.dart';
-import '../../feature/splash/screen/signup_screen.dart';
+import '../../feature/sign_up/screen/signup_screen.dart';
 import '../../feature/splash/screen/splash_screen.dart';
 
 class AppRouter {
@@ -52,7 +53,7 @@ late StatefulNavigationShell navigationShell2;
 
 GoRouter router = GoRouter(
   navigatorKey: appNavigatorKey,
-  initialLocation: AppRouter.signIn,
+  initialLocation: AppRouter.welcome,
   routes: [
     GoRoute(
       path: AppRouter.welcome,
@@ -253,7 +254,8 @@ GoRouter router = GoRouter(
                     BlocProvider(create: (context) => ProfileBloc()),
                     BlocProvider(create: (context) => RecipeBloc()),
                   ],
-                  child: const ProfileScreen(),
+                  child: ProfileScreen(
+                  ),
                 ),
               ),
             )
