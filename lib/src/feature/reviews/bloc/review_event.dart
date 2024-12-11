@@ -15,11 +15,25 @@ final class SendMessage$ReviewEvent extends ReviewEvent {
 }
 
 final class Emoji$ReviewEvent extends ReviewEvent {
-  final String emoji;
+  final BuildContext context;
+  final bool emoji;
   final int id;
 
   const Emoji$ReviewEvent({
+    required this.context,
     required this.emoji,
     required this.id,
+  });
+}
+
+final class GetReviews$ReviewEvent extends ReviewEvent {
+  final BuildContext context;
+  final int recipeId;
+  final int userId;
+
+  const GetReviews$ReviewEvent({
+    required this.context,
+    required this.recipeId,
+    required this.userId,
   });
 }

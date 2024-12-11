@@ -19,3 +19,13 @@ class GetRecipes$SearchEvent extends SearchEvent {
 
   const GetRecipes$SearchEvent({required this.context});
 }
+
+class AddRecentRecipe$SearchEvent extends SearchEvent {
+  final BuildContext context;
+  final int id;
+
+  const AddRecentRecipe$SearchEvent({
+    required this.context,
+    required this.id,
+  });
+}

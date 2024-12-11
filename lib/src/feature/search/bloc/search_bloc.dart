@@ -17,6 +17,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       (event, emit) => switch (event) {
         SearchRecipes$SearchEvent _ => _search(event, emit),
         GetRecipes$SearchEvent _ => _getRecentRecipes(event, emit),
+        AddRecentRecipe$SearchEvent _ => _addRecentRecipe(event, emit),
       },
     );
   }
@@ -27,19 +28,13 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   ) async {
     emit(state.copyWith(status: Status.loading));
 
-    List<SearchModel> recipes = [];
-
-    final response = await event.context.dependencies.searchRepository.searchRecipes(
+    final recipes = await event.context.dependencies.searchRepository.searchRecipes(
       query: event.searchText,
     );
 
-    for (var recipe in response) {
-      recipes.add(recipe);
-    }
+    log("Response [searchRecipes]: $recipes");
 
-    log("Response [searchRecipes]: $response");
-
-    if (event.searchText.isNotEmpty && response.isNotEmpty) {
+    if (event.searchText.isNotEmpty) {
       emit(state.copyWith(
         status: Status.success,
         searchText: event.searchText,
@@ -60,21 +55,34 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   ) async {
     emit(state.copyWith(status: Status.loading));
 
-    List<SearchModel> recipes = [];
-
-    final response = await event.context.dependencies.searchRepository.recentRecipes(
-      userId: 5,
+    final recipes = await event.context.dependencies.searchRepository.recentRecipes(
+      userId: 4,
     );
 
-    log("Response [getRecentRecipes]: $response");
-
-    for (var recipe in response) {
-      recipes.add(recipe);
-    }
+    log("Response [getRecentRecipes]: $recipes");
 
     emit(state.copyWith(
       status: Status.success,
       recentRecipes: recipes,
+      searchText: "",
+      recipes: [],
+    ));
+  }
+
+  Future<void> _addRecentRecipe(
+    AddRecentRecipe$SearchEvent event,
+    Emitter<SearchState> emit,
+  ) async {
+    emit(state.copyWith(status: Status.loading));
+
+    final response = await event.context.dependencies.searchRepository.addRecentRecipe(
+      id: event.id,
+    );
+
+    log("Response [addRecentRecipe]: $response");
+
+    emit(state.copyWith(
+      status: Status.success,
     ));
   }
 }

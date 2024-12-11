@@ -19,4 +19,11 @@ class Urls {
   // Search Controller
   static const String search = "/search/result";
   static const String recentSearches = "/search";
+  static const String addRecentSearch = "/search/result";
+
+  // Review Controller
+  static const String addReview = "/reviewA/comment";
+  static const String getReviews = "/reviewA";
+  static const String addReaction = "/reviewA/like-comment";
+  static const String deleteComment = "/reviewA";
 }

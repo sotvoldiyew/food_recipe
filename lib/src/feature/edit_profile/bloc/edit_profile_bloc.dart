@@ -19,8 +19,8 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
       Emitter<EditProfileState> emit,
       ) async {
     try {
-      final ImagePicker _picker  = ImagePicker();
-      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      final ImagePicker picker  = ImagePicker();
+      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
       if (image != null) {
         emit(state.copyWith(
           status: Status.success,

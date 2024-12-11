@@ -42,7 +42,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "min": MessageLookupByLibrary.simpleMessage("min"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "new_recipes": MessageLookupByLibrary.simpleMessage("New Recipes"),
-        "no_recipes": MessageLookupByLibrary.simpleMessage("No recipes found"),
+        "no_comments":
+            MessageLookupByLibrary.simpleMessage("Comments not found"),
+        "no_recent_recipes":
+            MessageLookupByLibrary.simpleMessage("Recent recipes not found"),
+        "no_recipes": MessageLookupByLibrary.simpleMessage("Recipes not found"),
         "procedure": MessageLookupByLibrary.simpleMessage("Procedure"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "rateRecipe": MessageLookupByLibrary.simpleMessage("Rate Recipe"),

@@ -145,7 +145,7 @@ class _CreateScreenState extends State<CreateScreen> {
                     );
 
                     // Agar kategoriya tanlangan bo‘lsa, BLoC ga yuboriladi
-                    if (selected != null) {
+                    if (selected != null && context.mounted) {
                       context.read<CreateBloc>().add(
                             CategorySelecter$CreateEvent(
                                 selectedCategory: selected),

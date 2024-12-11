@@ -48,8 +48,9 @@ class SearchBody extends StatelessWidget {
                   return SavedRecipe(
                     image: recipe.imageUrl,
                     text: recipe.title,
-                    byName: 'By Spicy Nelly',
+                    byName: recipe.author,
                     reputation: recipe.averageRating,
+                    id: recipe.id,
                   );
                 },
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -64,19 +65,34 @@ class SearchBody extends StatelessWidget {
           );
         },
       );
-    } else if (isTyped && recipes.isEmpty) {
+    }
+    else if (isTyped && recipes.isEmpty) {
       return Center(
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Text(
             context.lang.no_recipes,
             style: context.textTheme.titleMedium?.copyWith(
-              color: context.colors.onPrimary,
+              color: context.colors.outline,
             ),
           ),
         ),
       );
-    } else {
+    }
+    else if (recentRecipes.isEmpty && !isTyped) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Text(
+            context.lang.no_recent_recipes,
+            style: context.textTheme.titleMedium?.copyWith(
+              color: context.colors.outline,
+            ),
+          ),
+        ),
+      );
+    }
+    else {
       return BlocBuilder<SearchBloc, SearchState>(
         builder: (context, state) {
           return Scaffold(
@@ -111,10 +127,11 @@ class SearchBody extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final recipe = recipes[index];
                   return SavedRecipe(
-                    image: recipe.imageUrl ?? "",
+                    image: recipe.imageUrl,
                     text: recipe.title,
-                    byName: 'By Spicy Nelly',
+                    byName: 'By ${recipe.author}',
                     reputation: recipe.averageRating,
+                    id: recipe.id,
                   );
                 },
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

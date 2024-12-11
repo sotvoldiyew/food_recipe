@@ -3,8 +3,8 @@ import 'package:food_recipe/src/common/utils/context_extension.dart';
 
 import '../../../common/style/app_images.dart';
 
-class IngridentItems extends StatelessWidget {
-  const IngridentItems({super.key});
+class IngredientItems extends StatelessWidget {
+  const IngredientItems({super.key});
 
   @override
   Widget build(BuildContext context) {

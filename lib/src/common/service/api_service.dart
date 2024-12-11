@@ -37,7 +37,7 @@ class ApiService {
     if (!await checkConnection()) throw Exception("No Connection");
 
     try {
-      const token = 'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzM4MDQ3OTcsInN1YiI6InNheWR1bGxhMjQxMEBnbWFpbC5jb20iLCJleHAiOjE3MzYzOTY3OTd9.eUU0FhR8M5vZoPdT3zOttr7t5SfR9lFNryws6-UD35Y';
+      const token = 'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzM5Mjk4MTEsInN1YiI6InNheWR1bGxhMjQxMEBnbWFpbC5jb20iLCJleHAiOjE3MzY1MjE4MTF9.dnW_aaHAr_Qve92oCeP6nLHwnEvzAoGj2WJCQBz67ew';
 
       final requestHeaders = {
         ...?headers,

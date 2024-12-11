@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../screen/review.dart';
 
-mixin ReviewController on State<ReviewsPage> {
+mixin ReviewController on State<ReviewsScreen> {
   late final TextEditingController commentController;
 
   @override

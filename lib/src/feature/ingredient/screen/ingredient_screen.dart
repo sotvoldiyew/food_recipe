@@ -4,34 +4,39 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_recipe/src/common/router/app_router.dart';
 import 'package:food_recipe/src/common/utils/context_extension.dart';
-import 'package:food_recipe/src/feature/ingrident/bloc/ingrident_bloc.dart';
-import 'package:food_recipe/src/feature/ingrident/widget/follow_profile.dart';
-import 'package:food_recipe/src/feature/ingrident/widget/food_ingrident.dart';
-import 'package:food_recipe/src/feature/ingrident/widget/ingrident_items.dart';
-import 'package:food_recipe/src/feature/ingrident/widget/procedure_steps.dart';
+import 'package:food_recipe/src/feature/ingredient/bloc/ingredient_bloc.dart';
+import 'package:food_recipe/src/feature/ingredient/widget/follow_profile.dart';
+import 'package:food_recipe/src/feature/ingredient/widget/food_ingredient.dart';
+import 'package:food_recipe/src/feature/ingredient/widget/ingredient_items.dart';
+import 'package:food_recipe/src/feature/ingredient/widget/procedure_steps.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../common/style/app_icons.dart';
 import '../widget/my_delegate.dart';
 import '../widget/rating.dart';
 
-enum SampleItem { itemOne, itemTwo, itemThree, itemFour }
-
-class IngridentScreen extends StatefulWidget {
-  const IngridentScreen({super.key});
-
-  @override
-  State<IngridentScreen> createState() => _IngridentScreenState();
+enum SampleItem {
+  itemOne,
+  itemTwo,
+  itemThree,
+  itemFour,
 }
 
-class _IngridentScreenState extends State<IngridentScreen> {
+class IngredientScreen extends StatefulWidget {
+  const IngredientScreen({super.key});
+
+  @override
+  State<IngredientScreen> createState() => _IngredientScreenState();
+}
+
+class _IngredientScreenState extends State<IngredientScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.colors.onPrimary,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25.0),
-        child: BlocBuilder<IngridentBloc, IngridentState>(
+        child: BlocBuilder<IngredientBloc, IngredientState>(
           builder: (context, state) => NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) => [
               SliverAppBar(
@@ -205,7 +210,7 @@ class _IngridentScreenState extends State<IngridentScreen> {
                                           style: context.textTheme.labelMedium,
                                         ),
                                       ),
-                                      content: SizedBox(
+                                      content: const SizedBox(
                                         height: 100,
                                         child: MyRating(),
                                       ),
@@ -284,7 +289,7 @@ class _IngridentScreenState extends State<IngridentScreen> {
                   ),
                 ],
               ),
-              const SliverToBoxAdapter(child: FoodIngrident()),
+              const SliverToBoxAdapter(child: FoodIngredient()),
               const SliverToBoxAdapter(child: SizedBox(height: 15)),
               SliverToBoxAdapter(
                 child: Row(
@@ -314,12 +319,12 @@ class _IngridentScreenState extends State<IngridentScreen> {
               SliverPersistentHeader(
                 pinned: true,
                 delegate: MyHeaderDelegate(
-                  isIngrident: state.isIngrident,
+                  isIngredient: state.isIngredient,
                   isProcedure: state.isProcedure,
                   onToggle: (value) {
                     context
-                        .read<IngridentBloc>()
-                        .add(ToggleButton$IngridentEvent(value));
+                        .read<IngredientBloc>()
+                        .add(ToggleButton$IngredientEvent(value));
                   },
                 ),
               ),
@@ -335,7 +340,7 @@ class _IngridentScreenState extends State<IngridentScreen> {
                     ),
                     const Spacer(),
                     Text(
-                      "10 ${state.isIngrident ? context.lang.items : context.lang.steps}",
+                      "10 ${state.isIngredient ? context.lang.items : context.lang.steps}",
                       style: context.textTheme.labelSmall
                           ?.copyWith(fontWeight: FontWeight.w400),
                     )
@@ -344,8 +349,8 @@ class _IngridentScreenState extends State<IngridentScreen> {
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 15)),
             ],
-            body: state.isIngrident
-                ? const IngridentItems()
+            body: state.isIngredient
+                ? const IngredientItems()
                 : const ProcedureSteps(),
           ),
         ),

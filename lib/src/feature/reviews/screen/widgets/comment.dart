@@ -1,5 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:food_recipe/src/common/utils/context_extension.dart';
+import 'package:intl/intl.dart';
+
+import '../../../../common/style/app_images.dart';
 
 class Comment extends StatelessWidget {
   const Comment({
@@ -10,6 +14,10 @@ class Comment extends StatelessWidget {
     required this.comment,
     required this.likeCount,
     required this.dislikeCount,
+    required this.onTapLike,
+    required this.onTapDislike,
+    required this.onPressed,
+    this.hasReaction,
   });
 
   final String ownerImage;
@@ -18,17 +26,39 @@ class Comment extends StatelessWidget {
   final String comment;
   final int likeCount;
   final int dislikeCount;
+  final void Function() onTapLike;
+  final void Function() onTapDislike;
+  final bool? hasReaction;
+  final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: InkWell(
-        onTap: () {},
+        onTap: onPressed,
         overlayColor: const WidgetStatePropertyAll(Colors.transparent),
         child: Row(
           children: [
-            const CircleAvatar(
-              radius: 20,
+            CircleAvatar(
+              radius: 25,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12.5),
+                child: CachedNetworkImage(
+                  imageUrl: ownerImage,
+                  errorWidget: (context, url, error) {
+                    return const Center(
+                      child: Image(
+                        image: AssetImage(AppImages.chef),
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  },
+                  placeholder: (context, url) => CircularProgressIndicator(
+                    color: context.colors.onPrimary,
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
             const SizedBox(width: 10),
             Column(
@@ -36,17 +66,18 @@ class Comment extends StatelessWidget {
               children: [
                 Text(
                   ownerName,
-                  style: context.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
+                  style: context.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(width: 10),
+                const SizedBox(height: 5),
                 Text(
-                  time, // Добавляем время
-                  style: TextStyle(
-                    color: context.colors.outline,
-                    fontSize: 12,
-                  ),
+                  DateFormat('MMMM d, y - H:mm')
+                      .format(DateTime.parse(time).toLocal())
+                      .toString(), // Добавляем время
+                  style: context.textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w400,
+                  )
                 ),
               ],
             ),
@@ -56,58 +87,110 @@ class Comment extends StatelessWidget {
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          /// Comment text
           const SizedBox(height: 10),
-          Text(comment),
+          Text(comment, style: context.textTheme.bodyLarge,),
           const SizedBox(height: 10),
-          // Row(
-          //   children: [
-          //     GestureDetector(
-          //       onTap: () => _react(index, 'Like'),
-          //       child: Row(
-          //         children: [
-          //           Icon(
-          //             Icons.thumb_up,
-          //             color: userReactions[index] == 'Like'
-          //                 ? Colors.yellow
-          //                 : Colors.grey,
-          //           ),
-          //           const SizedBox(width: 5),
-          //           Text(
-          //             '${likesCount[index] ?? 0}',
-          //             style: TextStyle(
-          //               color: userReactions[index] == 'Like'
-          //                   ? Colors.yellow
-          //                   : Colors.grey,
-          //             ),
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //     const SizedBox(width: 20),
-          //     GestureDetector(
-          //       onTap: () => _react(index, 'Dislike'),
-          //       child: Row(
-          //         children: [
-          //           Icon(
-          //             Icons.thumb_down,
-          //             color: userReactions[index] == 'Dislike'
-          //                 ? Colors.yellow
-          //                 : Colors.grey,
-          //           ),
-          //           const SizedBox(width: 5),
-          //           Text(
-          //             '${dislikesCount[index] ?? 0}',
-          //             style: TextStyle(
-          //               color: userReactions[index] == 'Dislike'
-          //                   ? Colors.yellow
-          //                   : Colors.grey,
-          //             ),
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ],
-          // ),
+
+          /// Reactions
+          if (likeCount > 0 && dislikeCount > 0)
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: onTapLike, // () => _react(index, true),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.thumb_up,
+                        color:
+                            hasReaction == true ? Colors.yellow : Colors.grey,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        '$likeCount',
+                        style: TextStyle(
+                          color:
+                              hasReaction == true ? Colors.yellow : Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 20),
+                GestureDetector(
+                  onTap: onTapDislike,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.thumb_down,
+                        color:
+                            hasReaction == false ? Colors.yellow : Colors.grey,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        '$dislikeCount',
+                        style: TextStyle(
+                          color: hasReaction == false
+                              ? Colors.yellow
+                              : Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          if (likeCount > 0 && dislikeCount == 0)
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: onTapLike,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.thumb_up,
+                        color:
+                            hasReaction == true ? Colors.yellow : Colors.grey,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        '$likeCount',
+                        style: TextStyle(
+                          color:
+                              hasReaction == true ? Colors.yellow : Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          if (likeCount == 0 && dislikeCount > 0)
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: onTapDislike,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.thumb_down,
+                        color:
+                            hasReaction == false ? Colors.yellow : Colors.grey,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        '$dislikeCount',
+                        style: TextStyle(
+                          color: hasReaction == false
+                              ? Colors.yellow
+                              : Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
         ],
       ),
     );

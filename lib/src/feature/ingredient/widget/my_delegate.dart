@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:food_recipe/src/common/utils/context_extension.dart';
 
 class MyHeaderDelegate extends SliverPersistentHeaderDelegate {
-  late final bool isIngrident;
+  late final bool isIngredient;
   late final bool isProcedure;
   final ValueChanged<int> onToggle;
 
   MyHeaderDelegate({
-    required this.isIngrident,
+    required this.isIngredient,
     required this.isProcedure,
     required this.onToggle,
   });
@@ -29,14 +29,14 @@ class MyHeaderDelegate extends SliverPersistentHeaderDelegate {
               splashColor: Colors.transparent,
               height: 70,
               elevation: 0,
-              color: isIngrident
+              color: isIngredient
                   ? context.colors.primary
                   : context.colors.onPrimary,
               onPressed: () => onToggle(0),
               child: Text(
                 context.lang.ingredient,
                 style: context.textTheme.labelLarge?.copyWith(
-                  color: isIngrident
+                  color: isIngredient
                       ? context.colors.onPrimary
                       : context.colors.primary,
                 ),

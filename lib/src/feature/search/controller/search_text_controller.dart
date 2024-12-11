@@ -5,7 +5,7 @@ import '../../../common/utils/debouncing_throttling.dart';
 
 mixin SearchScreenController on State<SearchScreen> {late TextEditingController searchController;
 
-  final debouncing = Debouncing(const Duration(milliseconds: 500));
+  final debouncing = Debouncing(const Duration(milliseconds: 700));
 
   @override
   void initState() {

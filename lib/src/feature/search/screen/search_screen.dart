@@ -75,13 +75,17 @@ class _SearchScreenState extends State<SearchScreen> with SearchScreenController
                       ),
                     ),
                     onChanged: (query) {
-                      debouncing.call(
+                      query.isNotEmpty ? debouncing.call(
                         () => context.read<SearchBloc>().add(
                               SearchRecipes$SearchEvent(
                                 context: context,
                                 searchText: query,
                               ),
                             ),
+                      ) : context.read<SearchBloc>().add(
+                        GetRecipes$SearchEvent(
+                          context: context,
+                        ),
                       );
                     },
                   ),

@@ -4,8 +4,8 @@ import 'package:food_recipe/src/common/bloc/recipe_bloc.dart';
 import 'package:food_recipe/src/feature/create/bloc/create_bloc.dart';
 import 'package:food_recipe/src/feature/edit_profile/bloc/edit_profile_bloc.dart';
 import 'package:food_recipe/src/feature/edit_profile/screen/edit_profile.dart';
-import 'package:food_recipe/src/feature/ingrident/bloc/ingrident_bloc.dart';
-import 'package:food_recipe/src/feature/ingrident/screen/ingrident_screen.dart';
+import 'package:food_recipe/src/feature/ingredient/bloc/ingredient_bloc.dart';
+import 'package:food_recipe/src/feature/ingredient/screen/ingredient_screen.dart';
 import 'package:food_recipe/src/feature/main/bloc/main_bloc.dart';
 import 'package:food_recipe/src/feature/profile/screen/profile_screen.dart';
 import 'package:food_recipe/src/feature/profile/widget/see_followers.dart';
@@ -77,8 +77,8 @@ GoRouter router = GoRouter(
       pageBuilder: (context, state) => CustomTransitionPage(
         key: state.pageKey,
         child: BlocProvider(
-          child: const IngridentScreen(),
-          create: (context) => IngridentBloc(),
+          child: const IngredientScreen(),
+          create: (context) => IngredientBloc(),
         ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
@@ -93,9 +93,10 @@ GoRouter router = GoRouter(
       name: AppRouter.search,
       pageBuilder: (context, state) => CustomTransitionPage(
         child: BlocProvider<SearchBloc>(
-          create: (BuildContext context) => SearchBloc()..add(
-            GetRecipes$SearchEvent(context: context),
-          ),
+          create: (BuildContext context) => SearchBloc()
+            ..add(
+              GetRecipes$SearchEvent(context: context),
+            ),
           child: const SearchScreen(),
         ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -145,7 +146,7 @@ GoRouter router = GoRouter(
         key: state.pageKey,
         child: BlocProvider(
           child: const ProfileTabBarPage(),
-          create: (context) => IngridentBloc(),
+          create: (context) => IngredientBloc(),
         ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
@@ -189,8 +190,10 @@ GoRouter router = GoRouter(
       pageBuilder: (context, state) => CustomTransitionPage(
         key: state.pageKey,
         child: BlocProvider(
-          create: (BuildContext context) => ReviewBloc(),
-          child: const ReviewsPage(),
+          create: (BuildContext context) => ReviewBloc()..add(
+            GetReviews$ReviewEvent(context: context, recipeId: 1, userId: 5),
+          ),
+          child: const ReviewsScreen(),
         ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(

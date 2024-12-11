@@ -11,6 +11,8 @@ abstract interface class ISearchRepository {
   Future<List<SearchModel>> searchRecipes({required String query});
 
   Future<List<SearchModel>> recentRecipes({required int userId});
+
+  Future<bool> addRecentRecipe({required int id});
 }
 
 class SearchRepositoryImpl implements ISearchRepository {
@@ -68,6 +70,23 @@ class SearchRepositoryImpl implements ISearchRepository {
       log('Error [gatSearchRecipes]: $e');
       log('Stacktrace [getSearchRecipes]: $s');
       return [];
+    }
+  }
+
+  @override
+  Future<bool> addRecentRecipe({required int id}) async {
+    try {
+      final response = (await apiService.request(
+        "${Urls.addRecentSearch}/$id",
+      ));
+
+      log("Response [addRecentSearch]: $response");
+
+      return true;
+    } on Object catch (e, s) {
+      log('Error [addRecentSearch]: $e');
+      log('Stacktrace [addRecentSearch]: $s');
+      return false;
     }
   }
 

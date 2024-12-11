@@ -1,35 +1,41 @@
-part of 'ingrident_bloc.dart';
+part of 'ingredient_bloc.dart';
 
-class IngridentState extends Equatable {
-  const IngridentState({
+class IngredientState extends Equatable {
+  const IngredientState({
     this.isSaved = false,
     this.isFollow = false,
-    this.isIngrident = true,
+    this.isIngredient = true,
     this.isProcedure = false,
     this.status = Status.initial,
   });
 
   final Status status;
-  final bool isIngrident;
+  final bool isIngredient;
   final bool isProcedure;
   final bool isFollow;
   final bool isSaved;
 
   @override
-  List<Object?> get props => [isFollow, status, isIngrident, isProcedure, isSaved];
+  List<Object?> get props => [
+        isFollow,
+        status,
+        isIngredient,
+        isProcedure,
+        isSaved,
+      ];
 
-  IngridentState copyWith({
+  IngredientState copyWith({
     final bool? isSaved,
     final bool? isFollow,
     final Status? status,
     final bool? isProcedure,
-    final bool? isIngrident,
+    final bool? isIngredient,
   }) =>
-      IngridentState(
+      IngredientState(
         isSaved: isSaved ?? this.isSaved,
         isFollow: isFollow ?? this.isFollow,
         status: status ?? this.status,
-        isIngrident: isIngrident ?? this.isIngrident,
+        isIngredient: isIngredient ?? this.isIngredient,
         isProcedure: isProcedure ?? this.isProcedure,
       );
 }

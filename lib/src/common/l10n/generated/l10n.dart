@@ -490,11 +490,31 @@ class S {
     );
   }
 
-  /// `No recipes found`
+  /// `Recipes not found`
   String get no_recipes {
     return Intl.message(
-      'No recipes found',
+      'Recipes not found',
       name: 'no_recipes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recent recipes not found`
+  String get no_recent_recipes {
+    return Intl.message(
+      'Recent recipes not found',
+      name: 'no_recent_recipes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Comments not found`
+  String get no_comments {
+    return Intl.message(
+      'Comments not found',
+      name: 'no_comments',
       desc: '',
       args: [],
     );
