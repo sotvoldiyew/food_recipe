@@ -12,13 +12,15 @@ import 'package:food_recipe/src/feature/ingrident/widget/procedure_steps.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../common/style/app_icons.dart';
+import '../../profile/data/content_model.dart';
 import '../widget/my_delegate.dart';
 import '../widget/rating.dart';
 
 enum SampleItem { itemOne, itemTwo, itemThree, itemFour }
 
 class IngridentScreen extends StatefulWidget {
-  const IngridentScreen({super.key});
+  const IngridentScreen({super.key, required this.model});
+  final Datum model;
 
   @override
   State<IngridentScreen> createState() => _IngridentScreenState();

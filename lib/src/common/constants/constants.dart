@@ -17,4 +17,25 @@ class Urls{
   static const String verification = '/auth/verify';
   static const String myProfile = '/user/my-profile';
   static const String user = '/user';
+  static const String profileContent = '/user/profile-content';
+  static const String savedRecipe = '/saved-recipes';
+
+  static Map<String, Object> profileContentParam({required int id, required int size}){
+    Map<String, Object> map ={
+      "userId":id,
+      "page": 0,
+      "size": size
+    };
+    return map;
+  }
+  static Map<String, Object> savedProductParam({required int size}){
+    Map<String, Object> map ={
+      "page": 0,
+      "size": size
+    };
+    return map;
+  }
+
+
+
 }

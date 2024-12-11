@@ -6,6 +6,7 @@ import 'package:food_recipe/src/feature/edit_profile/bloc/edit_profile_bloc.dart
 import 'package:food_recipe/src/feature/edit_profile/screen/edit_profile.dart';
 import 'package:food_recipe/src/feature/ingrident/bloc/ingrident_bloc.dart';
 import 'package:food_recipe/src/feature/ingrident/screen/ingrident_screen.dart';
+import 'package:food_recipe/src/feature/profile/data/content_model.dart';
 import 'package:food_recipe/src/feature/profile/screen/profile_screen.dart';
 import 'package:food_recipe/src/feature/profile/widget/see_followers.dart';
 import 'package:food_recipe/src/feature/saved/bloc/saved_bloc.dart';
@@ -75,7 +76,7 @@ GoRouter router = GoRouter(
       pageBuilder: (context, state) => CustomTransitionPage(
         key: state.pageKey,
         child: BlocProvider(
-          child: const IngridentScreen(),
+          child:  IngridentScreen(model: state.extra as Datum,),
           create: (context) => IngridentBloc(),
         ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -225,7 +226,7 @@ GoRouter router = GoRouter(
                       create: (context) => RecipeBloc(),
                     ),
                   ],
-                  child: const SavedScreen(),
+                  child:  const SavedScreen(),
                 ),
               ),
               routes: const [],
@@ -254,7 +255,7 @@ GoRouter router = GoRouter(
                     BlocProvider(create: (context) => ProfileBloc()),
                     BlocProvider(create: (context) => RecipeBloc()),
                   ],
-                  child: ProfileScreen(
+                  child: const ProfileScreen(
                   ),
                 ),
               ),
