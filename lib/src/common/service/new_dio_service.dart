@@ -1,10 +1,10 @@
-
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:food_recipe/home_navigation.dart';
 import 'package:food_recipe/src/common/constants/constants.dart';
 import 'package:food_recipe/src/common/utils/context_extention.dart';
 
@@ -47,13 +47,13 @@ class NetworkService {
     return dio;
   }
 
-  static Future<Map<String, String>> getHeaders({bool isUpload = false, required BuildContext context}) async {
+  static Map<String, String> getHeaders({bool isUpload = false, required BuildContext context}) {
     final headers = <String, String>{
       "Content-type": isUpload ? "multipart/form-data" : "application/json; charset=UTF-8",
+      "Accept": isUpload ? "multipart/form-data" : "application/json; charset=UTF-8",
     };
 
-
-    final token = context.dependencies.shp.getString('token')??"";
+    final token = context.dependencies.shp.getString('token') ?? "";
 
     if (token.isNotEmpty) {
       headers.putIfAbsent("Authorization", () => "Bearer $token");
@@ -61,7 +61,6 @@ class NetworkService {
 
     return headers;
   }
-
 
   static Future<String?> get(String api, Map<String, Object> params, BuildContext context) async {
     final fullUrl = "${Constants.baseUrl}$api";
@@ -80,8 +79,6 @@ class NetworkService {
     }
     return null;
   }
-
-
 
   // static Future<dynamic> getData(String api, Map<String, dynamic> params) async {
   //   try {
@@ -113,51 +110,98 @@ class NetworkService {
   //   }
   // }
 
+  static Future<String?> postOneData({required String api, required String token, required String data}) async {
+    log("token: $token \n");
+    final newDio = Dio(BaseOptions(baseUrl: Constants.baseUrl, headers: {'Content-Type': 'text/plain', "Authorization": "Bearer $token"}));
+    log("Url = ${Constants.baseUrl}$api");
+    final response = await newDio.post(api, data: data);
+    log("Response status code ${response.statusCode}");
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return jsonEncode(response.data);
+    } else {
+      return null;
+    }
+  }
 
+  static Future<String?> post(
+      {required String api, required BuildContext context, required Map<String, Object?> data, Map<String, Object>? params = const {}}) async {
+    try {
+      log("try func in Post method");
+      final response = await (await initDio(context)).post<dynamic>(api, data: data, queryParameters: params);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        log("response status code ${response.statusCode}");
+        return jsonEncode(response.data);
+      } else {
+        return null;
+      }
+    } on TimeoutException catch (_) {
+      log("The connection has timed out, Please try again!");
+      rethrow;
+    } on DioException catch (e) {
+      log(e.response.toString());
+      rethrow;
+    } on Object catch (_) {
+      rethrow;
+    }
+  }
 
-  // static Future<String?> post(String api, Map<String, dynamic> data, [Map<String, dynamic> params = const <String, dynamic>{}]) async {
-  //   try {
-  //     final response = await (await initDio()).post<dynamic>(api, data: data, queryParameters: params);
-  //     return jsonEncode(response.data);
-  //   } on TimeoutException catch (_) {
-  //     log("The connection has timed out, Please try again!");
-  //     rethrow;
-  //   } on DioException catch (e) {
-  //     log(e.response.toString());
-  //     rethrow;
-  //   } on Object catch (_) {
-  //     rethrow;
-  //   }
-  // }
-  //
-  // static Future<String?> put(String api, Map<String, dynamic> data) async {
-  //   try {
-  //     final response = await (await initDio()).put<dynamic>(api, data: data);
-  //
-  //     return jsonEncode(response.data);
-  //   } on TimeoutException catch (_) {
-  //     log("The connection has timed out, Please try again!");
-  //     rethrow;
-  //   } on DioException catch (e) {
-  //     log(e.response.toString());
-  //     rethrow;
-  //   } on Object catch (_) {
-  //     rethrow;
-  //   }
-  // }
-  //
-  // static Future<String?> delete(String api, Map<String, dynamic> params) async {
-  //   try {
-  //     final _ = await (await initDio()).delete<dynamic>(api, queryParameters: params);
-  //     return "success";
-  //   } on TimeoutException catch (_) {
-  //     log("The connection has timed out, Please try again!");
-  //     rethrow;
-  //   } on DioException catch (e) {
-  //     log(e.response.toString());
-  //     rethrow;
-  //   } on Object catch (_) {
-  //     rethrow;
-  //   }
-  // }
+//
+// static Future<String?> put(String api, Map<String, dynamic> data) async {
+//   try {
+//     final response = await (await initDio()).put<dynamic>(api, data: data);
+//
+//     return jsonEncode(response.data);
+//   } on TimeoutException catch (_) {
+//     log("The connection has timed out, Please try again!");
+//     rethrow;
+//   } on DioException catch (e) {
+//     log(e.response.toString());
+//     rethrow;
+//   } on Object catch (_) {
+//     rethrow;
+//   }
+// }
+//
+// static Future<String?> delete(String api, Map<String, dynamic> params) async {
+//   try {
+//     final _ = await (await initDio()).delete<dynamic>(api, queryParameters: params);
+//     return "success";
+//   } on TimeoutException catch (_) {
+//     log("The connection has timed out, Please try again!");
+//     rethrow;
+//   } on DioException catch (e) {
+//     log(e.response.toString());
+//     rethrow;
+//   } on Object catch (_) {
+//     rethrow;
+//   }
+// }
+
+  static Future<String?> sendMultipartRequest(
+      {required String api, required BuildContext context, required Map<String, dynamic> jsonData, required File file}) async {
+    try {
+      log("try");
+      final fileData = await MultipartFile.fromFile(file.path, filename: file.path.split('/').last);
+      final formData = FormData.fromMap({'json': jsonEncode(jsonData), 'file': fileData});
+
+      final dio = Dio(BaseOptions(
+        baseUrl: Constants.baseUrl,
+        headers: getHeaders(isUpload: true, context: context),
+        validateStatus: (status) => status! < 203,
+      ));
+      log("url == ${Constants.baseUrl}/$api");
+      final response = await dio.post(api, data: formData);
+      log("multipart status code: ${response.statusCode}");
+      if (response.statusCode == 200) {
+        log('Yuborildi: ${response.data}');
+        return jsonEncode(response.data);
+      } else {
+        log('Xatolik: Else state ${response.statusCode}');
+        return null;
+      }
+    } catch (e) {
+      log('Xato yuz berdi: $e\n\ntry catch==> catch');
+      return null;
+    }
+  }
 }

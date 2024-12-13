@@ -20,7 +20,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   void checkUser(){
     log("chec user func");
     String? token = context.dependencies.shp.getString("token");
-
     log("token $token");
     if(token != null){
       log("token != null");

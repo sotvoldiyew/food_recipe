@@ -88,7 +88,7 @@ class Datum {
     imageUrl: json["imageUrl"],
   );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, Object?> toJson() => {
     "id": id,
     "title": title,
     "description": description,

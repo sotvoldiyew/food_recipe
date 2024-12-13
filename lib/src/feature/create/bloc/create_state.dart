@@ -2,8 +2,9 @@ part of 'create_bloc.dart';
 
 class CreateState extends Equatable {
   CreateState({
-    this.categories = const ["Appetizer", "Main Course", "Dessert", "Beverage"],
+    this.categories = const ["Indian", "Italian", "Asian", "Chinese", "Fruit", "All"],
     this.ingredientControllers = const [],
+    this.ingredients = const [],
     this.selectedCategory,
     this.status = Status.initial,
     this.selectedImage,
@@ -11,6 +12,7 @@ class CreateState extends Equatable {
   }) : picker = picker ?? ImagePicker();
 
   final List<String> categories; // Kategoriyalar ro‘yxati
+  final List<String> ingredients; // ingredientlar ro‘yxati
   final List<TextEditingController> ingredientControllers; // Ingredient controllerlari
   final String? selectedCategory; // Tanlangan kategoriya
   final Status status; // Holat
@@ -20,6 +22,7 @@ class CreateState extends Equatable {
   @override
   List<Object?> get props => [
     categories,
+    ingredients,
     ingredientControllers,
     selectedCategory,
     status,
@@ -37,6 +40,7 @@ class CreateState extends Equatable {
   }) {
     return CreateState(
       categories: categories ?? this.categories,
+      ingredients: ingredients ?? this.ingredients,
       ingredientControllers:
       ingredientControllers ?? this.ingredientControllers,
       selectedCategory: selectedCategory ?? this.selectedCategory,

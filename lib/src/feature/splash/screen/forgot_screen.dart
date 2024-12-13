@@ -1,7 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:food_recipe/src/common/constants/constants.dart';
+import 'package:food_recipe/src/common/service/new_dio_service.dart';
 import 'package:food_recipe/src/common/utils/context_extention.dart';
 import 'package:food_recipe/src/feature/verification_code/screen/verification_screen.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../verification_code/screen/refresh_code_otp_page.dart';
 
 class ForgotScreen extends StatefulWidget {
   const ForgotScreen({super.key});
@@ -12,6 +18,39 @@ class ForgotScreen extends StatefulWidget {
 
 class _ForgotScreenState extends State<ForgotScreen> {
   TextEditingController emailController = TextEditingController();
+
+  Future<void> requestPasswordReset(String email) async {
+    String? token = context.dependencies.shp.getString("token");
+    if (token != null) {
+      log("email: $email");
+      String? result = await NetworkService.post(api: Urls.requestPasswordReset, context: context, data: {"email": email});
+      if (result != null) {
+        log(" data mavjud $result");
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => RefreshCodeOtpPage(email: email)),
+        );
+        emailController.clear();
+      } else {
+        log("data mavjud emas $result");
+        emailController.clear();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text(
+              "Something went wrong",
+              style: TextStyle(color: Colors.white),
+            ),
+            backgroundColor: Colors.red,
+            duration: const Duration(seconds: 3), // Optional: duration of the Snackbar
+            behavior: SnackBarBehavior.floating, // Optional: floating Snackbar style
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +63,16 @@ class _ForgotScreenState extends State<ForgotScreen> {
           onPressed: () {
             context.pop();
           },
-          icon: const Icon(Icons.arrow_back_ios_sharp,
-            color: Colors.black,),
+          icon: const Icon(
+            Icons.arrow_back_ios_sharp,
+            color: Colors.black,
+          ),
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25.0),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
               height: 140,
@@ -82,11 +124,8 @@ class _ForgotScreenState extends State<ForgotScreen> {
             ),
             const SizedBox(height: 30),
             ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const VerificationCodeScreen(email: "email")),
-                );
+              onPressed: () async {
+                await requestPasswordReset(emailController.text);
               },
               style: ElevatedButton.styleFrom(
                 fixedSize: const Size(double.infinity, 50),
@@ -98,10 +137,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
               child: const Center(
                 child: Text(
                   'Continue',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w700),
+                  style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w700),
                 ),
               ),
             ),

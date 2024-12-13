@@ -40,17 +40,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> getProduct() async {
     int? id = context.dependencies.shp.getInt('user_id');
     if (id != null) {
-      String? result = await NetworkService.get(
-          Urls.profileContent, Urls.profileContentParam(id: id, size: 10),context);
+      String? result = await NetworkService.get(Urls.profileContent, Urls.profileContentParam(id: id, size: 10), context);
 
-
-      if(result != null){
-       content = profileContentFromJson(result);
-       list =  content.data!;
-       setState(() {});
+      if (result != null) {
+        content = profileContentFromJson(result);
+        list = content.data!;
+        setState(() {});
       }
     }
   }
+
 
   @override
   void initState() {
@@ -58,16 +57,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     profileRepository = ProfileRepository(
       dio: dio,
       getHeaders: () async {
-        return {
-          'Authorization':
-              'Bearer ${context.dependencies.shp.getString("token") ?? ""}'
-        };
+        return {'Authorization': 'Bearer ${context.dependencies.shp.getString("token") ?? ""}'};
       },
     );
   }
 
   @override
-  void didChangeDependencies()async{
+  void didChangeDependencies() async {
     await getProduct();
     super.didChangeDependencies();
   }
@@ -88,8 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             }
 
             final userProfile = snapshot.data!;
-            context.dependencies.shp
-                .setString("role", userProfile.data!.userRole);
+            context.dependencies.shp.setString("role", userProfile.data!.userRole);
             log("user id ${context.dependencies.shp.setInt("user_id", userProfile.data!.userId).toString()}");
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -103,8 +98,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 showMenu(
                                   color: context.colors.onPrimary,
                                   context: context,
-                                  position: const RelativeRect.fromLTRB(
-                                      100, 10, 0, 0),
+                                  position: const RelativeRect.fromLTRB(100, 10, 0, 0),
                                   items: [
                                     PopupMenuItem(
                                       onTap: () {
@@ -119,6 +113,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ],
                                       ),
                                     ),
+                                    PopupMenuItem(
+                                      onTap: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: const Text('Logout'),
+                                              content: const Text('Are you sure you want to log out?'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () => Navigator.pop(context),
+                                                  child: const Text('No'),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                    context.dependencies.shp.remove("token");
+                                                    context.go(AppRouter.welcome);
+                                                  },
+                                                  child: const Text('Yes'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                      value: 'option2',
+                                      child: const Row(
+                                        children: [Icon(Icons.login), SizedBox(width: 10), Text("Log out")],
+                                      ),
+                                    ),
                                   ],
                                 );
                               },
@@ -127,8 +152,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           centerTitle: true,
                           title: Text(
                             context.lang.profile,
-                            style: context.textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.w600),
+                            style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
                           ),
                           scrolledUnderElevation: 0,
                           automaticallyImplyLeading: false,
@@ -147,8 +171,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   radius: 40,
                                   child: Image(
                                     image: AssetImage(
-                                      userProfile.data?.authorImg ??
-                                          AppImages.userImage,
+                                      userProfile.data?.authorImg ?? AppImages.userImage,
                                     ),
                                   ),
                                 ),
@@ -157,15 +180,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 children: [
                                   Text(
                                     context.lang.recipe,
-                                    style:
-                                        context.textTheme.labelSmall?.copyWith(
+                                    style: context.textTheme.labelSmall?.copyWith(
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
                                   TextButton(
                                     style: const ButtonStyle(
-                                      padding: WidgetStatePropertyAll(
-                                          EdgeInsets.zero),
+                                      padding: WidgetStatePropertyAll(EdgeInsets.zero),
                                       overlayColor: WidgetStatePropertyAll(
                                         Colors.transparent,
                                       ),
@@ -173,9 +194,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     onPressed: () {},
                                     child: Text(
                                       "${userProfile.data?.recipeNumber ?? 0}",
-                                      style: context.textTheme.titleLarge
-                                          ?.copyWith(
-                                              fontWeight: FontWeight.w600),
+                                      style: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
                                     ),
                                   ),
                                 ],
@@ -184,8 +203,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 children: [
                                   Text(
                                     context.lang.followers,
-                                    style:
-                                        context.textTheme.labelSmall?.copyWith(
+                                    style: context.textTheme.labelSmall?.copyWith(
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
@@ -200,9 +218,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     },
                                     child: Text(
                                       "${userProfile.data?.followersCount ?? 0}",
-                                      style: context.textTheme.titleLarge
-                                          ?.copyWith(
-                                              fontWeight: FontWeight.w600),
+                                      style: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
                                     ),
                                   ),
                                 ],
@@ -211,23 +227,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 children: [
                                   Text(
                                     context.lang.following,
-                                    style:
-                                        context.textTheme.labelSmall?.copyWith(
+                                    style: context.textTheme.labelSmall?.copyWith(
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
                                   TextButton(
-                                    style: const ButtonStyle(
-                                        overlayColor: WidgetStatePropertyAll(
-                                            Colors.transparent)),
+                                    style: const ButtonStyle(overlayColor: WidgetStatePropertyAll(Colors.transparent)),
                                     onPressed: () {
                                       context.push(AppRouter.profileTapBar);
                                     },
                                     child: Text(
                                       "${userProfile.data?.followingCount ?? 0}",
-                                      style: context.textTheme.titleLarge
-                                          ?.copyWith(
-                                              fontWeight: FontWeight.w600),
+                                      style: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
                                     ),
                                   )
                                 ],
@@ -256,10 +267,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         SliverToBoxAdapter(
                           child: BlocProvider(
                               create: (context) => ProfileBloc(),
-                              child: userProfile.data?.description?.length !=
-                                          null &&
-                                      userProfile.data!.description!.length <=
-                                          100
+                              child: userProfile.data?.description?.length != null && userProfile.data!.description!.length <= 100
                                   ? MyViewMore(
                                       text: userProfile.data?.description ?? "",
                                     )
@@ -281,12 +289,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     itemBuilder: (context, index) {
                       final model = list[index];
                       return Padding(
-                      padding:  EdgeInsets.symmetric(vertical: 15.0),
-                      child: SizedBox(
-                        height: 170,
-                        child: SavedRecipe(model: model,),
-                      ),
-                    );},
+                        padding: EdgeInsets.symmetric(vertical: 15.0),
+                        child: SizedBox(
+                          height: 170,
+                          child: SavedRecipe(
+                            model: model,
+                          ),
+                        ),
+                      );
+                    },
                   )),
             );
           }),

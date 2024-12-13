@@ -19,6 +19,11 @@ class Urls{
   static const String user = '/user';
   static const String profileContent = '/user/profile-content';
   static const String savedRecipe = '/saved-recipes';
+  static const String addOneRecipe = '/recipeM/addOne';
+  static const String getAllIngredients = '/recipeA/ingredient';
+  static const String requestPasswordReset = '/auth/request-password-reset';
+  static const String refreshPassword = '/auth/reset-password';
+
 
   static Map<String, Object> profileContentParam({required int id, required int size}){
     Map<String, Object> map ={
@@ -35,6 +40,8 @@ class Urls{
     };
     return map;
   }
+
+
 
 
 
