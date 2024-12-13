@@ -22,7 +22,7 @@ class _HomeNavigationState extends State<HomeNavigation> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: widget.navigationShell,
-      floatingActionButton: widget.navigationShell.currentIndex == 3
+      floatingActionButton: widget.navigationShell.currentIndex == 3 && context.dependencies.shp.getString("role") == "CHEF"
           ? Material(
               elevation: 0,
               borderRadius: BorderRadius.circular(25),

@@ -11,5 +11,8 @@ class AppImages{
   static const String splash = "assets/images/splash_image.png";
   static const String whiteHat = "assets/images/white_hat.png";
   static const String galichka = "assets/images/galichka.png";
+  static const String userImage = "assets/images/user_default.jpg";
+  static const String defaultFood = "assets/images/default_food.jpg";
+  static const String whiteImage = "assets/images/white_image.jpg";
 
 }

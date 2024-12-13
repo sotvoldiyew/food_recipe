@@ -440,6 +440,26 @@ class S {
     );
   }
 
+  /// `Error Loading Profile`
+  String get errorLoadingProfile {
+    return Intl.message(
+      'Error Loading Profile',
+      name: 'errorLoadingProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Profile Data`
+  String get noProfileData {
+    return Intl.message(
+      'No Profile Data',
+      name: 'noProfileData',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `All`
   String get all {
     return Intl.message(

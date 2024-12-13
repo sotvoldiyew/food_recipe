@@ -4,6 +4,9 @@ import 'package:food_recipe/src/common/bloc/recipe_bloc.dart';
 import 'package:food_recipe/src/feature/create/bloc/create_bloc.dart';
 import 'package:food_recipe/src/feature/edit_profile/bloc/edit_profile_bloc.dart';
 import 'package:food_recipe/src/feature/edit_profile/screen/edit_profile.dart';
+import 'package:food_recipe/src/feature/ingrident/bloc/ingrident_bloc.dart';
+import 'package:food_recipe/src/feature/ingrident/screen/ingrident_screen.dart';
+import 'package:food_recipe/src/feature/profile/data/content_model.dart';
 import 'package:food_recipe/src/feature/ingredient/bloc/ingredient_bloc.dart';
 import 'package:food_recipe/src/feature/ingredient/screen/ingredient_screen.dart';
 import 'package:food_recipe/src/feature/main/bloc/main_bloc.dart';
@@ -22,11 +25,12 @@ import '../../feature/create/screen/create_screen.dart';
 import '../../feature/profile/bloc/profile_bloc.dart';
 import '../../../home_navigation.dart';
 import '../../feature/main/screen/main_screen.dart';
+import '../../feature/profile/data/profile_repository.dart';
 import '../../feature/search/screen/search_screen.dart';
 
 // import '../../feature/screens/welcome/screen/welcome_screen.dart';
 import '../../feature/splash/screen/login_screen.dart';
-import '../../feature/splash/screen/signup_screen.dart';
+import '../../feature/sign_up/screen/signup_screen.dart';
 import '../../feature/splash/screen/splash_screen.dart';
 
 class AppRouter {
@@ -56,7 +60,7 @@ late StatefulNavigationShell navigationShell2;
 
 GoRouter router = GoRouter(
   navigatorKey: appNavigatorKey,
-  initialLocation: AppRouter.signIn,
+  initialLocation: AppRouter.welcome,
   routes: [
     GoRoute(
       path: AppRouter.welcome,
@@ -78,8 +82,8 @@ GoRouter router = GoRouter(
       pageBuilder: (context, state) => CustomTransitionPage(
         key: state.pageKey,
         child: BlocProvider(
-          child: const IngredientScreen(),
-          create: (context) => IngredientBloc(),
+          child:  IngridentScreen(model: state.extra as Datum,),
+          create: (context) => IngridentBloc(),
         ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
@@ -274,7 +278,8 @@ GoRouter router = GoRouter(
                     BlocProvider(create: (context) => ProfileBloc()),
                     BlocProvider(create: (context) => RecipeBloc()),
                   ],
-                  child: const ProfileScreen(),
+                  child: const ProfileScreen(
+                  ),
                 ),
               ),
             )
@@ -284,4 +289,3 @@ GoRouter router = GoRouter(
     ),
   ],
 );
-

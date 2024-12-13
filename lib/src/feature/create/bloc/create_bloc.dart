@@ -17,9 +17,9 @@ class CreateBloc extends Bloc<CreateEvent, CreateState> {
   }
 
   Future<void> _pickImage(
-    ImagePicker$CreateEvent event,
-    Emitter<CreateState> emit,
-  ) async {
+      ImagePicker$CreateEvent event,
+      Emitter<CreateState> emit,
+      ) async {
     try {
       final ImagePicker picker = ImagePicker();
       final XFile? image = await picker.pickImage(source: ImageSource.gallery);
@@ -43,11 +43,12 @@ class CreateBloc extends Bloc<CreateEvent, CreateState> {
   }
 
   Future<void> _selectCategory(
-    CategorySelecter$CreateEvent event,
-    Emitter<CreateState> emit,
-  ) async {
+      CategorySelecter$CreateEvent event,
+      Emitter<CreateState> emit,
+      ) async {
     try {
-      if (event.selectedCategory.isNotEmpty && state.categories.contains(event.selectedCategory)) {
+      if (event.selectedCategory.isNotEmpty &&
+          state.categories.contains(event.selectedCategory)) {
         emit(state.copyWith(
           status: Status.success,
           selectedCategory: event.selectedCategory,

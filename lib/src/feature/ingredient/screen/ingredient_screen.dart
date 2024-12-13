@@ -1,7 +1,11 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:food_recipe/src/common/utils/context_extention.dart';
+import 'package:food_recipe/src/feature/ingrident/data/steps_model.dart';
+import 'package:food_recipe/src/feature/profile/data/content_model.dart';
 import 'package:food_recipe/src/common/router/app_router.dart';
 import 'package:food_recipe/src/common/utils/context_extension.dart';
 import 'package:food_recipe/src/feature/ingredient/bloc/ingredient_bloc.dart';
@@ -11,8 +15,18 @@ import 'package:food_recipe/src/feature/ingredient/widget/ingredient_items.dart'
 import 'package:food_recipe/src/feature/ingredient/widget/procedure_steps.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../common/constants/constants.dart';
+import '../../../common/router/app_router.dart';
+import '../../../common/service/new_dio_service.dart';
 import '../../../common/style/app_icons.dart';
+import '../bloc/ingrident_bloc.dart';
+import '../data/copy_model.dart';
+import '../data/ingridient_model.dart';
+import '../widget/follow_profile.dart';
+import '../widget/food_ingrident.dart';
+import '../widget/ingrident_items.dart';
 import '../widget/my_delegate.dart';
+import '../widget/procedure_steps.dart';
 import '../widget/rating.dart';
 
 enum SampleItem {
@@ -22,14 +36,68 @@ enum SampleItem {
   itemFour,
 }
 
-class IngredientScreen extends StatefulWidget {
-  const IngredientScreen({super.key});
+class IngridentScreen extends StatefulWidget {
+  const IngridentScreen({super.key, required this.model});
+
+  final Datum model;
 
   @override
   State<IngredientScreen> createState() => _IngredientScreenState();
 }
 
-class _IngredientScreenState extends State<IngredientScreen> {
+class _IngridentScreenState extends State<IngridentScreen> {
+  List<Datumm> stepsList = [];
+  List<Datum2> ingredientList = [];
+  late Data2 copyLink;
+
+  Future<void> getSteps() async {
+    ///recipeM/4/steps
+    String? result = await NetworkService.get(
+        Urls.steps(widget.model.id!), Urls.emptyParam(), context);
+    if (result != null) {
+      final model = stepsModelFromJson(result);
+      stepsList = model.data!;
+      setState(() {});
+    } else {
+      log("somth went wrong ");
+    }
+  }
+
+  Future<void> getLink() async {
+    ///recipeM/4/steps
+    String? result = await NetworkService.get(
+        Urls.copyLink(widget.model.id!), Urls.emptyParam(), context);
+    if (result != null) {
+      final model = copyLinkFromJson(result);
+      log("\n\n\n Modeol $model\n\n\n");
+      copyLink = model.data!;
+      setState(() {});
+    } else {
+      log("somth went wrong ");
+    }
+  }
+
+  Future<void> getIngredient() async {
+    String? result = await NetworkService.get(
+        Urls.ingrident(widget.model.id!), Urls.emptyParam(), context);
+    if (result != null) {
+      final model = ingedientModelFromJson(result);
+      log("\n\n\n\n\n\n\nsuccessfully result $result\n model text: ${model.text}\n\n\n\n\n");
+      ingredientList = model.data!;
+      setState(() {});
+    } else {
+      log("somth went wrong  iuerfherirgeriu ");
+    }
+  }
+
+  @override
+  void initState() {
+    getLink();
+    getIngredient();
+    getSteps();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,7 +165,7 @@ class _IngredientScreenState extends State<IngredientScreen> {
                                                 width: double.infinity,
                                                 child: Center(
                                                   child: Text(
-                                                    "app.Recipe.co/jollof_rice",
+                                                    "${copyLink.link}",
                                                     textAlign: TextAlign.start,
                                                     style: context
                                                         .textTheme.labelSmall
@@ -123,10 +191,10 @@ class _IngredientScreenState extends State<IngredientScreen> {
                                                 elevation: 0,
                                                 padding: EdgeInsets.zero,
                                                 onPressed: () async {
-                                                  const textToCopy =
-                                                      "app.Recipe.co/jollof_rice";
+                                                  String textToCopy =
+                                                      "${copyLink.link}";
                                                   await Clipboard.setData(
-                                                      const ClipboardData(
+                                                      ClipboardData(
                                                           text: textToCopy));
 
                                                   ScaffoldMessenger.of(context)
@@ -272,16 +340,16 @@ class _IngredientScreenState extends State<IngredientScreen> {
                               ],
                             ),
                           ),
-                          PopupMenuItem<SampleItem>(
-                            value: SampleItem.itemFour,
-                            child: Row(
-                              children: [
-                                SvgPicture.asset(AppIcons.saveBlack),
-                                const SizedBox(width: 8),
-                                Text(context.lang.unsaved),
-                              ],
-                            ),
-                          )
+                          // PopupMenuItem<SampleItem>(
+                          //   value: SampleItem.itemFour,
+                          //   child: Row(
+                          //     children: [
+                          //       SvgPicture.asset(AppIcons.saveBlack),
+                          //       const SizedBox(width: 8),
+                          //       Text(context.lang.unsave),
+                          //     ],
+                          //   ),
+                          // )
                         ],
                       );
                     },
@@ -289,7 +357,10 @@ class _IngredientScreenState extends State<IngredientScreen> {
                   ),
                 ],
               ),
-              const SliverToBoxAdapter(child: FoodIngredient()),
+              SliverToBoxAdapter(
+                  child: FoodIngrident(
+                model: widget.model,
+              )),
               const SliverToBoxAdapter(child: SizedBox(height: 15)),
               SliverToBoxAdapter(
                 child: Row(
@@ -297,7 +368,7 @@ class _IngredientScreenState extends State<IngredientScreen> {
                   children: [
                     Expanded(
                       child: Text(
-                        "Spicy chicken burger with French fries",
+                        "${widget.model.title}",
                         style: context.textTheme.titleSmall
                             ?.copyWith(fontWeight: FontWeight.w700),
                         maxLines: 2,
@@ -340,7 +411,7 @@ class _IngredientScreenState extends State<IngredientScreen> {
                     ),
                     const Spacer(),
                     Text(
-                      "10 ${state.isIngredient ? context.lang.items : context.lang.steps}",
+                      " ${state.isIngrident ? "${ingredientList.length} ${context.lang.items}" : "${stepsList.length} ${context.lang.steps}"}",
                       style: context.textTheme.labelSmall
                           ?.copyWith(fontWeight: FontWeight.w400),
                     )
@@ -349,9 +420,11 @@ class _IngredientScreenState extends State<IngredientScreen> {
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 15)),
             ],
-            body: state.isIngredient
-                ? const IngredientItems()
-                : const ProcedureSteps(),
+            body: state.isIngrident
+                ? IngridentItems(
+                    list: ingredientList,
+                  )
+                : ProcedureSteps(list: stepsList),
           ),
         ),
       ),

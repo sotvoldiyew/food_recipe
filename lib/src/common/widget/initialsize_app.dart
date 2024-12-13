@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:food_recipe/src/common/service/api_service.dart';
+import 'package:food_recipe/src/feature/edit_profile/data/edit_repository.dart';
 import 'package:food_recipe/src/feature/reviews/data/review_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,9 +27,9 @@ class InitializeApp {
 
     final dio = Dio(
       BaseOptions(
-        baseUrl: Urls.baseUrl,
+        baseUrl: Constants.baseUrl,
         connectTimeout: const Duration(seconds: 30),
-        receiveTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 30)
       )
     );
 
@@ -37,6 +39,7 @@ class InitializeApp {
     final reviewRepository = ReviewRepositoryImpl(apiService: apiService);
     final mainRepository = MainRepositoryImpl(apiService: apiService);
     final searchRepository = SearchRepositoryImpl(apiService: apiService);
+    IEditRepository editRepository = EditRepositoryImpl(apiService: apiService);
 
     return AppDependency(
       locale: locale,
@@ -46,6 +49,7 @@ class InitializeApp {
       reviewRepository: reviewRepository,
       mainRepository: mainRepository,
       searchRepository: searchRepository,
+      editRepository: editRepository,
     );
   }
 }

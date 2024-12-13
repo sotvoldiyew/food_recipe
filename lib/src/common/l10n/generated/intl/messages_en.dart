@@ -32,6 +32,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "description": MessageLookupByLibrary.simpleMessage("Description"),
         "editProfile": MessageLookupByLibrary.simpleMessage("Edit Profile"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),
+        "errorLoadingProfile":
+            MessageLookupByLibrary.simpleMessage("Error Loading Profile"),
         "follow": MessageLookupByLibrary.simpleMessage("Follow"),
         "followers": MessageLookupByLibrary.simpleMessage("Followers"),
         "following": MessageLookupByLibrary.simpleMessage("Following"),
@@ -47,6 +49,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "no_recent_recipes":
             MessageLookupByLibrary.simpleMessage("Recent recipes not found"),
         "no_recipes": MessageLookupByLibrary.simpleMessage("Recipes not found"),
+        "noProfileData":
+            MessageLookupByLibrary.simpleMessage("No Profile Data"),
         "procedure": MessageLookupByLibrary.simpleMessage("Procedure"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "rateRecipe": MessageLookupByLibrary.simpleMessage("Rate Recipe"),

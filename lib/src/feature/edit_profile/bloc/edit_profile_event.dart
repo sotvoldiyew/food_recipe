@@ -5,5 +5,7 @@ sealed class EditProfileEvent {
 }
 
 class ImagePicker$EditProfileEvent extends EditProfileEvent{
- const ImagePicker$EditProfileEvent();
+ final BuildContext context;
+
+ const ImagePicker$EditProfileEvent({required this.context});
 }
