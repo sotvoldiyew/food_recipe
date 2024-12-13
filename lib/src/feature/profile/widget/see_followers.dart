@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_recipe/src/common/style/app_images.dart';
-import 'package:food_recipe/src/common/utils/context_extention.dart';
-import 'package:food_recipe/src/feature/ingrident/bloc/ingrident_bloc.dart';
+import 'package:food_recipe/src/common/utils/context_extension.dart';
+import 'package:food_recipe/src/feature/ingredient/bloc/ingredient_bloc.dart';
 
 class ProfileTabBarPage extends StatefulWidget {
   const ProfileTabBarPage({super.key});
@@ -63,7 +63,7 @@ class _ProfileTabBarPageState extends State<ProfileTabBarPage>
                 ),
               ),
               subtitle: const Text('Chef'),
-              trailing: BlocBuilder<IngridentBloc, IngridentState>(
+              trailing: BlocBuilder<IngredientBloc, IngredientState>(
                 builder: (context, state) => MaterialButton(
                   splashColor: Colors.transparent,
                   elevation: 0,
@@ -83,7 +83,7 @@ class _ProfileTabBarPageState extends State<ProfileTabBarPage>
                     ),
                   ),
                   onPressed: () {
-                    context.read<IngridentBloc>().add(const FollowButton$IngridentEvent());
+                    context.read<IngredientBloc>().add(const FollowButton$IngredientEvent());
                   },
                 ),
             ),
@@ -103,7 +103,7 @@ class _ProfileTabBarPageState extends State<ProfileTabBarPage>
                 ),
               ),
               subtitle: const Text('Chef'),
-              trailing: BlocBuilder<IngridentBloc, IngridentState>(
+              trailing: BlocBuilder<IngredientBloc, IngredientState>(
                 builder: (context, state) => MaterialButton(
                   splashColor: Colors.transparent,
                   elevation: 0,
@@ -123,7 +123,7 @@ class _ProfileTabBarPageState extends State<ProfileTabBarPage>
                     ),
                   ),
                   onPressed: () {
-                    context.read<IngridentBloc>().add(const FollowButton$IngridentEvent());
+                    context.read<IngredientBloc>().add(const FollowButton$IngredientEvent());
                   },
                 ),
               ),

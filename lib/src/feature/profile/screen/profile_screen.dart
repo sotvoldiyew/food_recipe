@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_recipe/src/common/router/app_router.dart';
 import 'package:food_recipe/src/common/style/app_images.dart';
-import 'package:food_recipe/src/common/utils/context_extention.dart';
+import 'package:food_recipe/src/common/utils/context_extension.dart';
 import 'package:food_recipe/src/feature/profile/bloc/profile_bloc.dart';
 import 'package:food_recipe/src/feature/profile/widget/my_sliver_delegete.dart';
 import 'package:food_recipe/src/feature/profile/widget/view_more.dart';

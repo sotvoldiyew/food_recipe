@@ -7,7 +7,7 @@ part 'saved_event.dart';
 part 'saved_state.dart';
 
 class SavedBloc extends Bloc<SavedEvent, SavedState> {
-  SavedBloc() : super(SavedState()) {
+  SavedBloc() : super(const SavedState()) {
     on<SavedEvent>(
       (event, emit) => switch (event) {
         SaveButton$Savedevent() => _saveButton(event, emit),

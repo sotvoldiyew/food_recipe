@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_recipe/src/common/router/app_router.dart';
-import 'package:food_recipe/src/common/utils/context_extention.dart';
+import 'package:food_recipe/src/common/utils/context_extension.dart';
 import 'package:food_recipe/src/feature/splash/screen/forgot_screen.dart';
 import 'package:food_recipe/src/feature/splash/screen/signup_screen.dart';
 import 'package:go_router/go_router.dart';

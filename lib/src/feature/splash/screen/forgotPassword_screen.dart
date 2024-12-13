@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_recipe/src/common/utils/context_extention.dart';
+import 'package:food_recipe/src/common/utils/context_extension.dart';
 import 'package:food_recipe/src/feature/splash/screen/new_password.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pinput/pinput.dart';
@@ -24,16 +24,11 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
       margin: const EdgeInsets.all(7),
       padding: const EdgeInsets.all(10),
       textStyle: context.textTheme.bodyLarge?.copyWith(
-        fontSize: 20,
-        fontWeight: FontWeight.w600,
-        color: Colors.black
-      ),
+          fontSize: 20, fontWeight: FontWeight.w600, color: Colors.black),
       decoration: BoxDecoration(
         color: Colors.grey[300],
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(
-          color: const Color(0xFFE8ECF4)
-        ),
+        border: Border.all(color: const Color(0xFFE8ECF4)),
       ),
     );
     final focusedPinTheme = defaultPinTheme.copyWith(
@@ -48,7 +43,9 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: const Color(0xFF129575),),
+        border: Border.all(
+          color: const Color(0xFF129575),
+        ),
       ),
     );
     return Scaffold(
@@ -60,8 +57,10 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
           onPressed: () {
             context.pop();
           },
-          icon: const Icon(Icons.arrow_back_ios_sharp,
-          color: Colors.black,),
+          icon: const Icon(
+            Icons.arrow_back_ios_sharp,
+            color: Colors.black,
+          ),
         ),
       ),
       body: Padding(
@@ -82,10 +81,9 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
               style: context.textTheme.bodyLarge?.copyWith(
                 fontSize: 17,
                 fontWeight: FontWeight.w500,
-                color: Colors.grey
+                color: Colors.grey,
               ),
             ),
-
             const SizedBox(height: 40),
             Pinput(
               length: 4,
@@ -103,8 +101,8 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                 onPressed: () {
                   //Navigator.push(
                   //  context,
-                   // MaterialPageRoute(builder: (context) => NewPassword()),
-                 // );
+                  // MaterialPageRoute(builder: (context) => NewPassword()),
+                  // );
                 },
                 style: ElevatedButton.styleFrom(
                   fixedSize: const Size(double.infinity, 50),
@@ -113,42 +111,46 @@ class _VerificationCodeScreenState extends State<VerificationCodeScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-
                 child: Center(
                   child: Text(
                     "Continue",
                     style: context.textTheme.bodyLarge?.copyWith(
                       fontSize: 17,
                       fontWeight: FontWeight.w600,
-                      color: Colors.white
+                      color: Colors.white,
                     ),
                   ),
                 ),
               ),
-            ),const Spacer(),
+            ),
+            const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
                   "Didn't received code? ",
                   style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 13),
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 13,
+                  ),
                 ),
                 GestureDetector(
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const NewPassword()),
+                      MaterialPageRoute(
+                        builder: (context) => const NewPassword(),
+                      ),
                     );
                   },
                   child: const Text(
                     'Resend',
                     style: TextStyle(
-                        color: Color(0xffFF9C00),
-                        fontWeight: FontWeight.w500,
-                        fontSize: 13),
+                      color: Color(0xffFF9C00),
+                      fontWeight: FontWeight.w500,
+                      fontSize: 13,
+                    ),
                   ),
                 ),
               ],

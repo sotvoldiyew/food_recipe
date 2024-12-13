@@ -1,10 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_recipe/src/common/style/app_icons.dart';
-import 'package:food_recipe/src/common/utils/context_extention.dart';
+import 'package:food_recipe/src/common/utils/context_extension.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../common/router/app_router.dart';
+import '../../../../common/style/app_images.dart';
+import '../../bloc/search_bloc.dart';
 
 class SavedRecipe extends StatelessWidget {
   const SavedRecipe({
@@ -12,6 +16,7 @@ class SavedRecipe extends StatelessWidget {
     required this.text,
     required this.byName,
     required this.reputation,
+    required this.id,
     super.key,
   });
 
@@ -19,11 +24,18 @@ class SavedRecipe extends StatelessWidget {
   final String text;
   final String byName;
   final double reputation;
+  final int id;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        context.read<SearchBloc>().add(
+              AddRecentRecipe$SearchEvent(
+                context: context,
+                id: id,
+              ),
+            );
         context.push(AppRouter.ingrident);
       },
       child: SizedBox(
@@ -32,8 +44,23 @@ class SavedRecipe extends StatelessWidget {
           child: Stack(
             children: [
               // Image layer
-              Positioned.fill(
-                child: Image.asset(image, fit: BoxFit.cover),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: CachedNetworkImage(
+                  imageUrl: image,
+                  errorWidget: (context, url, error) {
+                    return const Center(
+                      child: Image(
+                        image: AssetImage(AppImages.chef),
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  },
+                  placeholder: (context, url) => CircularProgressIndicator(
+                    color: context.colors.onPrimary,
+                  ),
+                  fit: BoxFit.cover,
+                ),
               ),
 
               // Gradiant

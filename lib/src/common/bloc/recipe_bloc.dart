@@ -8,7 +8,7 @@ part 'recipe_state.dart';
 
 
 class RecipeBloc extends Bloc<RecipeEvent, RecipeState> {
-  RecipeBloc() : super(RecipeState()) {
+  RecipeBloc() : super(const RecipeState()) {
     on<RecipeEvent>(
           (event, emit) => switch (event) {
         SaveButton$RecipeEvent() => _saveButton(event, emit),

@@ -37,19 +37,31 @@ class MessageLookup extends MessageLookupByLibrary {
         "following": MessageLookupByLibrary.simpleMessage("Following"),
         "foodReviews": MessageLookupByLibrary.simpleMessage("k Reviews"),
         "hello": MessageLookupByLibrary.simpleMessage("Hello"),
-        "ingrident": MessageLookupByLibrary.simpleMessage("Ingrident"),
+        "ingredient": MessageLookupByLibrary.simpleMessage("Ingredient"),
         "items": MessageLookupByLibrary.simpleMessage("Items"),
         "min": MessageLookupByLibrary.simpleMessage("min"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
+        "new_recipes": MessageLookupByLibrary.simpleMessage("New Recipes"),
+        "no_comments":
+            MessageLookupByLibrary.simpleMessage("Comments not found"),
+        "no_recent_recipes":
+            MessageLookupByLibrary.simpleMessage("Recent recipes not found"),
+        "no_recipes": MessageLookupByLibrary.simpleMessage("Recipes not found"),
         "procedure": MessageLookupByLibrary.simpleMessage("Procedure"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "rateRecipe": MessageLookupByLibrary.simpleMessage("Rate Recipe"),
+        "recent_search": MessageLookupByLibrary.simpleMessage("Recent Search"),
         "recipe": MessageLookupByLibrary.simpleMessage("Recipe"),
         "recipeLink": MessageLookupByLibrary.simpleMessage("Recipe Link"),
         "review": MessageLookupByLibrary.simpleMessage("Review"),
+        "reviews": MessageLookupByLibrary.simpleMessage("Reviews"),
         "role": MessageLookupByLibrary.simpleMessage("Role"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "savedRecipes": MessageLookupByLibrary.simpleMessage("Saved Recipes"),
+        "say_something":
+            MessageLookupByLibrary.simpleMessage("Say something..."),
+        "search_recipe": MessageLookupByLibrary.simpleMessage("Search recipe"),
+        "search_result": MessageLookupByLibrary.simpleMessage("Search result"),
         "send": MessageLookupByLibrary.simpleMessage("Send"),
         "serve": MessageLookupByLibrary.simpleMessage("Serve"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
@@ -57,11 +69,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "steps": MessageLookupByLibrary.simpleMessage("Steps"),
         "textSaved":
             MessageLookupByLibrary.simpleMessage("Text saved to clipboard!"),
-        "unsave": MessageLookupByLibrary.simpleMessage("Unsave"),
+        "unsaved": MessageLookupByLibrary.simpleMessage("Unsaved"),
         "uploadImage": MessageLookupByLibrary.simpleMessage("Upload Image"),
         "videoLink": MessageLookupByLibrary.simpleMessage("Video Link"),
         "videoMin": MessageLookupByLibrary.simpleMessage("Video Minute"),
         "viewLess": MessageLookupByLibrary.simpleMessage(" View Less"),
-        "viewMore": MessageLookupByLibrary.simpleMessage(" More...")
+        "viewMore": MessageLookupByLibrary.simpleMessage(" More..."),
+        "what_cooking":
+            MessageLookupByLibrary.simpleMessage("What are you cooking today?")
       };
 }

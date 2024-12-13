@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
@@ -24,22 +25,24 @@ class ApiService {
   }
 
   Future<Map<String, Object?>> request(
-      String path, {
-        Method method = Method.get,
-        bool setToken = true,
-        Object? data,
-        Map<String, Object?>? headers,
-        Map<String, Object?>? queryParams,
-        FormData? formData,
-      }) async {
+    String path, {
+    Method method = Method.get,
+    bool setToken = true,
+    Object? data,
+    Map<String, Object?>? headers,
+    Map<String, Object?>? queryParams,
+    FormData? formData,
+  }) async {
     final sw = Stopwatch()..start();
     if (!await checkConnection()) throw Exception("No Connection");
 
     try {
+      const token = 'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzM5Mjk4MTEsInN1YiI6InNheWR1bGxhMjQxMEBnbWFpbC5jb20iLCJleHAiOjE3MzY1MjE4MTF9.dnW_aaHAr_Qve92oCeP6nLHwnEvzAoGj2WJCQBz67ew';
+
       final requestHeaders = {
         ...?headers,
-        'content-Type':
-        formData != null ? 'multipart/form-data' : 'application/json',
+        'Authorization': 'Bearer $token',
+        'content-Type': formData != null ? 'multipart/form-data' : 'application/json',
       };
 
       final response = await dio.request<Map<String, Object?>?>(path,
@@ -49,6 +52,8 @@ class ApiService {
             method: method.name,
             headers: requestHeaders,
           ));
+
+      log("Response Data: $response");
 
       if (response.statusCode == null ||
           response.statusCode! > 204 ||

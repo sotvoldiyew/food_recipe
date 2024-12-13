@@ -4,13 +4,16 @@ import 'package:food_recipe/src/common/bloc/recipe_bloc.dart';
 import 'package:food_recipe/src/feature/create/bloc/create_bloc.dart';
 import 'package:food_recipe/src/feature/edit_profile/bloc/edit_profile_bloc.dart';
 import 'package:food_recipe/src/feature/edit_profile/screen/edit_profile.dart';
-import 'package:food_recipe/src/feature/ingrident/bloc/ingrident_bloc.dart';
-import 'package:food_recipe/src/feature/ingrident/screen/ingrident_screen.dart';
+import 'package:food_recipe/src/feature/ingredient/bloc/ingredient_bloc.dart';
+import 'package:food_recipe/src/feature/ingredient/screen/ingredient_screen.dart';
+import 'package:food_recipe/src/feature/main/bloc/main_bloc.dart';
 import 'package:food_recipe/src/feature/profile/screen/profile_screen.dart';
 import 'package:food_recipe/src/feature/profile/widget/see_followers.dart';
+import 'package:food_recipe/src/feature/reviews/bloc/review_bloc.dart';
 import 'package:food_recipe/src/feature/saved/bloc/saved_bloc.dart';
 import 'package:food_recipe/src/feature/saved/screen/saved_screen.dart';
 import 'package:food_recipe/src/feature/reviews/screen/review.dart';
+import 'package:food_recipe/src/feature/search/bloc/search_bloc.dart';
 import 'package:food_recipe/src/feature/splash/screen/notifications_screen.dart';
 import 'package:food_recipe/src/feature/notification/screen/notifications_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -75,8 +78,8 @@ GoRouter router = GoRouter(
       pageBuilder: (context, state) => CustomTransitionPage(
         key: state.pageKey,
         child: BlocProvider(
-          child: const IngridentScreen(),
-          create: (context) => IngridentBloc(),
+          child: const IngredientScreen(),
+          create: (context) => IngredientBloc(),
         ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
@@ -88,9 +91,14 @@ GoRouter router = GoRouter(
     ),
     GoRoute(
       path: AppRouter.search,
+      name: AppRouter.search,
       pageBuilder: (context, state) => CustomTransitionPage(
-        child: SearchScreen(
-          allRecipes: state.extra as List<Map<String, Object?>>,
+        child: BlocProvider<SearchBloc>(
+          create: (BuildContext context) => SearchBloc()
+            ..add(
+              GetRecipes$SearchEvent(context: context),
+            ),
+          child: const SearchScreen(),
         ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
@@ -139,7 +147,7 @@ GoRouter router = GoRouter(
         key: state.pageKey,
         child: BlocProvider(
           child: const ProfileTabBarPage(),
-          create: (context) => IngridentBloc(),
+          create: (context) => IngredientBloc(),
         ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
@@ -182,7 +190,12 @@ GoRouter router = GoRouter(
       name: AppRouter.review,
       pageBuilder: (context, state) => CustomTransitionPage(
         key: state.pageKey,
-        child: const ReviewsPage(),
+        child: BlocProvider(
+          create: (BuildContext context) => ReviewBloc()..add(
+            GetReviews$ReviewEvent(context: context, recipeId: 1, userId: 5),
+          ),
+          child: const ReviewsScreen(),
+        ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(
             opacity: animation,
@@ -203,8 +216,15 @@ GoRouter router = GoRouter(
           routes: [
             GoRoute(
               path: AppRouter.home,
-              pageBuilder: (context, state) => const NoTransitionPage(
-                child: MainScreen(),
+              name: AppRouter.home,
+              pageBuilder: (context, state) => NoTransitionPage(
+                child: BlocProvider(
+                  create: (context) => MainBloc()
+                    ..add(
+                      GetAllData$MainEvent(context: context),
+                    ),
+                  child: const MainScreen(),
+                ),
               ),
               routes: const [],
             ),

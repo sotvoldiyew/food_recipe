@@ -1,15 +1,15 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:food_recipe/src/common/utils/context_extention.dart';
+import 'package:food_recipe/src/common/utils/context_extension.dart';
 import 'package:food_recipe/src/common/widget/my_text_fild.dart';
 import 'package:food_recipe/src/feature/create/bloc/create_bloc.dart';
 
 class CreateScreen extends StatefulWidget {
-  const CreateScreen({Key? key}) : super(key: key);
+  const CreateScreen({super.key});
 
   @override
-  _CreateScreenState createState() => _CreateScreenState();
+  State<CreateScreen> createState() => _CreateScreenState();
 }
 
 class _CreateScreenState extends State<CreateScreen> {
@@ -145,7 +145,7 @@ class _CreateScreenState extends State<CreateScreen> {
                     );
 
                     // Agar kategoriya tanlangan bo‘lsa, BLoC ga yuboriladi
-                    if (selected != null) {
+                    if (selected != null && context.mounted) {
                       context.read<CreateBloc>().add(
                             CategorySelecter$CreateEvent(
                                 selectedCategory: selected),

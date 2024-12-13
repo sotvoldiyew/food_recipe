@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:food_recipe/home_navigation.dart';
-import 'package:food_recipe/src/common/utils/context_extention.dart';
+import 'package:food_recipe/src/common/utils/context_extension.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
 
   @override
-  _NotificationsScreenState createState() => _NotificationsScreenState();
+  State<NotificationsScreen> createState() => _NotificationsScreenState();
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
@@ -15,17 +14,20 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   final List<Map<String, String>> notifications = [
     {
       'title': 'New Recipe Alert!',
-      'description': 'Lorem Ipsum tempor incididunt ut labore et dolore, in voluptate velit esse cillum',
+      'description':
+          'Lorem Ipsum tempor incididunt ut labore et dolore, in voluptate velit esse cillum',
       'time': '10 mins ago',
     },
     {
       'title': 'New Recipe Alert!',
-      'description': 'Lorem Ipsum tempor incididunt ut labore et dolore, in voluptate velit esse cillum',
+      'description':
+          'Lorem Ipsum tempor incididunt ut labore et dolore, in voluptate velit esse cillum',
       'time': '30 mins ago',
     },
     {
       'title': 'Save Recipe Alert!',
-      'description': 'Lorem Ipsum tempor incididunt ut labore et dolore, in voluptate velit esse cillum',
+      'description':
+          'Lorem Ipsum tempor incididunt ut labore et dolore, in voluptate velit esse cillum',
       'time': '30 mins ago',
     },
   ];
@@ -90,7 +92,12 @@ class FilterButton extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onTap;
 
-  FilterButton({required this.text, required this.isSelected, required this.onTap});
+  const FilterButton({
+    super.key,
+    required this.text,
+    required this.isSelected,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +112,8 @@ class FilterButton extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
-            color: isSelected ? context.colors.onPrimary : context.colors.primary,
+            color:
+                isSelected ? context.colors.onPrimary : context.colors.primary,
             fontWeight: FontWeight.w600,
           ),
         ),

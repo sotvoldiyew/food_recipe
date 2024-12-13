@@ -1,113 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_recipe/src/common/router/app_router.dart';
-import 'package:food_recipe/src/common/utils/context_extention.dart';
+import 'package:food_recipe/src/common/utils/context_extension.dart';
 import 'package:food_recipe/src/feature/main/screen/widgets/cuisine_button.dart';
 import 'package:food_recipe/src/feature/main/screen/widgets/recipe_card.dart';
 import 'package:food_recipe/src/feature/main/screen/widgets/recipe_card_info.dart';
 import 'package:go_router/go_router.dart';
 
-class MainScreen extends StatefulWidget {
+import '../bloc/main_bloc.dart';
+
+class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
-
-  @override
-  State<MainScreen> createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
-  TextEditingController searchController = TextEditingController();
-
-  List<Map<String, Object?>> allRecipes = [
-    {
-      "image": "assets/images/recipe1.png",
-      "title": "Classic Greek Salad",
-      "time": "15 Mins",
-      "rating": 4.5,
-      "cuisine": "Greek"
-    },
-    {
-      "image": "assets/images/recipe2.png",
-      "title": "Crunchy Nut Coleslaw",
-      "time": "10 Mins",
-      "rating": 3.5,
-      "cuisine": "American"
-    },
-    {
-      "image": "assets/images/recipe1.png",
-      "title": "Tandoori Chicken",
-      "time": "30 Mins",
-      "rating": 4.7,
-      "cuisine": "Indian"
-    },
-    {
-      "image": "assets/images/recipe2.png",
-      "title": "Spaghetti Carbonara",
-      "time": "20 Mins",
-      "rating": 4.2,
-      "cuisine": "Italian"
-    },
-    {
-      "image": "assets/images/recipe2.png",
-      "title": "Egg Fried Rice",
-      "time": "20 Mins",
-      "rating": 4.1,
-      "cuisine": "Chinese"
-    },
-    {
-      "image": "assets/images/recipe2.png",
-      "title": "Sushi Rolls",
-      "time": "25 Mins",
-      "rating": 4.8,
-      "cuisine": "Japanese"
-    },
-  ];
-
-  final List<Map<String, Object?>> recipes = [
-    {
-      'title': 'Steak with tomato',
-      'author': 'James Milner',
-      'time': '20 mins',
-      'rating': 4.5,
-      'image': 'assets/images/steak.png',
-    },
-    {
-      'title': 'Pilaf sweet rice',
-      'author': 'Laura Clark',
-      'time': '30 mins',
-      'rating': 4.2,
-      'image': 'assets/images/steak.png',
-    },
-    {
-      'title': 'Chicken curry',
-      'author': 'John Doe',
-      'time': '25 mins',
-      'rating': 4.7,
-      'image': 'assets/images/steak.png',
-    },
-  ];
-
-  List<Map<String, Object?>> filteredRecipes = [];
-
-  String selectedCuisine = "All";
-  List<String> cuisines = ["All", "Indian", "Italian", "Asian", "Chinese"];
-
-  @override
-  void initState() {
-    super.initState();
-    filteredRecipes = allRecipes;
-  }
-
-  void _filterRecipes(String cuisine) {
-    setState(() {
-      selectedCuisine = cuisine;
-      if (cuisine == context.lang.all) {
-        filteredRecipes = allRecipes;
-      } else {
-        filteredRecipes = allRecipes.where((recipe) {
-        return recipe["cuisine"] == cuisine;
-        }).toList();
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +18,7 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(
         scrolledUnderElevation: 0,
         forceMaterialTransparency: true,
-        backgroundColor: Colors.white,
+        backgroundColor: context.colors.onPrimary,
         elevation: 0,
         toolbarHeight: 80,
         title: Column(
@@ -130,7 +33,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
             const SizedBox(height: 5),
             Text(
-              "What are you cooking today?",
+              context.lang.what_cooking,
               style: context.textTheme.bodySmall?.copyWith(
                 color: context.colors.outline,
               ),
@@ -146,123 +49,153 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
-      backgroundColor: Colors.white,
-      body: ListView(
-        children: [
-          const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      context.push(
-                        AppRouter.search,
-                        extra: allRecipes,
-                      );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 14,
-                      ),
-                      decoration: BoxDecoration(
-                        color: context.colors.surfaceContainer,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Row(
-                        children: [
-                          Icon(Icons.search, color: Colors.grey),
-                          SizedBox(width: 8),
-                          Text(
-                            "Search recipe",
-                            style: TextStyle(color: Colors.grey),
+      backgroundColor: context.colors.onPrimary,
+      body: BlocBuilder<MainBloc, MainState>(
+        builder: (context, state) => state.categories.isEmpty
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : ListView(
+                children: [
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              context.push(AppRouter.search);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 14,
+                              ),
+                              decoration: BoxDecoration(
+                                color: context.colors.surfaceContainer,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.search,
+                                    color: context.colors.outline,
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    context.lang.search_recipe,
+                                    style:
+                                        context.textTheme.bodyMedium?.copyWith(
+                                      color: context.colors.outline,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                        ],
+                        ),
+                        const SizedBox(width: 12),
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: context.colors.primary,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Icon(
+                            Icons.filter_list,
+                            color: context.colors.onPrimary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Cuisine Filter Buttons
+                  SizedBox(
+                    height: 38,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        const SizedBox(width: 16),
+                        for (int i = 0; i < state.categories.length; i++)
+                          CuisineButton(
+                            label: state.categories[i].name,
+                            isSelected: state.categories[i].id == state.selectedCategoryId,
+                            onTap: () {
+                              context.read<MainBloc>().add(
+                                    GetRecipesByCategory$MainEvent(
+                                      context: context,
+                                      category: state.categories[i].id,
+                                    ),
+                                  );
+                            },
+                          ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Horizontal Recipe List
+                  state.recipes.isNotEmpty
+                      ? SizedBox(
+                          height: 230,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              const SizedBox(width: 16),
+                              for (int i = 0; i < state.recipes.length; i++)
+                                RecipeCard(
+                                  image: state.recipes[i].imgUrl ?? "",
+                                  title: state.recipes[i].title,
+                                  time: state.recipes[i].cookingTime,
+                                  rating: state.recipes[i].averageRating,
+                                ),
+                            ],
+                          ),
+                        )
+                      : SizedBox(
+                          height: 230,
+                          child: Center(
+                            child: Text(
+                              context.lang.no_recipes,
+                              style: context.textTheme.bodyLarge,
+                            ),
+                          ),
+                        ),
+                  const SizedBox(height: 16),
+
+                  // New Recipes
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Text(
+                      context.lang.new_recipes,
+                      style: context.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 12),
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: context.colors.primary,
-                    borderRadius: BorderRadius.circular(12),
+                  SizedBox(
+                    height: 220,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        const SizedBox(width: 8),
+                        for (int i = 0; i < state.newRecipes.length; i++)
+                          RecipeCardInfo(
+                            title: state.newRecipes[i].title,
+                            author: state.newRecipes[i].ownerName ?? "Chef",
+                            time: state.newRecipes[i].cookingTime,
+                            rating: state.newRecipes[i].averageRating,
+                            image: state.newRecipes[i].imgUrl ?? "",
+                            ownerImage: state.newRecipes[i].ownerImage ?? "",
+                          )
+                      ],
+                    ),
                   ),
-                  child: const Icon(Icons.filter_list, color: Colors.white),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
-
-          // Cuisine Filter Buttons
-          SizedBox(
-            height: 38,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                const SizedBox(width: 16),
-                for (int index = 0; index < cuisines.length; index++)
-                  CuisineButton(
-                    label: cuisines[index],
-                    isSelected: cuisines[index] == selectedCuisine,
-                    onTap: () {
-                      _filterRecipes(cuisines[index]);
-                    },
-                  ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
-          // Horizontal Recipe List
-          SizedBox(
-            height: 230,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                const SizedBox(width: 16),
-                for (int index = 0; index < filteredRecipes.length; index++)
-                  RecipeCard(
-                    image: filteredRecipes[index]["image"] as String,
-                    title: filteredRecipes[index]["title"] as String,
-                    time: filteredRecipes[index]["time"] as String,
-                    rating: filteredRecipes[index]["rating"] as double,
-                  ),
-              ],
-            ),
-          ),
-
-          const SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: Text(
-              "New Recipes",
-              style: context.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w600,
+                ],
               ),
-            ),
-          ),
-          SizedBox(
-            height: 200,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                const SizedBox(width: 8),
-                for (int i = 0; i < 10; i++)
-                  RecipeCardInfo(
-                    title: recipes[i % 2]['title'] as String,
-                    author: recipes[i % 2]['author'] as String,
-                    time: recipes[i % 2]['time'] as String,
-                    rating: recipes[i % 2]['rating'] as double,
-                    image: recipes[i % 2]['image'] as String,
-                  )
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }

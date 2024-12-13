@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import 'login_screen.dart';
 
@@ -37,10 +36,10 @@ class _PasswordChangedState extends State<PasswordChanged> {
                 ),
               ),
               const SizedBox(height: 10),
-              SizedBox(
+              const SizedBox(
                 width: 20,
               ),
-              Text(
+              const Text(
                 textAlign: TextAlign.center,
                 'Your password has been changed successfully ',
                 style: TextStyle(

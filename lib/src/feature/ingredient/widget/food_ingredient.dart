@@ -1,21 +1,19 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_recipe/src/common/style/app_icons.dart';
 import 'package:food_recipe/src/common/style/app_images.dart';
-import 'package:food_recipe/src/common/utils/context_extention.dart';
-import 'package:food_recipe/src/feature/ingrident/bloc/ingrident_bloc.dart';
-class FoodIngrident extends StatefulWidget {
-  const FoodIngrident({super.key});
+import 'package:food_recipe/src/common/utils/context_extension.dart';
+import 'package:food_recipe/src/feature/ingredient/bloc/ingredient_bloc.dart';
+
+class FoodIngredient extends StatefulWidget {
+  const FoodIngredient({super.key});
 
   @override
-  State<FoodIngrident> createState() => _FoodIngridentState();
+  State<FoodIngredient> createState() => _FoodIngredientState();
 }
 
-class _FoodIngridentState extends State<FoodIngrident> {
-
+class _FoodIngredientState extends State<FoodIngredient> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -49,8 +47,7 @@ class _FoodIngridentState extends State<FoodIngrident> {
               right: 10,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                ],
+                children: [],
               ),
             ),
             Positioned(
@@ -69,24 +66,28 @@ class _FoodIngridentState extends State<FoodIngrident> {
                   const SizedBox(
                     width: 10,
                   ),
-                  BlocBuilder<IngridentBloc, IngridentState>(
-                    builder: (BuildContext context, IngridentState state) => InkWell(
-                      onTap: () {
-                        context.read<IngridentBloc>().add(const SaveButton$IngridentEvent());
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(6),
-                        height: 30,
-                        width: 30,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: context.colors.onPrimary,
+                  BlocBuilder<IngredientBloc, IngredientState>(
+                    builder: (BuildContext context, IngredientState state) {
+                      return InkWell(
+                        onTap: () {
+                          context.read<IngredientBloc>().add(
+                                const SaveButton$IngredientEvent(),
+                              );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(6),
+                          height: 30,
+                          width: 30,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: context.colors.onPrimary,
+                          ),
+                          child: state.isSaved
+                              ? SvgPicture.asset(AppIcons.pressedSave)
+                              : SvgPicture.asset(AppIcons.saveIcon),
                         ),
-                        child: state.isSaved
-                            ? SvgPicture.asset(AppIcons.pressedSave)
-                            : SvgPicture.asset(AppIcons.saveIcon),
-                      ),
-                    ),
+                      );
+                    },
                   ),
                 ],
               ),
