@@ -185,6 +185,8 @@ class _EditProfileState extends State<EditProfile> {
             _emailController.text =
                 context.dependencies.shp.getString("email")!;
             _nameController.text = userProfile.data?.userName ?? '';
+            _countryController.text = userProfile.data?.country ?? '';
+            _cityController.text = userProfile.data?.city ?? '';
             _descriptionController.text = userProfile.data?.description ?? '';
           }
           return Center(
@@ -273,8 +275,8 @@ class _EditProfileState extends State<EditProfile> {
                         .toList(),
                     onChanged: (value) {
                       setState(() {
-                        // selectedRole = value!;
-                        context.dependencies.shp.setString("role", value!);
+                        selectedRole = value!;
+                        context.dependencies.shp.setString("role", value);
                         debugPrint(context.dependencies.shp.getString("role"));
                       });
                     },

@@ -24,6 +24,11 @@ class Urls{
   static const String requestPasswordReset = '/auth/request-password-reset';
   static const String refreshPassword = '/auth/reset-password';
 
+  static String steps(int id)=>"/recipeM/$id/steps";
+  static String ingrident(int id)=>"/recipeA/$id/ingredient";
+  static String copyLink(int id)=>"/recipeA/$id/share-link";
+
+
 
   static Map<String, Object> profileContentParam({required int id, required int size}){
     Map<String, Object> map ={
@@ -41,6 +46,7 @@ class Urls{
     return map;
   }
 
+  static Map<String, Object> emptyParam()=>{};
 
 
 

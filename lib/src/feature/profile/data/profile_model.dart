@@ -21,18 +21,16 @@ class UserProfile {
   }
 
   Map<String, dynamic> toJson() => {
-    'status': status,
-    'data': data?.toJson(),
-    'text': text,
-  };
+        'status': status,
+        'data': data?.toJson(),
+        'text': text,
+      };
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! UserProfile) return false;
-    return status == other.status &&
-        data == other.data &&
-        text == other.text;
+    return status == other.status && data == other.data && text == other.text;
   }
 
   @override
@@ -49,8 +47,12 @@ class UserData {
   final String userRole;
   final String? description;
   final String? authorImg;
+  final String? country;
+  final String? city;
 
   const UserData({
+    required this.country,
+    required this.city,
     required this.userId,
     required this.recipeNumber,
     required this.followersCount,
@@ -71,19 +73,23 @@ class UserData {
       userRole: json['userRole'] as String,
       description: json['description'] as String?,
       authorImg: json['authorImg'] as String?,
+      country: json['country'] as String?,
+      city: json['city'] as String?,
     );
   }
 
   Map<String, dynamic> toJson() => {
-    'userId': userId,
-    'recipeNumber': recipeNumber,
-    'followersCount': followersCount,
-    'followingCount': followingCount,
-    'userName': userName,
-    'userRole': userRole,
-    'description': description,
-    'authorImg': authorImg,
-  };
+        'userId': userId,
+        'recipeNumber': recipeNumber,
+        'followersCount': followersCount,
+        'followingCount': followingCount,
+        'userName': userName,
+        'userRole': userRole,
+        'description': description,
+        'authorImg': authorImg,
+        'country': country,
+        'city': city,
+      };
 
   @override
   bool operator ==(Object other) {
@@ -96,18 +102,22 @@ class UserData {
         userName == other.userName &&
         userRole == other.userRole &&
         description == other.description &&
-        authorImg == other.authorImg;
+        authorImg == other.authorImg &&
+        country == other.country &&
+        city == other.city;
   }
 
   @override
   int get hashCode => Object.hash(
-    userId,
-    recipeNumber,
-    followersCount,
-    followingCount,
-    userName,
-    userRole,
-    description,
-    authorImg,
-  );
+        userId,
+        recipeNumber,
+        followersCount,
+        followingCount,
+        userName,
+        userRole,
+        description,
+        authorImg,
+        country,
+        city,
+      );
 }

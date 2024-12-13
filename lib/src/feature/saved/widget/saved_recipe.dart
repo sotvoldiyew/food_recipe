@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:food_recipe/src/common/router/app_router.dart';
 import 'package:food_recipe/src/common/style/app_icons.dart';
-import 'package:food_recipe/src/common/style/app_images.dart';
 import 'package:food_recipe/src/common/utils/context_extention.dart';
 import 'package:go_router/go_router.dart';
 
@@ -23,7 +22,7 @@ class _SavedRecipeState extends State<SavedRecipe> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.push(AppRouter.ingrident);
+        context.push(AppRouter.ingrident, extra: widget.model);
       },
       child: SizedBox(
         width: double.infinity,
@@ -79,7 +78,7 @@ class _SavedRecipeState extends State<SavedRecipe> {
                     SvgPicture.asset(AppIcons.timer),
                     const SizedBox(width: 4),
                     Text(
-                      '${widget.model.time} ${context.lang.min}',
+                      '${widget.model.time} ',
                       style: context.textTheme.bodySmall?.copyWith(
                           color: context.colors.onPrimary,
                           fontWeight: FontWeight.w300),
