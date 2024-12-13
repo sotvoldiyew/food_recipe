@@ -21,5 +21,47 @@ class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
-  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{};
+  static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "all": MessageLookupByLibrary.simpleMessage("All"),
+        "by": MessageLookupByLibrary.simpleMessage("By"),
+        "city": MessageLookupByLibrary.simpleMessage("City"),
+        "copyLink": MessageLookupByLibrary.simpleMessage("Copy Link"),
+        "copyRecipe": MessageLookupByLibrary.simpleMessage(
+            "Copy recipe link and share your recipe link with  friends and family."),
+        "country": MessageLookupByLibrary.simpleMessage("Country"),
+        "description": MessageLookupByLibrary.simpleMessage("Description"),
+        "editProfile": MessageLookupByLibrary.simpleMessage("Edit Profile"),
+        "email": MessageLookupByLibrary.simpleMessage("Email"),
+        "follow": MessageLookupByLibrary.simpleMessage("Follow"),
+        "followers": MessageLookupByLibrary.simpleMessage("Followers"),
+        "following": MessageLookupByLibrary.simpleMessage("Following"),
+        "foodReviews": MessageLookupByLibrary.simpleMessage("k Reviews"),
+        "hello": MessageLookupByLibrary.simpleMessage("Hello"),
+        "ingrident": MessageLookupByLibrary.simpleMessage("Ingrident"),
+        "items": MessageLookupByLibrary.simpleMessage("Items"),
+        "min": MessageLookupByLibrary.simpleMessage("min"),
+        "name": MessageLookupByLibrary.simpleMessage("Name"),
+        "procedure": MessageLookupByLibrary.simpleMessage("Procedure"),
+        "profile": MessageLookupByLibrary.simpleMessage("Profile"),
+        "rateRecipe": MessageLookupByLibrary.simpleMessage("Rate Recipe"),
+        "recipe": MessageLookupByLibrary.simpleMessage("Recipe"),
+        "recipeLink": MessageLookupByLibrary.simpleMessage("Recipe Link"),
+        "review": MessageLookupByLibrary.simpleMessage("Review"),
+        "role": MessageLookupByLibrary.simpleMessage("Role"),
+        "save": MessageLookupByLibrary.simpleMessage("Save"),
+        "savedRecipes": MessageLookupByLibrary.simpleMessage("Saved Recipes"),
+        "send": MessageLookupByLibrary.simpleMessage("Send"),
+        "serve": MessageLookupByLibrary.simpleMessage("Serve"),
+        "share": MessageLookupByLibrary.simpleMessage("Share"),
+        "step": MessageLookupByLibrary.simpleMessage("Step"),
+        "steps": MessageLookupByLibrary.simpleMessage("Steps"),
+        "textSaved":
+            MessageLookupByLibrary.simpleMessage("Text saved to clipboard!"),
+        "unsave": MessageLookupByLibrary.simpleMessage("Unsave"),
+        "uploadImage": MessageLookupByLibrary.simpleMessage("Upload Image"),
+        "videoLink": MessageLookupByLibrary.simpleMessage("Video Link"),
+        "videoMin": MessageLookupByLibrary.simpleMessage("Video Minute"),
+        "viewLess": MessageLookupByLibrary.simpleMessage(" View Less"),
+        "viewMore": MessageLookupByLibrary.simpleMessage(" More...")
+      };
 }

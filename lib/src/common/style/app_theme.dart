@@ -17,7 +17,6 @@ class AppTheme {
 }
 
 /// Light [ColorScheme] made with FlexColorScheme v8.0.0.
-/// Requires Flutter 3.22.0 or later.
 const ColorScheme lightColorScheme = ColorScheme(
   brightness: Brightness.light,
   // Selected
@@ -28,9 +27,8 @@ const ColorScheme lightColorScheme = ColorScheme(
   primaryContainer: Color(0xffebebeb),
   secondary:Color(0xffffad30),
   onSecondary: Color(0xffffe1b3),
-
-
   primaryFixedDim: Color(0xff8cd39d),
+
   onPrimaryFixed: Color(0xff000902),
   onPrimaryFixedVariant: Color(0xff001b07),
   onPrimaryContainer: Color(0xffffffff),

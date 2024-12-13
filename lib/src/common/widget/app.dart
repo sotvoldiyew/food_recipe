@@ -30,7 +30,7 @@ class MyAppState extends State<MyApp> {
         Locale("ru"),
         Locale("uz"),
       ],
-      theme: context.dependencies.theme ? AppTheme.light : AppTheme.dark,
+      theme: context.dependencies.theme ?  AppTheme.dark : AppTheme.light ,
     );
   }
 }

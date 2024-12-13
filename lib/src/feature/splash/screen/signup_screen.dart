@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:food_recipe/src/common/utils/context_extention.dart';
+import 'package:food_recipe/src/feature/splash/screen/login_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -20,40 +22,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 35.0),
-        child: Column(
+        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+        child: ListView(
           children: [
             const SizedBox(
               height: 50,
             ),
-            const Row(
-              children: [
-                Text(
-                  textAlign: TextAlign.start,
-                  'Create an account',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
+            const Text(
+              textAlign: TextAlign.start,
+              'Create an account',
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
+              ),
             ),
             const SizedBox(
               height: 5,
             ),
-            const Row(
-              children: [
-                Text(
-                  textAlign: TextAlign.start,
-                  'Let’s help you set up your account,',
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xff121212),
-                  ),
-                ),
-              ],
+            const Text(
+              textAlign: TextAlign.start,
+              'Let’s help you set up your account,',
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w400,
+                color: Color(0xff121212),
+              ),
             ),
             const Row(
               children: [
@@ -87,7 +81,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               controller: nameController,
               decoration: InputDecoration(
                 labelText: 'Enter Name',
-                labelStyle: const TextStyle(color: Color(0xffD9D9D9),fontWeight: FontWeight.w400,fontSize: 13),
+                labelStyle: const TextStyle(
+                    color: Color(0xffD9D9D9),
+                    fontWeight: FontWeight.w400,
+                    fontSize: 13),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -118,7 +115,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               controller: emailController,
               decoration: InputDecoration(
                 labelText: 'Enter Email',
-                labelStyle: const TextStyle(color: Color(0xffD9D9D9),fontWeight: FontWeight.w400,fontSize: 13),
+                labelStyle: const TextStyle(
+                    color: Color(0xffD9D9D9),
+                    fontWeight: FontWeight.w400,
+                    fontSize: 13),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -149,7 +149,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               controller: passwordController,
               decoration: InputDecoration(
                 labelText: 'Enter Password',
-                labelStyle: const TextStyle(color: Color(0xffD9D9D9),fontWeight: FontWeight.w400,fontSize: 13),
+                labelStyle: const TextStyle(
+                    color: Color(0xffD9D9D9),
+                    fontWeight: FontWeight.w400,
+                    fontSize: 13),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -180,7 +183,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               controller: passwordConfirmController,
               decoration: InputDecoration(
                 labelText: 'Retype Password',
-                labelStyle: const TextStyle(color: Color(0xffD9D9D9),fontWeight: FontWeight.w400,fontSize: 13),
+                labelStyle: const TextStyle(
+                    color: Color(0xffD9D9D9),
+                    fontWeight: FontWeight.w400,
+                    fontSize: 13),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -198,8 +204,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   data: ThemeData(
                     checkboxTheme: CheckboxThemeData(
                       shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(6),
+                        borderRadius: BorderRadius.circular(6),
                       ),
                       side: WidgetStateBorderSide.resolveWith(
                         (states) => const BorderSide(
@@ -213,8 +218,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     children: [
                       Checkbox(
                         value: isChecked,
-                        activeColor:
-                            Colors.orange,
+                        activeColor: Colors.orange,
                         checkColor: Colors.white,
                         onChanged: (bool? value) {
                           setState(() {
@@ -238,65 +242,61 @@ class _SignUpScreenState extends State<SignUpScreen> {
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => LoginScreen()),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignInScreen()),
+                );
               },
               style: ElevatedButton.styleFrom(
-                fixedSize: const Size(355, 60),
+                fixedSize: const Size(double.infinity, 50),
                 backgroundColor: const Color(0xFF129575),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 110),
               ),
-              child: const Row(
-                children: [
-                  Text(
-                    'Sign Up',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w700),
-                  ),
-                  SizedBox(width: 15),
-                  Icon(
-                    Icons.arrow_forward,
-                    color: Colors.white,
-                    size: 18,
-                  ),
-                ],
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Sign Up',
+                      style: context.textTheme.titleMedium
+                          ?.copyWith(color: context.colors.onPrimary),
+                    ),
+                    const SizedBox(width: 10),
+                    const Icon(
+                      Icons.arrow_forward,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 10),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 60.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Divider(
-                      color: Color(0xffD9D9D9),
-                      thickness: 1,
-                    ),
+            const Row(
+              children: [
+                Expanded(
+                  child: Divider(
+                    color: Color(0xffD9D9D9),
+                    thickness: 1,
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(
-                      'Or Sign In With',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Color(0xffD9D9D9)),
-                    ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
+                    'Or Sign In With',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Color(0xffD9D9D9)),
                   ),
-                  Expanded(
-                    child: Divider(
-                      color: Color(0xffD9D9D9),
-                      thickness: 1,
-                    ),
+                ),
+                Expanded(
+                  child: Divider(
+                    color: Color(0xffD9D9D9),
+                    thickness: 1,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             const SizedBox(height: 10),
             Row(
@@ -314,7 +314,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 25,
                   ),
                 ),
-               /* const SizedBox(
+                /* const SizedBox(
                   width: 30,
                 ),
                 MaterialButton(

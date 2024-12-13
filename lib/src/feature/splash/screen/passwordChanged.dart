@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'login_screen.dart';
+
 class PasswordChanged extends StatefulWidget {
   const PasswordChanged({super.key});
 
@@ -19,6 +21,7 @@ class _PasswordChangedState extends State<PasswordChanged> {
         padding: const EdgeInsets.symmetric(horizontal: 26.0),
         child: Center(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 200),
               Image.asset('assets/images/img_1.png',
@@ -34,59 +37,53 @@ class _PasswordChangedState extends State<PasswordChanged> {
                 ),
               ),
               const SizedBox(height: 10),
-              const Row(
-                children: [
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    textAlign: TextAlign.start,
-                    'Your password has been changed ',
-                    style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
+              SizedBox(
+                width: 20,
               ),
-              const Row(
-                children: [
-                  SizedBox(
-                    width: 110,
-                  ),
-                  Text(
-                    textAlign: TextAlign.start,
-                    ' successfully ',
-                    style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
+              Text(
+                textAlign: TextAlign.center,
+                'Your password has been changed successfully ',
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey,
+                ),
               ),
+              // const Row(
+              //   children: [
+              //     SizedBox(
+              //       width: 110,
+              //     ),
+              //     Text(
+              //       textAlign: TextAlign.start,
+              //       ' successfully ',
+              //       style: TextStyle(
+              //         fontSize: 17,
+              //         fontWeight: FontWeight.w500,
+              //         color: Colors.grey,
+              //       ),
+              //     ),
+              //   ],
+              // ),
               const SizedBox(
                 height: 20,
               ),
 
               ElevatedButton(
                 onPressed: () {
-                  //Navigator.push(
-                  // context,
-                  // MaterialPageRoute(builder: (context) => const SignInScreen()),
-                  // );
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignInScreen()),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF129575),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 50, vertical: 15),
                 ),
                 child: const Row(
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'Back to Login',

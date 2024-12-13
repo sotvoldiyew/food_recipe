@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:food_recipe/src/common/router/app_router.dart';
+import 'package:food_recipe/src/common/utils/context_extention.dart';
 import 'package:food_recipe/src/feature/splash/screen/forgot_screen.dart';
 import 'package:food_recipe/src/feature/splash/screen/signup_screen.dart';
+import 'package:go_router/go_router.dart';
 
 
 class SignInScreen extends StatefulWidget {
@@ -19,12 +22,10 @@ class _SignInScreenState extends State<SignInScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 35.0),
+        padding: const EdgeInsets.symmetric(horizontal: 25.0),
         child: Column(
           children: [
-            const SizedBox(
-              height: 140,
-            ),
+            const Spacer(),
             const Row(
               children: [
                 Text(
@@ -66,7 +67,7 @@ class _SignInScreenState extends State<SignInScreen> {
               ],
             ),
             const SizedBox(height: 10),
-            TextField(
+            TextField(keyboardType: TextInputType.emailAddress,
               controller: emailController,
               decoration: InputDecoration(
                 labelText: 'Enter Email',
@@ -82,7 +83,7 @@ class _SignInScreenState extends State<SignInScreen> {
               obscureText: false,
               style: const TextStyle(color: Colors.black),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 20),
             const Row(
               children: [
                 Text(
@@ -97,7 +98,7 @@ class _SignInScreenState extends State<SignInScreen> {
               ],
             ),
             const SizedBox(height: 10),
-            TextField(
+            TextFormField(
               controller: passwordController,
               decoration: InputDecoration(
                 labelText: 'Enter Password',
@@ -137,31 +138,24 @@ class _SignInScreenState extends State<SignInScreen> {
             const SizedBox(height: 15),
             ElevatedButton(
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => LoginScreen()),
-                // );
+                context.go(AppRouter.home);
               },
               style: ElevatedButton.styleFrom(
-                fixedSize: const Size(355, 60),
+                fixedSize: const Size(double.infinity, 50),
                 backgroundColor: const Color(0xFF129575),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 110),
               ),
-              child: const Row(
+              child:  Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     'Sign In',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w700),
+                    style: context.textTheme.titleMedium?.copyWith(color: context.colors.onPrimary),
                   ),
-                  SizedBox(width: 15),
-                  Icon(
+                  const SizedBox(width: 15),
+                  const Icon(
                     Icons.arrow_forward,
                     color: Colors.white,
                     size: 18,
@@ -170,32 +164,29 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
             ),
             const SizedBox(height: 15),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 60.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Divider(
-                      color: Color(0xffD9D9D9),
-                      thickness: 1,
-                    ),
+            const Row(
+              children: [
+                Expanded(
+                  child: Divider(
+                    color: Color(0xffD9D9D9),
+                    thickness: 1,
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(
-                      'Or Sign In With',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Color(0xffD9D9D9)),
-                    ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
+                    'Or Sign In With',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Color(0xffD9D9D9)),
                   ),
-                  Expanded(
-                    child: Divider(
-                      color: Color(0xffD9D9D9),
-                      thickness: 1,
-                    ),
+                ),
+                Expanded(
+                  child: Divider(
+                    color: Color(0xffD9D9D9),
+                    thickness: 1,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             const SizedBox(height: 30),
             Row(
@@ -257,8 +248,10 @@ class _SignInScreenState extends State<SignInScreen> {
                         fontSize: 13),
                   ),
                 ),
+
               ],
             ),
+            const SizedBox(height: 15),
           ],
         ),
       ),

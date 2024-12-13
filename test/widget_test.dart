@@ -8,7 +8,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:food_recipe/main.dart';
 import 'package:food_recipe/src/common/widget/app.dart';
 
 void main() {
