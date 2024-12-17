@@ -59,6 +59,8 @@ class RecipeCard extends StatelessWidget {
                       color: context.colors.onPrimary,
                     ),
                     fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: 140,
                   ),
                 ),
                 Align(

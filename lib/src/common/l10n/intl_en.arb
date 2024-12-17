@@ -48,5 +48,6 @@
   "no_recent_recipes": "Recent recipes not found",
   "no_comments": "Comments not found",
   "recent_search": "Recent Search",
-  "reviews": "Reviews"
+  "reviews": "Reviews",
+  "delete": "Delete"
 }

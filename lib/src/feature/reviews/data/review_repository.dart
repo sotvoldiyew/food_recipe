@@ -15,6 +15,8 @@ abstract interface class IReviewRepository {
   Future<bool> deleteComment({required int commentId});
 
   Future<bool> reactionToComment({required int reviewId, required int userId, required bool isLike});
+
+  Future<int> getUserId();
 }
 
 class ReviewRepositoryImpl implements IReviewRepository {
@@ -106,6 +108,23 @@ class ReviewRepositoryImpl implements IReviewRepository {
       log('Error [reactionToComment]: $e');
       log('Stacktrace [reactionToComment]: $s');
       return false;
+    }
+  }
+
+  @override
+  Future<int> getUserId() async {
+    try {
+      final response = (await apiService.request(
+          Urls.userProfile,
+      ))['data'] as Map<String, Object?>;
+
+      log("Response [getUserId]: $response");
+
+      return response['userId'] as int;
+    } on Object catch (e, s) {
+      log('Error [getUserId]: $e');
+      log('Stacktrace [getUserId]: $s');
+      return -1;
     }
   }
 }

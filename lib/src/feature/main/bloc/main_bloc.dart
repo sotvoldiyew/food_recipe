@@ -29,7 +29,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   ) async {
     emit(state.copyWith(status: Status.loading));
 
-    final categories = await event.context.dependencies.mainRepository.getCategories();
+    final categories = (await event.context.dependencies.mainRepository.getCategories())..sort((a, b) => a.id.compareTo(b.id));
 
     final newRecipes = await event.context.dependencies.mainRepository.getRecipes(
       data: {

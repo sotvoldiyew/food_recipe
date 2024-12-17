@@ -191,7 +191,7 @@ GoRouter router = GoRouter(
         key: state.pageKey,
         child: BlocProvider(
           create: (BuildContext context) => ReviewBloc()..add(
-            GetReviews$ReviewEvent(context: context, recipeId: 1, userId: 5),
+            GetReviews$ReviewEvent(context: context, recipeId: state.extra as int),
           ),
           child: const ReviewsScreen(),
         ),

@@ -19,6 +19,7 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
         SendMessage$ReviewEvent _ => _sendMessage(event, emit),
         Emoji$ReviewEvent _ => _emoji(event, emit),
         GetReviews$ReviewEvent _ => _getReviews(event, emit),
+        DeleteComment$ReviewEvent _ => _deleteComment(event, emit),
       },
     );
   }
@@ -29,18 +30,18 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
   ) async {
     emit(state.copyWith(status: Status.loading));
 
-    final response =
-        await event.context.dependencies.reviewRepository.sendComment(
+    final response = await event.context.dependencies.reviewRepository.sendComment(
       recipeId: 1,
       comment: event.text,
     );
 
     log("Response [sendComment]: $response");
 
-    final comments =
-        await event.context.dependencies.reviewRepository.getReviews(
+    final comments = await event.context.dependencies.reviewRepository.getReviews(
       recipeId: 1,
     );
+
+    log("Response [getComments]: $comments");
 
     if (comments != null) {
       final commentList = comments.commentModel.reversed.toList();
@@ -64,14 +65,32 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
     emit(state.copyWith(status: Status.loading));
 
     final response = await event.context.dependencies.reviewRepository.reactionToComment(
-      userId: 4,
+      userId: event.userId,
       isLike: event.emoji,
-      reviewId: 1,
+      reviewId: event.reviewId,
     );
 
     log("Response [reactionToComment]: $response");
 
-    emit(state.copyWith(status: Status.success));
+    final comments = await event.context.dependencies.reviewRepository.getReviews(
+      recipeId: 1,
+    );
+
+    log("Response [getComments]: $comments");
+
+    if (comments != null) {
+      final commentList = comments.commentModel.reversed.toList();
+
+      emit(state.copyWith(
+        status: Status.success,
+        comments: commentList,
+      ));
+    } else {
+      emit(state.copyWith(
+        status: Status.success,
+        comments: [],
+      ));
+    }
   }
 
   Future<void> _getReviews(
@@ -84,10 +103,50 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
       recipeId: event.recipeId,
     );
 
+    final userId = await event.context.dependencies.reviewRepository.getUserId();
+
     log("Response [getReviews]: $response");
+    log("Response [getUserId]: $userId");
 
     if (response != null) {
       final commentList = response.commentModel.reversed.toList();
+
+      emit(state.copyWith(
+        status: Status.success,
+        comments: commentList,
+        recipeId: response.recipeId,
+        userId: userId,
+      ));
+    } else {
+      emit(state.copyWith(
+        status: Status.success,
+        comments: [],
+        recipeId: -1,
+        userId: -1,
+      ));
+    }
+  }
+
+  Future<void> _deleteComment(
+    DeleteComment$ReviewEvent event,
+    Emitter<ReviewState> emit,
+  ) async {
+    emit(state.copyWith(status: Status.loading));
+
+    final response = await event.context.dependencies.reviewRepository.deleteComment(
+      commentId: event.commentId,
+    );
+
+    log("Response [deleteComment]: $response");
+
+    final comments = await event.context.dependencies.reviewRepository.getReviews(
+      recipeId: 1,
+    );
+
+    log("Response [getComments]: $comments");
+
+    if (comments != null) {
+      final commentList = comments.commentModel.reversed.toList();
 
       emit(state.copyWith(
         status: Status.success,

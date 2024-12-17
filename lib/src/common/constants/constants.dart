@@ -26,4 +26,7 @@ class Urls {
   static const String getReviews = "/reviewA";
   static const String addReaction = "/reviewA/like-comment";
   static const String deleteComment = "/reviewA";
+
+  // User Controller
+  static const String userProfile = "/user/my-profile";
 }

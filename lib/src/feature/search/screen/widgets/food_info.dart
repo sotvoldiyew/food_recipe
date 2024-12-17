@@ -60,6 +60,7 @@ class SavedRecipe extends StatelessWidget {
                     color: context.colors.onPrimary,
                   ),
                   fit: BoxFit.cover,
+                  height: double.infinity,
                 ),
               ),
 

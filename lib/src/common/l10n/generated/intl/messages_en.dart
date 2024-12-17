@@ -29,6 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "copyRecipe": MessageLookupByLibrary.simpleMessage(
             "Copy recipe link and share your recipe link with  friends and family."),
         "country": MessageLookupByLibrary.simpleMessage("Country"),
+        "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "description": MessageLookupByLibrary.simpleMessage("Description"),
         "editProfile": MessageLookupByLibrary.simpleMessage("Edit Profile"),
         "email": MessageLookupByLibrary.simpleMessage("Email"),

@@ -140,7 +140,7 @@ class MainScreen extends StatelessWidget {
                   // Horizontal Recipe List
                   state.recipes.isNotEmpty
                       ? SizedBox(
-                          height: 230,
+                          height: 240,
                           child: ListView(
                             scrollDirection: Axis.horizontal,
                             children: [

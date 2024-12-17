@@ -55,8 +55,10 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   ) async {
     emit(state.copyWith(status: Status.loading));
 
+    final userId = await event.context.dependencies.searchRepository.getUserId();
+
     final recipes = await event.context.dependencies.searchRepository.recentRecipes(
-      userId: 4,
+      userId: userId,
     );
 
     log("Response [getRecentRecipes]: $recipes");
