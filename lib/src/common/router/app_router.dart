@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_recipe/src/common/bloc/recipe_bloc.dart';
+import 'package:food_recipe/src/common/model/recipe_model.dart';
 import 'package:food_recipe/src/feature/create/bloc/create_bloc.dart';
 import 'package:food_recipe/src/feature/edit_profile/bloc/edit_profile_bloc.dart';
 import 'package:food_recipe/src/feature/edit_profile/screen/edit_profile.dart';
-import 'package:food_recipe/src/feature/ingrident/bloc/ingrident_bloc.dart';
-import 'package:food_recipe/src/feature/ingrident/screen/ingrident_screen.dart';
 import 'package:food_recipe/src/feature/profile/data/content_model.dart';
 import 'package:food_recipe/src/feature/ingredient/bloc/ingredient_bloc.dart';
 import 'package:food_recipe/src/feature/ingredient/screen/ingredient_screen.dart';
@@ -17,7 +16,6 @@ import 'package:food_recipe/src/feature/saved/bloc/saved_bloc.dart';
 import 'package:food_recipe/src/feature/saved/screen/saved_screen.dart';
 import 'package:food_recipe/src/feature/reviews/screen/review.dart';
 import 'package:food_recipe/src/feature/search/bloc/search_bloc.dart';
-import 'package:food_recipe/src/feature/splash/screen/notifications_screen.dart';
 import 'package:food_recipe/src/feature/notification/screen/notifications_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -25,7 +23,6 @@ import '../../feature/create/screen/create_screen.dart';
 import '../../feature/profile/bloc/profile_bloc.dart';
 import '../../../home_navigation.dart';
 import '../../feature/main/screen/main_screen.dart';
-import '../../feature/profile/data/profile_repository.dart';
 import '../../feature/search/screen/search_screen.dart';
 
 // import '../../feature/screens/welcome/screen/welcome_screen.dart';
@@ -82,8 +79,8 @@ GoRouter router = GoRouter(
       pageBuilder: (context, state) => CustomTransitionPage(
         key: state.pageKey,
         child: BlocProvider(
-          child:  IngridentScreen(model: state.extra as Datum,),
-          create: (context) => IngridentBloc(),
+          child:  IngredientScreen(model: state.extra as RecipeModel,),
+          create: (context) => IngredientBloc(),
         ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(

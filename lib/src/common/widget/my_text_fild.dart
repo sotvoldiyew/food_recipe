@@ -2,15 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:food_recipe/src/common/utils/context_extension.dart';
 
 class MyTextFild extends StatelessWidget {
-  const MyTextFild(
-      {super.key, required this.controller, required this.labelName});
+  const MyTextFild({
+    super.key,
+    required this.controller,
+    required this.labelName,
+    this.validator,
+  });
 
   final TextEditingController controller;
   final String labelName;
+  final FormFieldValidator<String>? validator;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      validator: validator,
       controller: controller,
       decoration: InputDecoration(
         labelText: labelName,

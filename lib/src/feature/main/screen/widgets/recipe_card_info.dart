@@ -1,29 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:food_recipe/src/common/model/recipe_model.dart';
 import 'package:food_recipe/src/common/style/app_icons.dart';
 import 'package:food_recipe/src/common/utils/context_extension.dart';
+import 'package:food_recipe/src/feature/profile/data/content_model.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../common/router/app_router.dart';
 import '../../../../common/style/app_images.dart';
 
 class RecipeCardInfo extends StatelessWidget {
-  final String title;
-  final String author;
-  final String time;
-  final double rating;
-  final String image;
-  final String ownerImage;
+  final RecipeModel model;
 
   const RecipeCardInfo({
-    super.key,
-    required this.title,
-    required this.author,
-    required this.time,
-    required this.rating,
-    required this.image,
-    required this.ownerImage,
+    super.key, required this.model,
+
   });
 
   @override
@@ -35,7 +27,7 @@ class RecipeCardInfo extends StatelessWidget {
         splashColor: Colors.transparent,
         hoverColor: Colors.transparent,
         onTap: () {
-          context.push(AppRouter.ingrident);
+          context.push(AppRouter.ingrident, extra:  model);
         },
         child: DecoratedBox(
           decoration: BoxDecoration(
@@ -62,7 +54,7 @@ class RecipeCardInfo extends StatelessWidget {
                         SizedBox(
                           width: 150,
                           child: Text(
-                            title,
+                            "${model.title}",
                             style: context.textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
@@ -80,7 +72,7 @@ class RecipeCardInfo extends StatelessWidget {
                           Radius.circular(18),
                         ),
                         child: CachedNetworkImage(
-                          imageUrl: ownerImage,
+                          imageUrl: model.imgUrl??"https://media.istockphoto.com/id/1316145932/photo/table-top-view-of-spicy-food.jpg?s=612x612&w=0&k=20&c=eaKRSIAoRGHMibSfahMyQS6iFADyVy1pnPdy1O5rZ98=",
                           errorWidget: (context, url, error) {
                             return const Center(
                               child: Image(
@@ -98,7 +90,7 @@ class RecipeCardInfo extends StatelessWidget {
                     ),
                     const SizedBox(height: 3),
                     Text(
-                      'By $author',
+                      'By ${model.ownerName}',
                       style: TextStyle(
                         fontSize: 14,
                         color: context.colors.outline,
@@ -114,7 +106,7 @@ class RecipeCardInfo extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          time,
+                          model.cookingTime,
                           style: TextStyle(color: context.colors.outline),
                         ),
                       ],
@@ -139,7 +131,7 @@ class RecipeCardInfo extends StatelessWidget {
                   child: CachedNetworkImage(
                     width: 200,
                     height: double.infinity,
-                    imageUrl: image,
+                    imageUrl: model.imgUrl??"https://media.istockphoto.com/id/1316145932/photo/table-top-view-of-spicy-food.jpg?s=612x612&w=0&k=20&c=eaKRSIAoRGHMibSfahMyQS6iFADyVy1pnPdy1O5rZ98=",
                     errorWidget: (context, url, error) {
                       return const Center(
                         child: Image(

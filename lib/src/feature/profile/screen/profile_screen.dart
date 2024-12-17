@@ -3,18 +3,21 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:food_recipe/src/common/model/recipe_model.dart';
 import 'package:food_recipe/src/common/router/app_router.dart';
 import 'package:food_recipe/src/common/service/new_dio_service.dart';
 import 'package:food_recipe/src/common/style/app_images.dart';
 import 'package:food_recipe/src/common/utils/context_extension.dart';
 import 'package:food_recipe/src/feature/profile/bloc/profile_bloc.dart';
 import 'package:food_recipe/src/feature/profile/data/content_model.dart';
+import 'package:food_recipe/src/feature/profile/data/profile_recipe_model.dart';
 import 'package:food_recipe/src/feature/profile/widget/my_sliver_delegete.dart';
 import 'package:food_recipe/src/feature/profile/widget/view_more.dart';
 import 'package:food_recipe/src/feature/saved/widget/saved_recipe.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../common/constants/constants.dart';
+import '../../saved/screen/new_saved_widget.dart';
 import '../data/profile_model.dart';
 import '../data/profile_repository.dart';
 
@@ -24,12 +27,15 @@ class ProfileScreen extends StatefulWidget {
   });
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<ProfileScreen> createState() => ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class ProfileScreenState extends State<ProfileScreen> {
   late final ProfileRepository profileRepository;
   late final ProfileContent content;
+  late final ReciepeFullModel recipeModel;
+  bool isLoading = false;
+
   List<Datum> list = [];
   final dio = Dio(
     BaseOptions(
@@ -38,13 +44,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
   );
 
   Future<void> getProduct() async {
+     isLoading = false;
     int? id = context.dependencies.shp.getInt('user_id');
     if (id != null) {
       String? result = await NetworkService.get(Urls.profileContent, Urls.profileContentParam(id: id, size: 10), context);
+      String? recipeNetworkData = await NetworkService.get(Urls.profileContent, Urls.profileContentParam(id: id, size: 10), context);
 
       if (result != null) {
         content = profileContentFromJson(result);
+
         list = content.data!;
+        isLoading = true;
         setState(() {});
       }
     }
@@ -54,6 +64,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
+    getProduct();
     profileRepository = ProfileRepository(
       dio: dio,
       getHeaders: () async {
@@ -86,7 +97,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             final userProfile = snapshot.data!;
             context.dependencies.shp.setString("role", userProfile.data!.userRole);
             log("user id ${context.dependencies.shp.setInt("user_id", userProfile.data!.userId).toString()}");
-            return Padding(
+
+            log("isLoading $isLoading  ");
+            return isLoading?Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: NestedScrollView(
                   headerSliverBuilder: (context, innerBoxIsScrolled) => [
@@ -214,7 +227,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       ),
                                     ),
                                     onPressed: () {
-                                      context.push(AppRouter.profileTapBar);
+                                      // context.push(AppRouter.profileTapBar);
                                     },
                                     child: Text(
                                       "${userProfile.data?.followersCount ?? 0}",
@@ -234,7 +247,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   TextButton(
                                     style: const ButtonStyle(overlayColor: WidgetStatePropertyAll(Colors.transparent)),
                                     onPressed: () {
-                                      context.push(AppRouter.profileTapBar);
+                                      // context.push(AppRouter.profileTapBar);
                                     },
                                     child: Text(
                                       "${userProfile.data?.followingCount ?? 0}",
@@ -289,17 +302,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     itemBuilder: (context, index) {
                       final model = list[index];
                       return Padding(
-                        padding: EdgeInsets.symmetric(vertical: 15.0),
+                        padding: const EdgeInsets.symmetric(vertical: 15.0),
                         child: SizedBox(
                           height: 170,
-                          child: SavedRecipe(
+                          child: NewSavedWidget(
                             model: model,
+                            // as RecipeModel,
                           ),
                         ),
                       );
                     },
                   )),
-            );
+            ):const Center(child: CircularProgressIndicator());
           }),
     );
   }

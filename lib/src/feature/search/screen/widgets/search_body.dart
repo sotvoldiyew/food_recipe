@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_recipe/src/common/utils/context_extension.dart';
@@ -45,6 +47,8 @@ class SearchBody extends StatelessWidget {
                 itemCount: state.recentRecipes.length,
                 itemBuilder: (context, index) {
                   final recipe = recentRecipes[index];
+                  log("\n\n gridview image url=>  ${recipe.imageUrl}");
+                  log("\n\n gridview image url=>  ${recipe.imageUrl}");
                   return SavedRecipe(
                     image: recipe.imageUrl,
                     text: recipe.title,

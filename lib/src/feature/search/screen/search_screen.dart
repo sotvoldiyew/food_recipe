@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -109,6 +111,10 @@ class _SearchScreenState extends State<SearchScreen> with SearchScreenController
             Expanded(
               child: BlocBuilder<SearchBloc, SearchState>(
                 builder: (context, state) {
+                  log("\n\n state recent recipe : ${state.recentRecipes}\n\n");
+                  log("\n\nstate recipes: ${state.recipes}\n\n");
+
+
                   return SearchBody(
                     recentRecipes: state.recentRecipes,
                     recipes: state.recipes,

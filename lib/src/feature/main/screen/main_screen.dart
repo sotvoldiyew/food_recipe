@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_recipe/src/common/router/app_router.dart';
@@ -96,17 +98,7 @@ class MainScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 12),
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: context.colors.primary,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Icon(
-                            Icons.filter_list,
-                            color: context.colors.onPrimary,
-                          ),
-                        ),
+
                       ],
                     ),
                   ),
@@ -146,11 +138,14 @@ class MainScreen extends StatelessWidget {
                             children: [
                               const SizedBox(width: 16),
                               for (int i = 0; i < state.recipes.length; i++)
-                                RecipeCard(
-                                  image: state.recipes[i].imgUrl ?? "",
-                                  title: state.recipes[i].title,
-                                  time: state.recipes[i].cookingTime,
-                                  rating: state.recipes[i].averageRating,
+                                InkWell(
+                                  onTap: () {
+                                    final model = state.recipes[i];
+                                    context.push(AppRouter.ingrident, extra: model);
+                                  },
+                                  child: RecipeCard(model: state.recipes[i],
+
+                                  ),
                                 ),
                             ],
                           ),
@@ -176,21 +171,24 @@ class MainScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  
+
                   SizedBox(
                     height: 220,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
                         const SizedBox(width: 8),
-                        for (int i = 0; i < state.newRecipes.length; i++)
-                          RecipeCardInfo(
-                            title: state.newRecipes[i].title,
-                            author: state.newRecipes[i].ownerName ?? "Chef",
-                            time: state.newRecipes[i].cookingTime,
-                            rating: state.newRecipes[i].averageRating,
-                            image: state.newRecipes[i].imgUrl ?? "",
-                            ownerImage: state.newRecipes[i].ownerImage ?? "",
-                          )
+                        ...List.generate(state.newRecipes.length, (index){
+                          final model = state.newRecipes[index];
+                          log("\n\nmodel cooking time ${model.cookingTime}\n\n");
+
+                          return RecipeCardInfo(model: model);
+                        }),
+                        // for (int i = 0; i < state.newRecipes.length; i++)
+                        //   RecipeCardInfo(model: state.newRecipes.,
+                        //
+                        //   )
                       ],
                     ),
                   ),

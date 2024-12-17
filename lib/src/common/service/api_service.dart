@@ -33,15 +33,6 @@ class ApiService {
     Map<String, Object?>? queryParams,
     FormData? formData,
   }) async {
-    log("Api service func is start to work");
-    String path, {
-    Method method = Method.get,
-    bool setToken = true,
-    Object? data,
-    Map<String, Object?>? headers,
-    Map<String, Object?>? queryParams,
-    FormData? formData,
-  }) async {
     final sw = Stopwatch()..start();
     if (!await checkConnection()) throw Exception("No Connection");
 
@@ -52,7 +43,6 @@ class ApiService {
       final requestHeaders = {
         ...?headers,
         'Authorization': 'Bearer $token',
-        'content-Type': formData != null ? 'multipart/form-data' : 'application/json',
         'content-Type': formData != null ? 'multipart/form-data' : 'application/json',
       };
 

@@ -6,7 +6,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:food_recipe/src/common/constants/constants.dart';
-import 'package:food_recipe/src/common/utils/context_extention.dart';
+import 'package:food_recipe/src/common/utils/context_extension.dart';
 
 @immutable
 class NetworkService {

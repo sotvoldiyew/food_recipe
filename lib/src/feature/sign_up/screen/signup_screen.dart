@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:food_recipe/src/common/utils/context_extention.dart';
+import 'package:food_recipe/src/common/utils/context_extension.dart';
 import 'package:food_recipe/src/feature/verification_code/screen/verification_screen.dart';
 
 import '../../../common/constants/constants.dart';
@@ -382,18 +382,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  MaterialButton(
-                    onPressed: (){},
-                    height: 70,
-                    minWidth: 70,
-                    color: const Color(0xffFFFFFF),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)),
-                    child: Image.asset(
-                      'assets/images/icon_google.png',
-                      height: 25,
-                    ),
-                  ),
+
                 ],
               ),
               const SizedBox(height: 15),

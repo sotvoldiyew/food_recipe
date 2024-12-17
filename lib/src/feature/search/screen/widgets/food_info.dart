@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:food_recipe/src/common/model/recipe_model.dart';
 import 'package:food_recipe/src/common/style/app_icons.dart';
 import 'package:food_recipe/src/common/utils/context_extension.dart';
 import 'package:go_router/go_router.dart';
@@ -36,7 +37,8 @@ class SavedRecipe extends StatelessWidget {
                 id: id,
               ),
             );
-        context.push(AppRouter.ingrident);
+        final model =  RecipeModel(id: id, title: text, imgUrl: image, cookingTime: "1.50", averageRating: reputation, ownerImage: "ownerImage", ownerName: byName, ownerId: id);
+        context.push(AppRouter.ingrident, extra: model);
       },
       child: SizedBox(
         child: ClipRRect(

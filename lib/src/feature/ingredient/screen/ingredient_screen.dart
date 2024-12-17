@@ -3,30 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:food_recipe/src/common/utils/context_extention.dart';
-import 'package:food_recipe/src/feature/ingrident/data/steps_model.dart';
-import 'package:food_recipe/src/feature/profile/data/content_model.dart';
+import 'package:food_recipe/src/common/model/recipe_model.dart';
+import 'package:food_recipe/src/feature/ingredient/data/follow_repository.dart';
 import 'package:food_recipe/src/common/router/app_router.dart';
 import 'package:food_recipe/src/common/utils/context_extension.dart';
 import 'package:food_recipe/src/feature/ingredient/bloc/ingredient_bloc.dart';
+import 'package:food_recipe/src/feature/ingredient/data/owner_repository.dart';
 import 'package:food_recipe/src/feature/ingredient/widget/follow_profile.dart';
-import 'package:food_recipe/src/feature/ingredient/widget/food_ingredient.dart';
 import 'package:food_recipe/src/feature/ingredient/widget/ingredient_items.dart';
 import 'package:food_recipe/src/feature/ingredient/widget/procedure_steps.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../common/constants/constants.dart';
-import '../../../common/router/app_router.dart';
 import '../../../common/service/new_dio_service.dart';
 import '../../../common/style/app_icons.dart';
-import '../bloc/ingrident_bloc.dart';
 import '../data/copy_model.dart';
 import '../data/ingridient_model.dart';
-import '../widget/follow_profile.dart';
-import '../widget/food_ingrident.dart';
-import '../widget/ingrident_items.dart';
+import '../data/steps_model.dart';
+import '../widget/food_ingredient.dart';
 import '../widget/my_delegate.dart';
-import '../widget/procedure_steps.dart';
 import '../widget/rating.dart';
 
 enum SampleItem {
@@ -36,16 +32,16 @@ enum SampleItem {
   itemFour,
 }
 
-class IngridentScreen extends StatefulWidget {
-  const IngridentScreen({super.key, required this.model});
+class IngredientScreen extends StatefulWidget {
+  const IngredientScreen({super.key, required this.model});
 
-  final Datum model;
+  final RecipeModel model;
 
   @override
   State<IngredientScreen> createState() => _IngredientScreenState();
 }
 
-class _IngridentScreenState extends State<IngridentScreen> {
+class _IngredientScreenState extends State<IngredientScreen> {
   List<Datumm> stepsList = [];
   List<Datum2> ingredientList = [];
   late Data2 copyLink;
@@ -53,7 +49,7 @@ class _IngridentScreenState extends State<IngridentScreen> {
   Future<void> getSteps() async {
     ///recipeM/4/steps
     String? result = await NetworkService.get(
-        Urls.steps(widget.model.id!), Urls.emptyParam(), context);
+        Urls.steps(widget.model.id), Urls.emptyParam(), context);
     if (result != null) {
       final model = stepsModelFromJson(result);
       stepsList = model.data!;
@@ -62,6 +58,21 @@ class _IngridentScreenState extends State<IngridentScreen> {
       log("somth went wrong ");
     }
   }
+
+  // Future<void> getOwner() async {
+  //    ///recipeM/4/steps
+  //    String? result = await NetworkService.get(
+  //        Urls.steps(widget.model.id), Urls.emptyParam(), context);
+  //    if (result != null) {
+  //      final model = stepsModelFromJson(result);
+  //      stepsList = model.data!;
+  //      setState(() {});
+  //    } else {
+  //      log("somth went wrong ");
+  //    }
+  //  }
+
+ 
 
   Future<void> getLink() async {
     ///recipeM/4/steps
@@ -78,8 +89,8 @@ class _IngridentScreenState extends State<IngridentScreen> {
   }
 
   Future<void> getIngredient() async {
-    String? result = await NetworkService.get(
-        Urls.ingrident(widget.model.id!), Urls.emptyParam(), context);
+    String? result =
+        await NetworkService.get(Urls.ingrident(2), Urls.emptyParam(), context);
     if (result != null) {
       final model = ingedientModelFromJson(result);
       log("\n\n\n\n\n\n\nsuccessfully result $result\n model text: ${model.text}\n\n\n\n\n");
@@ -96,6 +107,34 @@ class _IngridentScreenState extends State<IngridentScreen> {
     getIngredient();
     getSteps();
     super.initState();
+  }
+
+  void follow(BuildContext context, int userId, String token) async {
+    FollowRepository followRepository = FollowRepository();
+
+      await followRepository.follow(userId, token);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Recipe saved successfully!")),
+    );
+  }
+
+  Future<String?> getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
+  }
+
+  void saveRecipe(BuildContext context, int recipeId) async {
+    String? token = await getToken();
+    if (token != null) {
+      follow(context, recipeId, token);
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //     const SnackBar(content: Text("successfully")));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Token is missing")),
+      );
+    }
   }
 
   @override
@@ -357,8 +396,10 @@ class _IngridentScreenState extends State<IngridentScreen> {
                   ),
                 ],
               ),
+
+              /// kommentga oldim
               SliverToBoxAdapter(
-                  child: FoodIngrident(
+                  child: FoodIngredient(
                 model: widget.model,
               )),
               const SliverToBoxAdapter(child: SizedBox(height: 15)),
@@ -376,7 +417,7 @@ class _IngridentScreenState extends State<IngridentScreen> {
                       ),
                     ),
                     Text(
-                      "(13${context.lang.foodReviews})",
+                      "",
                       style: context.textTheme.titleSmall?.copyWith(
                         color: Colors.black45,
                       ),
@@ -385,7 +426,7 @@ class _IngridentScreenState extends State<IngridentScreen> {
                 ),
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 15)),
-              const SliverToBoxAdapter(child: FollowProfile()),
+               SliverToBoxAdapter(child: FollowProfile(name: widget.model.ownerName ?? "Chef", lacation: " Uzbekistan",image: widget.model.ownerImage?? "", userId: widget.model.ownerId ?? 5,)),
               const SliverToBoxAdapter(child: SizedBox(height: 20)),
               SliverPersistentHeader(
                 pinned: true,
@@ -411,7 +452,7 @@ class _IngridentScreenState extends State<IngridentScreen> {
                     ),
                     const Spacer(),
                     Text(
-                      " ${state.isIngrident ? "${ingredientList.length} ${context.lang.items}" : "${stepsList.length} ${context.lang.steps}"}",
+                      " ${state.isIngredient ? "${ingredientList.length} ${context.lang.items}" : "${stepsList.length} ${context.lang.steps}"}",
                       style: context.textTheme.labelSmall
                           ?.copyWith(fontWeight: FontWeight.w400),
                     )
@@ -420,7 +461,7 @@ class _IngridentScreenState extends State<IngridentScreen> {
               ),
               const SliverToBoxAdapter(child: SizedBox(height: 15)),
             ],
-            body: state.isIngrident
+            body: state.isIngredient
                 ? IngridentItems(
                     list: ingredientList,
                   )

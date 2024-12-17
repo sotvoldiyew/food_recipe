@@ -71,7 +71,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       },
     );
 
-    log("Response [getRecipeByCategory]: $recipes");
+    log("\n\n\n /n/n/n/n/n/n  Response [getRecipeByCategory]: $recipes \n\n\n");
 
     emit(state.copyWith(
       status: Status.success,

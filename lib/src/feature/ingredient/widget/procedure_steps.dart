@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:food_recipe/src/common/utils/context_extention.dart';
-import 'package:food_recipe/src/feature/ingrident/data/steps_model.dart';
 import 'package:food_recipe/src/common/utils/context_extension.dart';
+
+import '../data/steps_model.dart';
 
 class ProcedureSteps extends StatefulWidget {
   const ProcedureSteps({super.key, required this.list});

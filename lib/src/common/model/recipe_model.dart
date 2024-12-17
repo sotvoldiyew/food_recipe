@@ -1,3 +1,9 @@
+
+import 'dart:convert';
+
+RecipeModel reciepeModelFromJson(String str) => RecipeModel.fromJson(json.decode(str));
+
+
 class RecipeModel {
   final int id;
   final String title;

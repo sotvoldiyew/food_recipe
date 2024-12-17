@@ -126,15 +126,7 @@ class NotificationsList extends StatelessWidget {
       itemBuilder: (context, index) {
         return NotificationTile(notification: notifications[index]);
       },
-            child: ListView.builder(
-              itemCount: notifications.length,
-              itemBuilder: (context, index) {
-                return NotificationTile(notification: notifications[index]);
-              },
-            ),
-          ),
-        ],
-      ),
+
       // bottomNavigationBar: BottomNavigationBar(
       //   items: const [
       //     BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
@@ -270,8 +262,7 @@ class _NotificationTileState extends State<NotificationTile> {
           ),
         ],
       ),
-      trailing: const Icon(Icons.notifications),
-      isThreeLine: true,
+
     );
   }
 }

@@ -2,7 +2,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:food_recipe/src/common/utils/context_extention.dart';
+import 'package:food_recipe/src/common/utils/context_extension.dart';
 
 class BuildDynamicSteps extends StatefulWidget {
   const BuildDynamicSteps({super.key, required this.title, required this.controllers, required this.onAdd});

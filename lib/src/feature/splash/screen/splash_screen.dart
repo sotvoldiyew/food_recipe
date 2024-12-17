@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:food_recipe/src/common/utils/context_extention.dart';
+import 'package:food_recipe/src/common/utils/context_extension.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../common/router/app_router.dart';

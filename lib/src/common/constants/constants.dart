@@ -23,6 +23,26 @@ class Urls{
   static const String getAllIngredients = '/recipeA/ingredient';
   static const String requestPasswordReset = '/auth/request-password-reset';
   static const String refreshPassword = '/auth/reset-password';
+  static const String saveRecipe = '/save-recipe';
+  static const String follow = '/user/following';
+  static const String owner = '/user/byId';
+
+  // Home Controller
+  static const String newRecipes = "/home/new-recipes";
+  static const String categories = "/home";
+  static const String recipesByCategory = "/home/category";
+
+  // Search Controller
+  static const String search = "/search/result";
+  static const String recentSearches = "/search";
+  static const String addRecentSearch = "/search/result";
+
+  // Review Controller
+  static const String addReview = "/reviewA/comment";
+  static const String getReviews = "/reviewA";
+  static const String addReaction = "/reviewA/like-comment";
+  static const String deleteComment = "/reviewA";
+
 
   static String steps(int id)=>"/recipeM/$id/steps";
   static String ingrident(int id)=>"/recipeA/$id/ingredient";
@@ -52,25 +72,25 @@ class Urls{
 
 
 }
-
-class Urls {
-  const Urls._();
-
-  static const String baseUrl = 'http://95.130.227.21:8080/api';
-
-  // Home Controller
-  static const String newRecipes = "/home/new-recipes";
-  static const String categories = "/home";
-  static const String recipesByCategory = "/home/category";
-
-  // Search Controller
-  static const String search = "/search/result";
-  static const String recentSearches = "/search";
-  static const String addRecentSearch = "/search/result";
-
-  // Review Controller
-  static const String addReview = "/reviewA/comment";
-  static const String getReviews = "/reviewA";
-  static const String addReaction = "/reviewA/like-comment";
-  static const String deleteComment = "/reviewA";
-}
+//
+// class Urls {
+//   const Urls._();
+//
+//   static const String baseUrl = 'http://95.130.227.21:8080/api';
+//
+//   // Home Controller
+//   static const String newRecipes = "/home/new-recipes";
+//   static const String categories = "/home";
+//   static const String recipesByCategory = "/home/category";
+//
+//   // Search Controller
+//   static const String search = "/search/result";
+//   static const String recentSearches = "/search";
+//   static const String addRecentSearch = "/search/result";
+//
+//   // Review Controller
+//   static const String addReview = "/reviewA/comment";
+//   static const String getReviews = "/reviewA";
+//   static const String addReaction = "/reviewA/like-comment";
+//   static const String deleteComment = "/reviewA";
+// }

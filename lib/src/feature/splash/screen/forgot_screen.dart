@@ -3,8 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:food_recipe/src/common/constants/constants.dart';
 import 'package:food_recipe/src/common/service/new_dio_service.dart';
-import 'package:food_recipe/src/common/utils/context_extention.dart';
-import 'package:food_recipe/src/feature/verification_code/screen/verification_screen.dart';
+import 'package:food_recipe/src/common/utils/context_extension.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../verification_code/screen/refresh_code_otp_page.dart';

@@ -10,7 +10,7 @@ class RecipeState extends Equatable {
   final Status status;
 
   @override
-  List<Object?> get props => [isSaved];
+  List<Object?> get props => [isSaved, status];
 
   RecipeState copyWith({
     final Status? status,
