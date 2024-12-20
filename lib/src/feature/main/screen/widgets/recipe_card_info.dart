@@ -27,7 +27,7 @@ class RecipeCardInfo extends StatelessWidget {
         splashColor: Colors.transparent,
         hoverColor: Colors.transparent,
         onTap: () {
-          context.push(AppRouter.ingrident, extra:  model);
+          context.push(AppRouter.ingrident, extra:  model.id);
         },
         child: DecoratedBox(
           decoration: BoxDecoration(

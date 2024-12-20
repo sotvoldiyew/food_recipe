@@ -1,4 +1,9 @@
+
 import 'package:flutter/material.dart';
+
+import '../../../common/constants/constants.dart';
+import '../../../common/service/new_dio_service.dart';
+import '../data/notification_model.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
@@ -9,29 +14,30 @@ class NotificationsScreen extends StatefulWidget {
 
 class _NotificationsScreenState extends State<NotificationsScreen>
     with SingleTickerProviderStateMixin {
+  bool isLoading = true;
   late TabController _tabController;
+  List<Datum10> model = [];
+  NotificationModel? notificationModel;
 
-  final List<Map<String, String>> notifications = [
-    {
-      'title': 'New Recipe Alert!',
-      'description': 'Lorem Ipsum tempor incididunt ut labore et dolore, in voluptate velit esse cillum',
-      'time': '10 mins ago',
-    },
-    {
-      'title': 'New Recipe Alert!',
-      'description': 'Lorem Ipsum tempor incididunt ut labore et dolore, in voluptate velit esse cillum',
-      'time': '30 mins ago',
-    },
-    {
-      'title': 'Save Recipe Alert!',
-      'description': 'Lorem Ipsum tempor incididunt ut labore et dolore, in voluptate velit esse cillum',
-      'time': '30 mins ago',
-    },
-  ];
+  Future<void> getNotification() async {
+    String? result = await NetworkService.get(Urls.notification,
+        Urls.getNotification(size: 10, read: "ALL"), context);
+
+    debugPrint("notification => result ${result}");
+
+    if (result != null) {
+      notificationModel = notificationModelFromJson(result);
+      debugPrint("notification => $notificationModel");
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    getNotification();
     _tabController = TabController(length: 3, vsync: this);
   }
 
@@ -64,7 +70,8 @@ class _NotificationsScreenState extends State<NotificationsScreen>
             height: 10,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Container(
               height: 40,
               decoration: BoxDecoration(
@@ -100,9 +107,9 @@ class _NotificationsScreenState extends State<NotificationsScreen>
             child: TabBarView(
               controller: _tabController,
               children: [
-                NotificationsList(notifications: notifications),
-                NotificationsList(notifications: notifications),
-                NotificationsList(notifications: notifications),
+                NotificationsList(model: model),
+                NotificationsList(model: model),
+                NotificationsList(model: model),
               ],
             ),
           ),
@@ -112,31 +119,37 @@ class _NotificationsScreenState extends State<NotificationsScreen>
   }
 }
 
-class NotificationsList extends StatelessWidget {
-  final List<Map<String, String>> notifications;
+class NotificationsList extends StatefulWidget {
+  List<Datum10>? model;
 
-  const NotificationsList({super.key, required this.notifications});
+  NotificationsList({super.key, required this.model});
 
+  @override
+  State<NotificationsList> createState() => _NotificationsListState();
+}
+
+class _NotificationsListState extends State<NotificationsList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       padding: const EdgeInsets.all(30.0),
-      itemCount: notifications.length,
+      itemCount: widget.model!.length,
       itemBuilder: (context, index) {
-        return NotificationTile(notification: notifications[index]);
+        return NotificationTile(model: widget.model);
       },
     );
   }
 }
 
 class NotificationTile extends StatefulWidget {
-  final Map<String, String> notification;
+  List<Datum10>? model;
 
-  const NotificationTile({super.key, required this.notification});
+  NotificationTile({super.key, required this.model});
 
   @override
   _NotificationTileState createState() => _NotificationTileState();
 }
+
 class _NotificationTileState extends State<NotificationTile> {
   bool _isSuccess = false;
 
@@ -151,36 +164,36 @@ class _NotificationTileState extends State<NotificationTile> {
       ),
       child: Stack(
         children: [
-          Row(
+          const Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal:  15.0,vertical: 5),
+                  padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.notification['title'] ?? '',
-                        style: const TextStyle(
+                        "widget.model.",
+                        style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Colors.black,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8),
                       Text(
-                        widget.notification['description'] ?? '',
-                        style: const TextStyle(
+                        "widget.model.",
+                        style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                           color: Colors.black54,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8),
                       Text(
-                        widget.notification['time'] ?? '',
-                        style: const TextStyle(
+                        "widget.model['time'] ?? ''",
+                        style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
                           color: Colors.black54,

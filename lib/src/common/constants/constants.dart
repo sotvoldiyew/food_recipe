@@ -25,7 +25,12 @@ class Urls{
   static const String refreshPassword = '/auth/reset-password';
   static const String saveRecipe = '/save-recipe';
   static const String follow = '/user/following';
+  static const String unFollow = '/user/unfollowing';
   static const String owner = '/user/byId';
+  static const String deleteRecipe = '/saved-recipes';
+  static const String notification = '/notification';
+  static const String rateRecipe = '/reviewA/rate-recipe';
+
 
   // Home Controller
   static const String newRecipes = "/home/new-recipes";
@@ -65,6 +70,14 @@ class Urls{
     };
     return map;
   }
+static Map<String, Object> getNotification({required int size, required String read}){
+    Map<String, Object> map ={
+      "page": 0,
+      "size": size,
+      "read": read
+    };
+    return map;
+  }
 
   static Map<String, Object> emptyParam()=>{};
 
@@ -72,25 +85,3 @@ class Urls{
 
 
 }
-//
-// class Urls {
-//   const Urls._();
-//
-//   static const String baseUrl = 'http://95.130.227.21:8080/api';
-//
-//   // Home Controller
-//   static const String newRecipes = "/home/new-recipes";
-//   static const String categories = "/home";
-//   static const String recipesByCategory = "/home/category";
-//
-//   // Search Controller
-//   static const String search = "/search/result";
-//   static const String recentSearches = "/search";
-//   static const String addRecentSearch = "/search/result";
-//
-//   // Review Controller
-//   static const String addReview = "/reviewA/comment";
-//   static const String getReviews = "/reviewA";
-//   static const String addReaction = "/reviewA/like-comment";
-//   static const String deleteComment = "/reviewA";
-// }

@@ -1,36 +1,51 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:food_recipe/src/common/bloc/recipe_bloc.dart';
 import 'package:food_recipe/src/common/model/recipe_model.dart';
 import 'package:food_recipe/src/common/utils/context_extension.dart';
-import 'package:food_recipe/src/feature/profile/data/content_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../common/router/app_router.dart';
+import '../../../common/service/new_dio_service.dart';
 import '../../../common/style/app_icons.dart';
+import '../../ingredient/data/recipe_model.dart';
 import '../saved_repository.dart';
 
 class NewSavedWidget extends StatefulWidget {
-  const NewSavedWidget({super.key, required this.model});
+  const NewSavedWidget({super.key, required this.recipeId});
 
-  final Datum model;
+  final int recipeId;
 
   @override
   State<NewSavedWidget> createState() => _NewSavedWidgetState();
 }
 
 class _NewSavedWidgetState extends State<NewSavedWidget> {
-  void submitRecipe(BuildContext context, int recipeId, String token) async {
-    RecipeService recipeService = RecipeService();
+  RecipeInfo? recipeInfo;
 
-    await recipeService.saveRecipe(recipeId, token);
+  Future<void> getOneRecepWithId() async {
+    log("\n\nget one product \n\n");
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Recipe saved successfully!")),
-    );
+    String? retsep =
+    await NetworkService.get("/recipeM/${widget.recipeId}", {}, context);
 
+    if (retsep != null) {
+      log("ifni ichiga tushdi ");
+      recipeInfo = recipeInfoFromJson(retsep);
+      setState(() {});
+    } else {
+      log("Ma'lumotni yuklashda xatolik.");
+    }
+  }
+
+  @override
+  void initState() {
+    getOneRecepWithId();
+    super.initState();
   }
 
   Future<String?> getToken() async {
@@ -38,12 +53,12 @@ class _NewSavedWidgetState extends State<NewSavedWidget> {
     return prefs.getString('token');
   }
 
-  void saveRecipe(BuildContext context, int recipeId) async {
+  Future<void> saveRecipe(BuildContext context, int recipeId) async {
     String? token = await getToken();
     if (token != null) {
-      submitRecipe(context, recipeId, token);
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //     const SnackBar(content: Text("successfully")));
+      RecipeService recipeService = RecipeService();
+      await recipeService.saveRecipe(recipeId, token);
+      getOneRecepWithId();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Token is missing")),
@@ -56,15 +71,15 @@ class _NewSavedWidgetState extends State<NewSavedWidget> {
     return InkWell(
       onTap: () {
         final model = RecipeModel(
-            id: widget.model.id!,
-            title: widget.model.title!,
-            imgUrl: widget.model.imageUrl,
-            cookingTime: widget.model.time!,
-            averageRating: widget.model.averageRating!,
+            id: recipeInfo!.data!.id!,
+            title: recipeInfo!.data!.title!,
+            imgUrl: recipeInfo?.data?.imageUrl,
+            cookingTime: recipeInfo!.data!.cookingTime!,
+            averageRating: recipeInfo!.data!.averageRating!,
             ownerImage: "",
-            ownerName: widget.model.author,
-            ownerId: widget.model.id);
-        context.push(AppRouter.ingrident, extra: model);
+            ownerName: recipeInfo!.data!.author,
+            ownerId: recipeInfo!.data!.authorId);
+        context.push(AppRouter.ingrident, extra: model.id);
       },
       child: SizedBox(
         width: double.infinity,
@@ -75,7 +90,7 @@ class _NewSavedWidgetState extends State<NewSavedWidget> {
             children: [
               Positioned.fill(
                 child: Image.network(
-                  widget.model.imageUrl ??
+                  recipeInfo?.data?.imageUrl ??
                       "https://media.istockphoto.com/id/1316145932/photo/table-top-view-of-spicy-food.jpg?s=612x612&w=0&k=20&c=eaKRSIAoRGHMibSfahMyQS6iFADyVy1pnPdy1O5rZ98=",
                   fit: BoxFit.cover,
                 ),
@@ -99,13 +114,13 @@ class _NewSavedWidgetState extends State<NewSavedWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.model.title ?? "",
+                      recipeInfo?.data?.title ?? "",
                       style: context.textTheme.bodyMedium?.copyWith(
                           color: context.colors.onPrimary,
                           fontWeight: FontWeight.w600),
                     ),
                     const SizedBox(height: 4),
-                    Text('${context.lang.by} ${widget.model.author}',
+                    Text('${context.lang.by} ${recipeInfo?.data?.author}',
                         style: context.textTheme.bodySmall?.copyWith(
                             color: context.colors.onPrimary,
                             fontWeight: FontWeight.w300)),
@@ -120,7 +135,7 @@ class _NewSavedWidgetState extends State<NewSavedWidget> {
                     SvgPicture.asset(AppIcons.timer),
                     const SizedBox(width: 4),
                     Text(
-                      '${widget.model.time} ',
+                      '${recipeInfo?.data!.cookingTime} ',
                       style: context.textTheme.bodySmall?.copyWith(
                           color: context.colors.onPrimary,
                           fontWeight: FontWeight.w300),
@@ -131,7 +146,9 @@ class _NewSavedWidgetState extends State<NewSavedWidget> {
                     BlocBuilder<RecipeBloc, RecipeState>(
                       builder: (context, state) => InkWell(
                         onTap: () {
-                          saveRecipe(context, widget.model.id!);
+                          saveRecipe(context, recipeInfo!.data!.id!);
+                          setState(() {
+                          });
                           context
                               .read<RecipeBloc>()
                               .add(const SaveButton$RecipeEvent());
@@ -144,7 +161,7 @@ class _NewSavedWidgetState extends State<NewSavedWidget> {
                             shape: BoxShape.circle,
                             color: context.colors.onPrimary,
                           ),
-                          child: state.isSaved
+                          child: recipeInfo!.data!.isSaved!
                               ? SvgPicture.asset(AppIcons.pressedSave)
                               : SvgPicture.asset(AppIcons.saveIcon),
                         ),
@@ -174,7 +191,7 @@ class _NewSavedWidgetState extends State<NewSavedWidget> {
                               AppIcons.star,
                             ),
                             Text(
-                              "${widget.model.averageRating}",
+                              "${recipeInfo?.data?.averageRating}",
                               style: context.textTheme.bodySmall
                                   ?.copyWith(fontSize: 9),
                             ),

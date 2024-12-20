@@ -31,7 +31,7 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
 
     final response =
         await event.context.dependencies.reviewRepository.sendComment(
-      recipeId: 1,
+      recipeId: 2,
       comment: event.text,
     );
 
@@ -39,7 +39,7 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
 
     final comments =
         await event.context.dependencies.reviewRepository.getReviews(
-      recipeId: 1,
+      recipeId:2,
     );
 
     if (comments != null) {

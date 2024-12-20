@@ -162,20 +162,20 @@ class NetworkService {
 //   }
 // }
 //
-// static Future<String?> delete(String api, Map<String, dynamic> params) async {
-//   try {
-//     final _ = await (await initDio()).delete<dynamic>(api, queryParameters: params);
-//     return "success";
-//   } on TimeoutException catch (_) {
-//     log("The connection has timed out, Please try again!");
-//     rethrow;
-//   } on DioException catch (e) {
-//     log(e.response.toString());
-//     rethrow;
-//   } on Object catch (_) {
-//     rethrow;
-//   }
-// }
+static Future<String?> delete(String api,int id, BuildContext context) async {
+  try {
+    final _ = await (await initDio(context)).delete<dynamic>("$api/$id");
+    return "success";
+  } on TimeoutException catch (_) {
+    log("The connection has timed out, Please try again!");
+    rethrow;
+  } on DioException catch (e) {
+    log(e.response.toString());
+    rethrow;
+  } on Object catch (_) {
+    rethrow;
+  }
+}
 
   static Future<String?> sendMultipartRequest(
       {required String api, required BuildContext context, required Map<String, dynamic> jsonData, required File file}) async {

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_recipe/src/common/router/app_router.dart';
+import 'package:food_recipe/src/common/style/app_images.dart';
 import 'package:food_recipe/src/common/utils/context_extension.dart';
 import 'package:food_recipe/src/feature/main/screen/widgets/cuisine_button.dart';
 import 'package:food_recipe/src/feature/main/screen/widgets/recipe_card.dart';
@@ -27,7 +28,7 @@ class MainScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Hello Jega",
+              "Hello Chef",
               style: context.textTheme.titleLarge?.copyWith(
                 color: context.colors.onSecondaryContainer,
                 fontWeight: FontWeight.w600,
@@ -42,11 +43,11 @@ class MainScreen extends StatelessWidget {
             ),
           ],
         ),
-        actions: const [
+        actions:  [
           Padding(
             padding: EdgeInsets.only(right: 16.0),
             child: CircleAvatar(
-              backgroundImage: AssetImage("assets/images/recipe1.png"),
+              backgroundImage: AssetImage(AppImages.userImage),
             ),
           ),
         ],
@@ -141,7 +142,7 @@ class MainScreen extends StatelessWidget {
                                 InkWell(
                                   onTap: () {
                                     final model = state.recipes[i];
-                                    context.push(AppRouter.ingrident, extra: model);
+                                    context.push(AppRouter.ingrident, extra: model.id);
                                   },
                                   child: RecipeCard(model: state.recipes[i],
 

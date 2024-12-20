@@ -79,7 +79,7 @@ GoRouter router = GoRouter(
       pageBuilder: (context, state) => CustomTransitionPage(
         key: state.pageKey,
         child: BlocProvider(
-          child:  IngredientScreen(model: state.extra as RecipeModel,),
+          child:  IngredientScreen(recipeId: state.extra as int,),
           create: (context) => IngredientBloc(),
         ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -193,7 +193,7 @@ GoRouter router = GoRouter(
         key: state.pageKey,
         child: BlocProvider(
           create: (BuildContext context) => ReviewBloc()..add(
-            GetReviews$ReviewEvent(context: context, recipeId: 1, userId: 5),
+            GetReviews$ReviewEvent(context: context, recipeId: 2, userId: 5),
           ),
           child: const ReviewsScreen(),
         ),

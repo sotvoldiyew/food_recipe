@@ -38,7 +38,7 @@ class SavedRecipe extends StatelessWidget {
               ),
             );
         final model =  RecipeModel(id: id, title: text, imgUrl: image, cookingTime: "1.50", averageRating: reputation, ownerImage: "ownerImage", ownerName: byName, ownerId: id);
-        context.push(AppRouter.ingrident, extra: model);
+        context.push(AppRouter.ingrident, extra: model.id);
       },
       child: SizedBox(
         child: ClipRRect(

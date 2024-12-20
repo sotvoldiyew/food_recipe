@@ -22,12 +22,64 @@ class FollowRepository {
       );
 
       if (response.statusCode == 200) {
-        print('Recipe saved successfully');
+        print('follow successfully');
       } else {
-        print('Failed to save recipe: ${response.data}');
+        print('Failed to follow: ${response.data}');
       }
     } catch (e) {
       print('Error: $e');
     }
   }
+   Future<void> unFollow(int userId, String token) async {
+    try {
+      final response = await _dio.post(
+        Urls.unFollow,
+        data: {
+          'id': userId,
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        print('follow successfully');
+      } else {
+        print('Failed to follow: ${response.data}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+ Future<void> rate(int recipeId, String token, Object rate) async {
+    try {
+      final response = await _dio.post(
+        Urls.unFollow,
+        data: {
+          "comment" : "string",
+          "rating": recipeId,
+          "recipeId": rate
+        },
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        print('follow successfully');
+      } else {
+        print('Failed to follow: ${response.data}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
 }

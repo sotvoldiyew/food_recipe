@@ -5,11 +5,9 @@ import 'package:food_recipe/src/common/model/recipe_model.dart';
 import 'package:food_recipe/src/common/router/app_router.dart';
 import 'package:food_recipe/src/common/style/app_icons.dart';
 import 'package:food_recipe/src/common/utils/context_extension.dart';
-import 'package:food_recipe/src/feature/create/data/post_recipe_model.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../common/bloc/recipe_bloc.dart';
-import '../../profile/data/content_model.dart';
 
 class SavedRecipe extends StatefulWidget {
   const SavedRecipe({super.key, required this.model});
